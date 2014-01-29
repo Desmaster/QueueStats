@@ -1,4 +1,4 @@
 QueueStats
 ==========
 
-A League of Legends info application.
+A League of Legends stat analyzer.
