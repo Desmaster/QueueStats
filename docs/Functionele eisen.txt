@@ -1,0 +1,6 @@
+De gebruiker moet zijn/haar account op kunnen zoeken
+De gebruiker moet zijn/haar gespeelde potjes kunnen bekijken
+De gebruiker moet de statistieken van een gespeeld potje kunnen bekijken
+De gebruiker moet de gemiddelde statistieken kunnen bekijken
+De gebruiker moet karakters van het spel kunnen bekijken
+De gebruiker moet voorwerpen van het spel kunnen bekijken

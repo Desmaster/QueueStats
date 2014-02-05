@@ -14,12 +14,39 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace src {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window {
+
         public MainWindow() {
             InitializeComponent();
         }
+
+        bool mouseDown = false;
+        int lastX, lastY;
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
+            mouseDown = true;
+            lastX = (int) e.GetPosition(this).X;
+            lastY = (int) e.GetPosition(this).Y;
+        }
+
+        private void Window_MouseUp(object sender, MouseButtonEventArgs e) {
+            mouseDown = false;
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e) {
+            if (mouseDown) {
+                int xDiff = (int)e.GetPosition(this).X - lastX;
+                int yDiff = (int)e.GetPosition(this).Y - lastY;
+                this.Left += xDiff;
+                this.Top += yDiff;
+            }
+        }
+
+        private void Window_MouseLeave(object sender, MouseEventArgs e) {
+            mouseDown = false;
+        }
+
+        
     }
 }
