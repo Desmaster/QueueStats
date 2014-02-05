@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace src {
+namespace src.api {
 
     public class Champion {
         public string id { get; set; }
