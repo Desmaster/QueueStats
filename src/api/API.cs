@@ -106,7 +106,7 @@ namespace src.api {
                     jw.Formatting = Formatting.Indented;
 
                     JsonSerializer serializer = new JsonSerializer();
-                    serializer.Serialize(jw, person);
+                    //serializer.Serialize(jw, person);
                 }
                 //championList = JsonConvert.DeserializeObject<ChampionList>(json);
             } else {
