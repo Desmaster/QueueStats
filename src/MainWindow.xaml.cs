@@ -54,6 +54,11 @@ namespace src {
             mouseDown = false;
         }
 
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("GODVERDOME");
+		}
+
         
     }
 }

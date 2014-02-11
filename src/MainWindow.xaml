@@ -1,5 +1,10 @@
 ﻿<Window x:Class="src.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#3FFFFFFF" ResizeMode="CanMinimize" AllowsTransparency="True" MouseDown="Window_MouseDown" MouseMove="Window_MouseMove" MouseUp="Window_MouseUp" MouseLeave="Window_MouseLeave">
+        Title="MainWindow" Height="576" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanMinimize" AllowsTransparency="True" MouseDown="Window_MouseDown" MouseMove="Window_MouseMove" MouseUp="Window_MouseUp" MouseLeave="Window_MouseLeave">
+	<Window.Background>
+		<ImageBrush ImageSource="assets\filledframeborder.png"/>
+	</Window.Background>
+	<StackPanel>
+	</StackPanel>
 </Window>
