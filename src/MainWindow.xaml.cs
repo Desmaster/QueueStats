@@ -13,12 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using src.api;
+
 namespace src {
 
     public partial class MainWindow : Window {
 
         public MainWindow() {
             InitializeComponent();
+            // Example: 
+            String url = API.load(API.STATIC_CHAMPION_ID, new {region = "euw", id = 12});
+            Console.WriteLine(url);
         }
 
         bool mouseDown = false;
