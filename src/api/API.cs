@@ -8,12 +8,19 @@ using System.Net;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
+using src.api.champion;
+using src.api.champion.list;
+
 namespace src.api {
 
     class API {
 
+        private static String storagePath;
+
         private static String region;
         private static String version;
+
+        private static ChampionList championList;
 
         private const String HOST = "http://tdegroot.nl/api/qstats/";
 
@@ -48,42 +55,86 @@ namespace src.api {
 
         public const String TEAM_BY_SUMMONER = "/api/lol/{region}/v2.2/team/by-summoner/{summonerId}";
 
+        public const String DDRAGON_CHAMPION = "ddragon.leagueoflegends.com/cdn/{version}/data/{region}/champion/{champion}.json ";
+
         private static HttpWebRequest request;
 
         public static void init(String region) {
             setRegion(region);
             version = loadVersion(region);
+            storagePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
+            if(!Directory.Exists(storagePath)) {
+                Directory.CreateDirectory(storagePath);
+            }
+            loadChampionList(region);
         }
 
         public static Champion getChampionById(int id) {
-            String name = load(STATIC_CHAMPION_ID, new { region = region, id = id });
-            return getChampionByName(name);
+            Champion champion;
+            String json = load(STATIC_CHAMPION_ID, new { region = region, id = id }, null);
+            champion = JsonConvert.DeserializeObject<Champion>(json);
+            return champion;
         }
 
         public static Champion getChampionByName(String name) {
             Champion champion;
-            return null;
+            String json = load(DDRAGON_CHAMPION, new { version = version, region = region, champion = name }, null);
+            champion = JsonConvert.DeserializeObject<Champion>(json);
+            return champion;
         }
 
-        public static void setRegion(String region) {
-            API.region = region;
-        }
-
-        public static String loadVersion(String region) {
-            String json = load(STATIC_REALM, new {region = region});
+        private static String loadVersion(String region) {
+            String json = load(STATIC_REALM, new { region = region }, null);
             Realm realm = JsonConvert.DeserializeObject<Realm>(json);
             return realm.v;
         }
 
-        public static String load(String type, object args) {
-            String url = HOST + "index.php?url=" + ReplaceArguments(type, args);
+        private static ChampionList loadChampionList(String region) {
+            String fileName = "championList" + region + version.Replace(".", "") + ".json";
+            Console.WriteLine("Path: " + storagePath + fileName);    
+            if(!File.Exists(storagePath + fileName)) {
+                File.Create(storagePath + fileName);
+                String json = load(STATIC_CHAMPIONS, new {region = region}, "{\"champData\" : \"all\"}");
+                try {
+                    File.WriteAllText(storagePath + fileName, json);
+                } catch (IOException e) {
+                    Console.Error.WriteLine(e.StackTrace);
+                }
+                using(FileStream fs = File.Open(@"c:\person.json", FileMode.CreateNew))
+                using(StreamWriter sw = new StreamWriter(fs))
+                using(JsonWriter jw = new JsonTextWriter(sw)) {
+                    jw.Formatting = Formatting.Indented;
+
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(jw, person);
+                }
+                //championList = JsonConvert.DeserializeObject<ChampionList>(json);
+            } else {
+
+            }
+            return null;
+        }
+
+        public static String load(String type, object data, object args) {
+            String url = HOST + "index.php?url=" + ReplaceArguments(type, data);
+            if(args != null) {
+                url += "&args=" + args;
+            }
             Console.WriteLine(url);
             request = (HttpWebRequest)WebRequest.Create(url);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream streamData = response.GetResponseStream();
             StreamReader reader = new StreamReader(streamData, Encoding.UTF8);
             string json = reader.ReadToEnd();
-            return json.Substring(0, json.Length - 1);
+            return json.Substring(0, json.Length);
+        }
+
+        public static void setRegion(String region) {
+            API.region = region;
+        }
+
+        public static String getVersion() {
+            return version;
         }
 
         /**

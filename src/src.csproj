@@ -60,13 +60,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="API.cs" />
+    <Compile Include="api\API.cs" />
+    <Compile Include="api\champion\ChampionMeta.cs" />
+    <Compile Include="api\champion\list\ChampionList.cs" />
+    <Compile Include="api\Realm.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Champion.cs" />
-    <Compile Include="Item.cs" />
+    <Compile Include="api\champion\Champion.cs" />
+    <Compile Include="api\item\Item.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

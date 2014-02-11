@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using src.api;
+using src.api.champion;
 
 namespace src {
 
@@ -21,9 +22,10 @@ namespace src {
 
         public MainWindow() {
             InitializeComponent();
-            // Example: 
-            String url = API.load(API.STATIC_CHAMPION_ID, new {region = "euw", id = 12});
-            Console.WriteLine(url);
+            API.init("na");
+            //API.load(API.STATIC_CHAMPIONS, new { region = "euw" }, "{\"champData\" : \"all\"}");
+            Console.WriteLine(new { region = "region", version = "1.2.3" });
+            Console.WriteLine("Version: " + API.getVersion());
         }
 
         bool mouseDown = false;
