@@ -20,8 +20,6 @@ namespace src.api {
         private static String region;
         private static String version;
 
-        private static ChampionList championList;
-
         private const String HOST = "http://tdegroot.nl/api/qstats/";
 
         public const String CHAMPION_GET = "/api/lol/{region}/v1.1/champion";
@@ -66,7 +64,7 @@ namespace src.api {
             if(!Directory.Exists(storagePath)) {
                 Directory.CreateDirectory(storagePath);
             }
-            loadChampionList(region);
+            //loadChampionList(region);
         }
 
         public static Champion getChampionById(int id) {
@@ -89,37 +87,62 @@ namespace src.api {
             return realm.v;
         }
 
-        private static ChampionList loadChampionList(String region) {
-            String fileName = "championList" + region + version.Replace(".", "") + ".json";
-            Console.WriteLine("Path: " + storagePath + fileName);    
-            if(!File.Exists(storagePath + fileName)) {
-                File.Create(storagePath + fileName);
-                String json = load(STATIC_CHAMPIONS, new {region = region}, "{\"champData\" : \"all\"}");
-                try {
-                    File.WriteAllText(storagePath + fileName, json);
-                } catch (IOException e) {
-                    Console.Error.WriteLine(e.StackTrace);
-                }
-                
-                //championList = JsonConvert.DeserializeObject<ChampionList>(json);
-            } else {
-
-            }
-            return null;
+        public static String loadServerFile(String filename) {
+            return webGet(HOST + filename);
         }
+
+        //private static ChampionList loadChampionList(String region) {
+        //    String fileName = "championList" + region + version.Replace(".", "") + ".json";
+        //    Console.WriteLine("Path: " + storagePath + fileName);
+        //    String json = "";
+        //    if(!File.Exists(storagePath + fileName)) {
+        //        json = load(STATIC_CHAMPIONS, new { region = region }, "{\"champData\" : \"all\"}");
+        //        File.WriteAllText(storagePath + fileName, json);
+        //    } else {
+        //        using(StreamReader reader = new StreamReader(storagePath + fileName)) {
+        //            json = reader.ReadLine();
+        //        }
+        //    }
+        //    if(json != "") {
+        //        championList = JsonConvert.DeserializeObject<ChampionList>(json);
+        //    }
+        //    return null;
+        //}
 
         public static String load(String type, object data, object args) {
             String url = HOST + "index.php?url=" + ReplaceArguments(type, data);
             if(args != null) {
                 url += "&args=" + args;
             }
-            Console.WriteLine(url);
+            //Console.WriteLine(url);
+            return webGet(url);
+        }
+
+        public async static Task<String> loadAsync(String type, object data, object args) {
+            String url = HOST + "index.php?url=" + ReplaceArguments(type, data);
+            if(args != null) {
+                url += "&args=" + args;
+            }
+            //Console.WriteLine(url);
+            String result = await webGetAsync(url);
+            return result;
+        }
+
+        private static string webGet(String url) {
             request = (HttpWebRequest)WebRequest.Create(url);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream streamData = response.GetResponseStream();
             StreamReader reader = new StreamReader(streamData, Encoding.UTF8);
-            string json = reader.ReadToEnd();
-            return json.Substring(0, json.Length);
+            return reader.ReadToEnd();
+        }
+
+        private async static Task<String> webGetAsync(String url) {
+            request = (HttpWebRequest)WebRequest.Create(url);
+            HttpWebResponse response = (HttpWebResponse) await request.GetResponseAsync();
+            Stream streamData = response.GetResponseStream();
+            StreamReader reader = new StreamReader(streamData, Encoding.UTF8);
+            String result = await reader.ReadToEndAsync();
+            return result;
         }
 
         public static void setRegion(String region) {

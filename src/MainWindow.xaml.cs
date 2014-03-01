@@ -20,12 +20,11 @@ namespace src {
 
     public partial class MainWindow : Window {
 
+        Client client;
+
         public MainWindow() {
             InitializeComponent();
-            API.init("na");
-            //API.load(API.STATIC_CHAMPIONS, new { region = "euw" }, "{\"champData\" : \"all\"}");
-            Console.WriteLine(new { region = "region", version = "1.2.3" });
-            Console.WriteLine("Version: " + API.getVersion());
+            client = new Client();
         }
 
         bool mouseDown = false;

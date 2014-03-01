@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace src.api.champion {
 
+
     public class Champion {
         public string[] tags { get; set; }
         public Stats stats { get; set; }
@@ -107,16 +108,16 @@ namespace src.api.champion {
         public Leveltip leveltip { get; set; }
         public string resource { get; set; }
         public int maxrank { get; set; }
-        public Image2 image { get; set; }
         public string[] effectBurn { get; set; }
-        public int[] cooldown { get; set; }
+        public Image2 image { get; set; }
         public int[] cost { get; set; }
+        public int[] cooldown { get; set; }
         public string id { get; set; }
         public Var[] vars { get; set; }
         public string rangeBurn { get; set; }
         public string costType { get; set; }
-        public string cooldownBurn { get; set; }
         public int[][] effect { get; set; }
+        public string cooldownBurn { get; set; }
         public string description { get; set; }
         public string name { get; set; }
         public string costBurn { get; set; }
@@ -149,6 +150,5 @@ namespace src.api.champion {
         public int num { get; set; }
         public string name { get; set; }
     }
-
 
 }
