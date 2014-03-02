@@ -28,14 +28,18 @@ namespace src.patch {
             patchThread = new Thread(new ThreadStart(client.patch));
             if(client.shouldPatch()) {
                 btnPatch.Enabled = true;
+                Visible = true;
+                Activate();
+                Focus();
+                lblFilesRemaining.Text = ("" + client.patchableNodes.Count);
             }
         }
 
         private delegate void ObjectDelegate(object obj);
 
-        public void setProgress(object obj) {
+        public void setProgressInvoked(object obj) {
             if(InvokeRequired) {
-                ObjectDelegate method = new ObjectDelegate(setProgress);
+                ObjectDelegate method = new ObjectDelegate(setProgressInvoked);
                 Invoke(method, obj);
                 return;
             }
@@ -43,9 +47,9 @@ namespace src.patch {
             pbPatch.Value = value;
         }
 
-        public void setFilesRemaining(object obj) {
+        public void setFilesRemainingInvoked(object obj) {
             if(InvokeRequired) {
-                ObjectDelegate method = new ObjectDelegate(setFilesRemaining);
+                ObjectDelegate method = new ObjectDelegate(setFilesRemainingInvoked);
                 Invoke(method, obj);
                 return;
             }
@@ -53,9 +57,9 @@ namespace src.patch {
             lblFilesRemaining.Text = value.ToString();
         }
 
-        public void setStatus(object obj) {
+        public void setStatusInvoked(object obj) {
             if(InvokeRequired) {
-                ObjectDelegate method = new ObjectDelegate(setStatus);
+                ObjectDelegate method = new ObjectDelegate(setStatusInvoked);
                 Invoke(method, obj);
                 return;
             }

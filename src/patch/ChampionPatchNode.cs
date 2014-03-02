@@ -34,8 +34,8 @@ namespace src.patch {
             }
             String result = "";
             if(!File.Exists(fullPath + fileName)) {
-                Console.WriteLine("Downloading " + name + ".json");
                 result = await API.loadAsync(type, new { region = "euw", id = id }, "{\"champData\":\"all\"}");
+                Console.WriteLine("Downloading " + name + ".json");
                 File.WriteAllText(fullPath + fileName, result);
             }
         }

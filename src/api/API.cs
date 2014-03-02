@@ -64,21 +64,6 @@ namespace src.api {
             if(!Directory.Exists(storagePath)) {
                 Directory.CreateDirectory(storagePath);
             }
-            //loadChampionList(region);
-        }
-
-        public static Champion getChampionById(int id) {
-            Champion champion;
-            String json = load(STATIC_CHAMPION_ID, new { region = region, id = id }, null);
-            champion = JsonConvert.DeserializeObject<Champion>(json);
-            return champion;
-        }
-
-        public static Champion getChampionByName(String name) {
-            Champion champion;
-            String json = load(DDRAGON_CHAMPION, new { version = version, region = region, champion = name }, null);
-            champion = JsonConvert.DeserializeObject<Champion>(json);
-            return champion;
         }
 
         private static String loadVersion(String region) {
@@ -91,30 +76,11 @@ namespace src.api {
             return webGet(HOST + filename);
         }
 
-        //private static ChampionList loadChampionList(String region) {
-        //    String fileName = "championList" + region + version.Replace(".", "") + ".json";
-        //    Console.WriteLine("Path: " + storagePath + fileName);
-        //    String json = "";
-        //    if(!File.Exists(storagePath + fileName)) {
-        //        json = load(STATIC_CHAMPIONS, new { region = region }, "{\"champData\" : \"all\"}");
-        //        File.WriteAllText(storagePath + fileName, json);
-        //    } else {
-        //        using(StreamReader reader = new StreamReader(storagePath + fileName)) {
-        //            json = reader.ReadLine();
-        //        }
-        //    }
-        //    if(json != "") {
-        //        championList = JsonConvert.DeserializeObject<ChampionList>(json);
-        //    }
-        //    return null;
-        //}
-
         public static String load(String type, object data, object args) {
             String url = HOST + "index.php?url=" + ReplaceArguments(type, data);
             if(args != null) {
                 url += "&args=" + args;
             }
-            //Console.WriteLine(url);
             return webGet(url);
         }
 
@@ -123,7 +89,6 @@ namespace src.api {
             if(args != null) {
                 url += "&args=" + args;
             }
-            //Console.WriteLine(url);
             String result = await webGetAsync(url);
             return result;
         }

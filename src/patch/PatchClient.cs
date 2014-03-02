@@ -25,7 +25,7 @@ namespace src.patch {
         private Patcher patcher;
 
         private List<PatchNode> nodes = new List<PatchNode>();
-        private List<PatchNode> patchableNodes = new List<PatchNode>();
+        public List<PatchNode> patchableNodes = new List<PatchNode>();
 
         public PatchClient(Patcher patcher) {
             this.patcher = patcher;
@@ -100,19 +100,19 @@ namespace src.patch {
             }
             ObjectDelegate del;
             int elements = patchableNodes.Count;
-            del = new ObjectDelegate(patcher.setFilesRemaining);
+            del = new ObjectDelegate(patcher.setFilesRemainingInvoked);
             del.Invoke(elements);
             double valuePerElement = 1.0 / elements * 100;
             double progress = 0;
             for(int i = 0; i < patchableNodes.Count; i++) {
                 await patchableNodes[i].patch(currentPath);
-                patcher.setStatus("Currently Downloading: " + patchableNodes[i].name + ".json");
+                patcher.setStatusInvoked("Currently Downloading: " + patchableNodes[i].name + ".json");
                 progress += valuePerElement;
 
-                del = new ObjectDelegate(patcher.setProgress);
+                del = new ObjectDelegate(patcher.setProgressInvoked);
                 del.Invoke((int)progress);
 
-                del = new ObjectDelegate(patcher.setFilesRemaining);
+                del = new ObjectDelegate(patcher.setFilesRemainingInvoked);
                 del.Invoke(elements - i - 1);
             }
             if(File.Exists(patchPath)) {
@@ -122,7 +122,7 @@ namespace src.patch {
             strm.WriteLine("version:" + API.getVersion());
             strm.WriteLine("patched:true");
             strm.Close();
-            patcher.setStatus("Patching Finished")
+            patcher.setStatusInvoked("Patching Finished");
             Console.WriteLine("Patching Finished");
             Console.WriteLine("Downloaded " + patchableNodes.Count + " files");
         }
