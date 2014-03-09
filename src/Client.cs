@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using src.api;
-using src.api.champion.list;
+using RiotSharp;
 using src.patch;
 
 namespace src {
     class Client {
 
         public Client() {
-            API.init("na");
-            API.load(API.STATIC_CHAMPIONS, new { region = "euw" }, "{\"champData\" : \"all\"}");
-            Console.WriteLine(new { region = "region", version = "1.2.3" });
-            Console.WriteLine("Version: " + API.getVersion());
+            String key = Properties.Settings.Default.api_key;
+            var api = RiotApi.GetInstance(key, false);
+            API.init("euw");
             Patcher patcher = new Patcher();            
         }
 

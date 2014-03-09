@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,10 +11,11 @@ using System.Windows.Forms;
 
 using Newtonsoft.Json;
 
+using RiotSharp;
 using src.api;
-using src.api.champion.list;
 
 namespace src.patch {
+
     class PatchClient {
 
         private String homePath;
@@ -28,6 +28,8 @@ namespace src.patch {
         public List<PatchNode> patchableNodes = new List<PatchNode>();
 
         public PatchClient(Patcher patcher) {
+            String key = Properties.Settings.Default.api_key;
+            var riotAPI = RiotApi.GetInstance(key, false);
             this.patcher = patcher;
             homePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
             currentPath = homePath + API.getVersion() + @"\";
@@ -35,19 +37,51 @@ namespace src.patch {
             Console.WriteLine("Home Path: " + homePath);
             Console.WriteLine("Current Path: " + currentPath);
             Console.WriteLine("Patch Path: " + patchPath);
+
             if(!Directory.Exists(homePath)) {
                 Directory.CreateDirectory(homePath);
             }
-            string championlist = API.loadServerFile("champions.json");
-            ChampionKeyPair[] list = JsonConvert.DeserializeObject<ChampionKeyPair[]>(championlist);
-            for(int i = 0; i < list.Length; i++) {
-                ChampionPatchNode node = new ChampionPatchNode(list[i].Key, list[i].Name, API.STATIC_CHAMPION_ID);
+
+            var staticAPI = StaticRiotApi.GetInstance(key);
+            
+            ChampionListStatic champions;
+            if(File.Exists(currentPath + @"\champions\list.json")) {
+                champions = JsonConvert.DeserializeObject<ChampionListStatic>(File.ReadAllText(currentPath + @"\champions\list.json"));
+            } else {
+                champions = staticAPI.GetChampions(Region.euw, ChampionData.all);
+                var json = JsonConvert.SerializeObject(champions);
+                var champPath = currentPath + @"\champions";
+                if(!Directory.Exists(champPath)) {
+                    Directory.CreateDirectory(champPath);
+                }
+                File.WriteAllText(champPath + @"\list.json", json);
+            }
+            
+            foreach(KeyValuePair<String, ChampionStatic> pair in champions.Champions) {
+                ChampionPatchNode node = new ChampionPatchNode(pair.Value, staticAPI);
+                nodes.Add(node);
+            }
+
+            ItemListStatic items;
+            if(File.Exists(currentPath + @"\items\list.json")) {
+                items = JsonConvert.DeserializeObject<ItemListStatic>(File.ReadAllText(currentPath + @"\items\list.json"));
+            } else {
+                items = staticAPI.GetItems(Region.euw, ItemData.all);
+                var json = JsonConvert.SerializeObject(items);
+                var itemPath = currentPath + @"\items";
+                if(!Directory.Exists(itemPath)) {
+                    Directory.CreateDirectory(itemPath);
+                }
+                File.WriteAllText(itemPath + @"\list.json", json);
+            }
+            foreach(KeyValuePair<int, ItemStatic> pair in items.Items) {
+                ItemPatchNode node = new ItemPatchNode(pair.Value, staticAPI);
                 nodes.Add(node);
             }
 
         }
 
-        public bool shouldPatch() {
+        private bool isPatched() {
             bool patched = false;
             if(File.Exists(patchPath)) {
                 string lastPatchVersion = "";
@@ -75,6 +109,13 @@ namespace src.patch {
             } else {
                 patched = false;
             }
+            return patched;
+        }
+
+        public bool shouldPatch() {
+            bool patched = false;
+
+            patched = isPatched();
 
             for(int i = 0; i < nodes.Count; i++) {
                 if(!nodes[i].patched(currentPath))
@@ -94,7 +135,7 @@ namespace src.patch {
 
         private delegate void ObjectDelegate(object obj);
 
-        public async void patch() {
+        public void patch() {
             if(!Directory.Exists(currentPath)) {
                 Directory.CreateDirectory(currentPath);
             }
@@ -105,7 +146,7 @@ namespace src.patch {
             double valuePerElement = 1.0 / elements * 100;
             double progress = 0;
             for(int i = 0; i < patchableNodes.Count; i++) {
-                await patchableNodes[i].patch(currentPath);
+                patchableNodes[i].patch(currentPath);
                 patcher.setStatusInvoked("Currently Downloading: " + patchableNodes[i].name + ".json");
                 progress += valuePerElement;
 
@@ -122,6 +163,8 @@ namespace src.patch {
             strm.WriteLine("version:" + API.getVersion());
             strm.WriteLine("patched:true");
             strm.Close();
+            del = new ObjectDelegate(patcher.stopSpinning);
+            del.Invoke(null);
             patcher.setStatusInvoked("Patching Finished");
             Console.WriteLine("Patching Finished");
             Console.WriteLine("Downloaded " + patchableNodes.Count + " files");

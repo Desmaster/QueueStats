@@ -3,39 +3,42 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
+using Newtonsoft.Json;
+
+using RiotSharp;
 
 using src.api;
 
 namespace src.patch {
     class ItemPatchNode : PatchNode {
 
-        private int id { get; set; }
+        private ItemStatic item { get; set; }
+        private String regex = "[^0-9a-zA-Z]+";
 
-        public ItemPatchNode(String name, String type, int id) : base(name, type) {
-            this.id = id;
+        public ItemPatchNode(ItemStatic item, StaticRiotApi staticAPI) : base(staticAPI) {
+            this.item = item;
+            name = Regex.Replace(item.Name, regex, "");
         }
 
         override
         public bool patched(String path) {
-            if(File.Exists(path + @"champions\" + name + ".json")) {
-                return true;
-            }
-            return false;
+            return File.Exists(path + @"items\" + name + ".json");
         }
 
         override
-        public async Task patch(String path) {
+        public void patch(String path) {
             String fullPath = path + @"items\";
             String fileName = name + ".json";
             if(!Directory.Exists(fullPath)) {
                 Directory.CreateDirectory(fullPath);
             }
-            String result = "";
             if(!File.Exists(fullPath + fileName)) {
-                Console.WriteLine("Downloading " + name + ".json");
-                result = await API.loadAsync(type, new { region = "euw", id = id }, "{\"champData\":\"all\"}");
-                File.WriteAllText(fullPath + fileName, result);
+                Console.WriteLine("Downloading " + item.Name + ".json");
+                String json = JsonConvert.SerializeObject(item);
+                File.WriteAllText(fullPath + fileName, json);
             }
         }
 

@@ -4,21 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using RiotSharp;
+
 namespace src.patch {
 
     public abstract class PatchNode {
 
-        public String name { get; set; }
-        protected String type { get; set; }
+        public String name;
+        protected StaticRiotApi staticAPI;
 
-        public PatchNode(String name, String type) {
-            this.name = name;
-            this.type = type;
+        public PatchNode(StaticRiotApi staticAPI) {
+            this.staticAPI = staticAPI;
         }
 
         public abstract bool patched(String path); 
 
-        public abstract Task patch(String path);
+        public abstract void patch(String path);
 
     }
 

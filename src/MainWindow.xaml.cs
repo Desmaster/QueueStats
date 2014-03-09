@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using src.api;
-using src.api.champion;
 
 namespace src {
 
