@@ -81,30 +81,12 @@ namespace src.api {
             return webGet(url);
         }
 
-        public async static Task<String> loadAsync(String type, object data, object args) {
-            String url = HOST + "index.php?url=" + ReplaceArguments(type, data);
-            if(args != null) {
-                url += "&args=" + args;
-            }
-            String result = await webGetAsync(url);
-            return result;
-        }
-
         private static string webGet(String url) {
             request = (HttpWebRequest)WebRequest.Create(url);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream streamData = response.GetResponseStream();
             StreamReader reader = new StreamReader(streamData, Encoding.UTF8);
             return reader.ReadToEnd();
-        }
-
-        private async static Task<String> webGetAsync(String url) {
-            request = (HttpWebRequest)WebRequest.Create(url);
-            HttpWebResponse response = (HttpWebResponse) await request.GetResponseAsync();
-            Stream streamData = response.GetResponseStream();
-            StreamReader reader = new StreamReader(streamData, Encoding.UTF8);
-            String result = await reader.ReadToEndAsync();
-            return result;
         }
 
         public static void setRegion(String region) {
