@@ -14,7 +14,6 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 
 using src.api;
-using src.api.champion.list;
 
 namespace src.patch {
     public partial class Patcher : Form {
@@ -67,8 +66,18 @@ namespace src.patch {
             ttslblCurrentFile.Text = value;
         }
 
+        public void stopSpinning(object obj) {
+            if(InvokeRequired) {
+                ObjectDelegate method = new ObjectDelegate(stopSpinning);
+                Invoke(method, obj);
+                return;
+            }
+            pictureBox1.Visible = false;
+        }
+
         private void btnPatch_Click(object sender, EventArgs e) {
             btnPatch.Enabled = false;
+            pictureBox1.Visible = true;
             patchThread.Start();
         }
 
