@@ -55,9 +55,12 @@ namespace src {
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			MessageBox.Show("GODVERDOME");
+			content.Content = new Window2().Content;
 		}
 
-        
+		private void Button_Click_1(object sender, RoutedEventArgs e)
+		{
+			content.Content = new Window1().Content;
+		}
     }
 }
