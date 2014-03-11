@@ -125,15 +125,15 @@ namespace src {
             return staticApi.GetItem(region, id, ItemData.all);
         }
 
-        public static bool getProperty(String name) {
+        public static bool getPropertyBool(String name) {
             return (bool)Properties.Settings.Default.PropertyValues[name].PropertyValue;
         }
 
-        public static int getProperty(String name) {
+        public static int getPropertyInt(String name) {
             return (int)Properties.Settings.Default.PropertyValues[name].PropertyValue;
         }
 
-        public static String getProperty(String name) {
+        public static String getPropertyString(String name) {
             return (String)Properties.Settings.Default.PropertyValues[name].PropertyValue;
         }
 
