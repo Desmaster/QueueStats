@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Core.cs" />
     <Compile Include="RiotSharp\API.cs" />
     <Compile Include="RiotSharp\Cache.cs" />
     <Compile Include="RiotSharp\Champion\Champion.cs" />

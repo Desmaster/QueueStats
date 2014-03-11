@@ -8,13 +8,15 @@ using System.Net;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
+using RiotSharp;
+
 namespace src.api {
 
     class API {
 
         private static String storagePath;
 
-        private static String region;
+        private static Region region;
         private static String version;
 
         private const String HOST = "http://tdegroot.nl/api/qstats/";
@@ -54,17 +56,13 @@ namespace src.api {
 
         private static HttpWebRequest request;
 
-        public static void init(String region) {
+        public static void init(Region region) {
             setRegion(region);
             version = loadVersion(region);
-            storagePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
-            if(!Directory.Exists(storagePath)) {
-                Directory.CreateDirectory(storagePath);
-            }
         }
 
-        private static String loadVersion(String region) {
-            String json = load(STATIC_REALM, new { region = region }, null);
+        private static String loadVersion(Region region) {
+            String json = load(STATIC_REALM, new { region = region.ToString() }, null);
             Realm realm = JsonConvert.DeserializeObject<Realm>(json);
             return realm.v;
         }
@@ -89,7 +87,7 @@ namespace src.api {
             return reader.ReadToEnd();
         }
 
-        public static void setRegion(String region) {
+        public static void setRegion(Region region) {
             API.region = region;
         }
 
