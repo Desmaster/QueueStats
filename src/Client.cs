@@ -15,8 +15,8 @@ namespace src {
 
         public Client() {
             String key = Properties.Settings.Default.api_key;
-            var api = RiotApi.GetInstance(key, false);
-            API.init("euw");
+            Core core = Core.getInstance(Region.euw, key, false);
+            ChampionStatic champ = core.getChampion("VelKoz");
             Patcher patcher = new Patcher();            
         }
 
