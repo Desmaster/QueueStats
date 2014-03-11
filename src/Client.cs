@@ -16,8 +16,9 @@ namespace src {
         public Client() {
             String key = Properties.Settings.Default.api_key;
             Core core = Core.getInstance(Region.euw, key, false);
-            ChampionStatic champ = core.getChampion("VelKoz");
-            Patcher patcher = new Patcher();            
+            ChampionStatic champ = core.getChampion("Darius");
+            Log.info(champ.Name + " " + champ.Title);
+            //Patcher patcher = new Patcher();            
         }
 
     }
