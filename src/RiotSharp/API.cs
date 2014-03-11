@@ -83,6 +83,7 @@ namespace src.api {
             request = (HttpWebRequest)WebRequest.Create(url);
             request.Proxy = null;
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            response.Headers.Add("Content-Encoding: gzip");
             Stream streamData = response.GetResponseStream();
             StreamReader reader = new StreamReader(streamData, Encoding.UTF8);
             return reader.ReadToEnd();

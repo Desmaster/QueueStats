@@ -28,17 +28,15 @@ namespace src {
 
         private String HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
         private String CURRENT_PATH;
-        private String CHAMPION_PATH;
-        private String ITEM_PATH;
 
         private static Core instance;
 
         private Core(Region region, String apiKey, bool isProdApi) {
             riotApi = RiotApi.GetInstance(apiKey, isProdApi);
             staticApi = StaticRiotApi.GetInstance(apiKey);
-            API.init(region);
             updateRegion(region);
             loadLists();
+            Log.info("Initialized Core");
         }
 
         public static Core getInstance(Region region, String apiKey, bool isProdApi) {
@@ -49,54 +47,42 @@ namespace src {
         }
 
         private void loadLists() {
-            if(File.Exists(CHAMPION_PATH + "list.json")) {
-                championList = JsonConvert.DeserializeObject<ChampionListStatic>(File.ReadAllText(CHAMPION_PATH + "list.json"));
+            if(File.Exists(CURRENT_PATH + "championList.json")) {
+                championList = JsonConvert.DeserializeObject<ChampionListStatic>(File.ReadAllText(CURRENT_PATH + "championList.json"));
             } else {
                 championList = staticApi.GetChampions(region, ChampionData.all);
                 var json = JsonConvert.SerializeObject(championList);
-                if(!Directory.Exists(CHAMPION_PATH)) {
-                    Directory.CreateDirectory(CHAMPION_PATH);
-                }
-                File.WriteAllText(CHAMPION_PATH + "list.json", json);
+                File.WriteAllText(CURRENT_PATH + "championList.json", json);
             }
 
-            if(File.Exists(ITEM_PATH + "list.json")) {
-                itemList = JsonConvert.DeserializeObject<ItemListStatic>(File.ReadAllText(ITEM_PATH + "list.json"));
+            if(File.Exists(CURRENT_PATH + "itemList.json")) {
+                itemList = JsonConvert.DeserializeObject<ItemListStatic>(File.ReadAllText(CURRENT_PATH + "itemList.json"));
             } else {
                 itemList = staticApi.GetItems(region, ItemData.all);
                 var json = JsonConvert.SerializeObject(itemList);
-                if(!Directory.Exists(ITEM_PATH)) {
-                    Directory.CreateDirectory(ITEM_PATH);
-                }
-                File.WriteAllText(ITEM_PATH + "list.json", json);
+                File.WriteAllText(CURRENT_PATH + "itemList.json", json);
             }
         }
 
         private void updateRegion(Region region) {
             API.init(region);
+
+            if(!Directory.Exists(HOME_PATH))
+                Directory.CreateDirectory(HOME_PATH);
+
             CURRENT_PATH = HOME_PATH + API.getVersion() + @"\";
-            CHAMPION_PATH = CURRENT_PATH + @"champions\";
-            ITEM_PATH = CURRENT_PATH + @"items\";
+
+            if(!Directory.Exists(CURRENT_PATH))
+                Directory.CreateDirectory(CURRENT_PATH);
         }
 
         public ChampionStatic getChampion(String name) {
-            ChampionStatic champion = null;
-            if(!Directory.Exists(CHAMPION_PATH)) {
-                Directory.CreateDirectory(CHAMPION_PATH);
-            }
-            name = Regex.Replace(name, @"[^0-9a-zA-Z]+", "").Trim();
-            if(File.Exists(CHAMPION_PATH + name + ".json")) {
-                String json = File.ReadAllText(CHAMPION_PATH + name + ".json");
-                champion = JsonConvert.DeserializeObject<ChampionStatic>(json);
-            } else {
-                foreach(KeyValuePair<String, ChampionStatic> pair in championList.Champions) {
-                    if(Regex.Replace(pair.Value.Name, @"[^0-9a-zA-Z]+", "").Trim() == name) {
-                        champion = pair.Value;
-                        break;
-                    }
+            foreach(KeyValuePair<String, ChampionStatic> pair in championList.Champions) {
+                if(pair.Value.Name == name) {
+                    return pair.Value;
                 }
             }
-            return champion;
+            return null;
         }
 
         public ChampionStatic getChampion(int id) {
@@ -105,27 +91,25 @@ namespace src {
                     return pair.Value;
                 }
             }
-            return staticApi.GetChampion(region, id, ChampionData.all);
+            return null;
         }
 
         public ItemStatic getItem(String name) {
-            ItemStatic item = null;
-            name = Regex.Replace(name, @"[^0-9a-zA-Z]+", "").Trim();
-            if(File.Exists(ITEM_PATH + name + ".json")) {
-                item = JsonConvert.DeserializeObject<ItemStatic>(File.ReadAllText(ITEM_PATH + name + ".json"));
-            } else {
-                foreach(KeyValuePair<int, ItemStatic> pair in itemList.Items) {
-                    if(Regex.Replace(pair.Value.Name, @"[^0-9a-zA-Z]+", "").Trim() == name) {
-                        item = pair.Value;
-                        break;
-                    }
+            foreach(KeyValuePair<int, ItemStatic> pair in itemList.Items) {
+                if(pair.Value.Name == name) {
+                    return pair.Value;
                 }
             }
-            return item;
+            return null;
         }
 
         public ItemStatic getItem(int id) {
-            return staticApi.GetItem(region, id, ItemData.all);
+            foreach(KeyValuePair<int, ItemStatic> pair in itemList.Items) {
+                if(pair.Key == id) {
+                    return pair.Value;
+                }
+            }
+            return null;
         }
 
         public static bool getPropertyBool(String name) {

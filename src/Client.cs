@@ -14,16 +14,9 @@ namespace src {
     class Client {
 		Core core;
 
-        public Client() {
-            String key = Properties.Settings.Default.api_key;
-            core = Core.getInstance(Region.euw, key, false);
-            ChampionStatic champ = core.getChampion("VelKoz");
-            Patcher patcher = new Patcher();
-		}
-
-
-		public Core getCore() {
-			return core;
+		public Client() {
+			String key = Properties.Settings.Default.api_key;
+			core = Core.getInstance(Region.euw, key, false);
 		}
 
 		public bool summonerSet() {
