@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 using RiotSharp;
 using src.api;
+using System.Configuration;
 
 namespace src {
 
@@ -37,7 +38,7 @@ namespace src {
             staticApi = StaticRiotApi.GetInstance(apiKey);
             API.init(region);
             updateRegion(region);
-            load();
+            loadLists();
         }
 
         public static Core getInstance(Region region, String apiKey, bool isProdApi) {
@@ -47,7 +48,7 @@ namespace src {
             return instance;
         }
 
-        private void load() {
+        private void loadLists() {
             if(File.Exists(CHAMPION_PATH + "list.json")) {
                 championList = JsonConvert.DeserializeObject<ChampionListStatic>(File.ReadAllText(CHAMPION_PATH + "list.json"));
             } else {
@@ -72,11 +73,11 @@ namespace src {
         }
 
         private void updateRegion(Region region) {
+            API.init(region);
             CURRENT_PATH = HOME_PATH + API.getVersion() + @"\";
-            CHAMPION_PATH = HOME_PATH + @"champions\";
-            ITEM_PATH = HOME_PATH + @"items\";
+            CHAMPION_PATH = CURRENT_PATH + @"champions\";
+            ITEM_PATH = CURRENT_PATH + @"items\";
         }
-
 
         public ChampionStatic getChampion(String name) {
             ChampionStatic champion = null;
@@ -88,21 +89,55 @@ namespace src {
                 String json = File.ReadAllText(CHAMPION_PATH + name + ".json");
                 champion = JsonConvert.DeserializeObject<ChampionStatic>(json);
             } else {
-                foreach(KeyValuePair<int, String> pair in championList.Keys) {
-                    if(Regex.Replace(pair.Value, @"[^0-9a-zA-Z]+", "").Trim() == name) {
-                        champion = getChampion(pair.Key);
+                foreach(KeyValuePair<String, ChampionStatic> pair in championList.Champions) {
+                    if(Regex.Replace(pair.Value.Name, @"[^0-9a-zA-Z]+", "").Trim() == name) {
+                        champion = pair.Value;
                         break;
                     }
-                }                
+                }
             }
             return champion;
         }
 
         public ChampionStatic getChampion(int id) {
-            if(id > 0) {
-                return staticApi.GetChampion(region, id, ChampionData.all);
+            foreach(KeyValuePair<String, ChampionStatic> pair in championList.Champions) {
+                if(pair.Value.Key == id) {
+                    return pair.Value;
+                }
             }
-            return null;
+            return staticApi.GetChampion(region, id, ChampionData.all);
+        }
+
+        public ItemStatic getItem(String name) {
+            ItemStatic item = null;
+            name = Regex.Replace(name, @"[^0-9a-zA-Z]+", "").Trim();
+            if(File.Exists(ITEM_PATH + name + ".json")) {
+                item = JsonConvert.DeserializeObject<ItemStatic>(File.ReadAllText(ITEM_PATH + name + ".json"));
+            } else {
+                foreach(KeyValuePair<int, ItemStatic> pair in itemList.Items) {
+                    if(Regex.Replace(pair.Value.Name, @"[^0-9a-zA-Z]+", "").Trim() == name) {
+                        item = pair.Value;
+                        break;
+                    }
+                }
+            }
+            return item;
+        }
+
+        public ItemStatic getItem(int id) {
+            return staticApi.GetItem(region, id, ItemData.all);
+        }
+
+        public static bool getProperty(String name) {
+            return (bool)Properties.Settings.Default.PropertyValues[name].PropertyValue;
+        }
+
+        public static int getProperty(String name) {
+            return (int)Properties.Settings.Default.PropertyValues[name].PropertyValue;
+        }
+
+        public static String getProperty(String name) {
+            return (String)Properties.Settings.Default.PropertyValues[name].PropertyValue;
         }
 
         public void setSummoner(Summoner summoner) {
