@@ -27,7 +27,7 @@ namespace src {
 		}
 
 		public bool summonerSet() {
-			return (core.getProperty("summonername") != null && core.getProperty("region") != null);
+			return (Core.getPropertyString("summonername") != "" && Core.getPropertyString("region") != "");
 		}
 	}
 }
