@@ -81,6 +81,7 @@ namespace src.api {
 
         private static string webGet(String url) {
             request = (HttpWebRequest)WebRequest.Create(url);
+            request.Proxy = null;
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream streamData = response.GetResponseStream();
             StreamReader reader = new StreamReader(streamData, Encoding.UTF8);
