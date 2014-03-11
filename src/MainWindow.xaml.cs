@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using src.api;
+using src.patch;
 using RiotSharp;
 
 namespace src {
@@ -24,12 +25,23 @@ namespace src {
 
         public MainWindow() {
             InitializeComponent();
-            client = new Client();
-
-			cbxRegion.ItemsSource = Enum.GetNames(typeof(Region)
 			
-			);
-        }
+			//init client code
+			client = new Client();
+
+			//check summoner's set
+			if (!client.summonerSet())
+			{
+				content.Content = "Please insert a summonername and region";
+			}
+
+			InitSummonerPanel();
+		}
+
+		private void InitSummonerPanel()
+		{
+			cbxRegion.ItemsSource = Enum.GetNames(typeof(Region));
+		}
 
         bool mouseDown = false;
         int lastX, lastY;
@@ -57,19 +69,16 @@ namespace src {
             mouseDown = false;
         }
 
-		private void Menu_Click(object sender, EventArgs args)
-		{
-			if (true){
+		private void Menu_Click(object sender, EventArgs args) {
+			if (client.summonerSet()){
 				var button = (sender as Button);
 				switch(button.Content.ToString()){
 					case "Summoner":
-						
+						content.Content = new SummonerView();
 						break;
 				}
-			}
-			else
-			{
-				content.Content = "Please insert a Summoner name and/or select a region.";
+			} else {
+				content.Content = "Please insert a summonername and region";
 			}
 		}
     }

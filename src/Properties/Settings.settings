@@ -5,5 +5,11 @@
     <Setting Name="api_key" Type="System.String" Scope="User">
       <Value Profile="(Default)">af7503f7-147c-4342-b331-fcd32b479c0c</Value>
     </Setting>
+    <Setting Name="summonername" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="region" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

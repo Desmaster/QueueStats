@@ -22,6 +22,9 @@ namespace src {
         private Summoner summoner;
         private Region region;
 
+		public Boolean summonerSet = false;
+		public Boolean regionSet = false;
+
         private String HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
         private String CURRENT_PATH;
         private String CHAMPION_PATH;
@@ -103,6 +106,7 @@ namespace src {
         }
 
         public void setSummoner(Summoner summoner) {
+			summonerSet = true;
             this.summoner = summoner;
         }
 
@@ -111,7 +115,8 @@ namespace src {
         }
 
         public void setRegion(Region region) {
-            this.region = region;
+			regionSet = true;
+			this.region = region;
         }
 
         public Region getRegion() {
