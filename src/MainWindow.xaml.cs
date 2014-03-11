@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using src.api;
+using RiotSharp;
 
 namespace src {
 
@@ -24,6 +25,10 @@ namespace src {
         public MainWindow() {
             InitializeComponent();
             client = new Client();
+
+			cbxRegion.ItemsSource = Enum.GetNames(typeof(Region)
+			
+			);
         }
 
         bool mouseDown = false;
@@ -52,14 +57,20 @@ namespace src {
             mouseDown = false;
         }
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void Menu_Click(object sender, EventArgs args)
 		{
-			content.Content = new Window2().Content;
-		}
-
-		private void Button_Click_1(object sender, RoutedEventArgs e)
-		{
-			content.Content = new Window1().Content;
+			if (true){
+				var button = (sender as Button);
+				switch(button.Content.ToString()){
+					case "Summoner":
+						
+						break;
+				}
+			}
+			else
+			{
+				content.Content = "Please insert a Summoner name and/or select a region.";
+			}
 		}
     }
 }
