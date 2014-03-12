@@ -16,7 +16,8 @@ namespace src {
 
 		public Client() {
 			String key = Properties.Settings.Default.api_key;
-			core = Core.getInstance(Region.euw, key, false);
+			core = Core.getInstance(Region.euw, Core.getPropertyString("api_key"), false);
+            Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
 		}
 
 		public bool summonerSet() {
