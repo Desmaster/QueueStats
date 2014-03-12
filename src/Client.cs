@@ -20,7 +20,7 @@ namespace src {
             Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
 		}
 
-		public bool summonerSet() {
+		public bool isSummonerSet() {
 			return (Core.getPropertyString("summonername") != "" && Core.getPropertyString("region") != "");
 		}
 	}

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using src.views;
 using src.api;
 using src.patch;
 using RiotSharp;
@@ -30,7 +31,7 @@ namespace src {
 			client = new Client();
 
 			//check summoner's set
-			if (!client.summonerSet())
+			if (!client.isSummonerSet())
 			{
 				content.Content = "Please insert a summonername and region";
 			}
@@ -70,7 +71,7 @@ namespace src {
         }
 
 		private void Menu_Click(object sender, EventArgs args) {
-			if (client.summonerSet()){
+			if (client.isSummonerSet()){
 				var button = (sender as Button);
 				switch(button.Content.ToString()){
 					case "Summoner":
