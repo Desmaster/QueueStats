@@ -29,14 +29,6 @@ namespace src {
 			
 			//init client code
 			client = new Client();
-
-			//check summoner's set
-			if (!client.isSummonerSet())
-			{
-				content.Content = "Please insert a summonername and region";
-			}
-
-			InitSummonerPanel();
 		}
 
 		private void InitSummonerPanel()
@@ -75,12 +67,35 @@ namespace src {
 				var button = (sender as Button);
 				switch(button.Content.ToString()){
 					case "Summoner":
-						content.Content = new SummonerView();
+						content.Content = new SummonerView().Content;
 						break;
 				}
 			} else {
 				content.Content = "Please insert a summonername and region";
 			}
+		}
+
+		private void tbxSummonername_LostFocus(object sender, RoutedEventArgs e)
+		{
+			setSummoner();
+		}
+		
+		private void cbxRegion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			setSummoner();
+		}
+
+		private void setSummoner()
+		{
+			if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "")
+			{
+				client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedValue.ToString());
+			}
+		}
+
+		private void cbRemember_Checked(object sender, RoutedEventArgs e)
+		{
+			
 		}
     }
 }

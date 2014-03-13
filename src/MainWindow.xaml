@@ -6,15 +6,27 @@
 		<ImageBrush ImageSource="assets\filledframeborder.png"/>
 	</Window.Background>
 	<DockPanel HorizontalAlignment="Left" Height="500" LastChildFill="False" Margin="38,38,0,0" VerticalAlignment="Top" Width="945">
-		<DockPanel DockPanel.Dock="Left">
-			<TextBox Name="tbxSummonername" DockPanel.Dock="Top"></TextBox>
-			<ComboBox Name="cbxRegion" DockPanel.Dock="Top"></ComboBox>
+		<DockPanel DockPanel.Dock="Left" Margin="0,0,0,0.2" Width="200">
+			<Grid DockPanel.Dock="Top">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<TextBox Name="tbxSummonername" Grid.Column ="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" Width="145" Height="23" LostFocus="tbxSummonername_LostFocus"/>
+				<ComboBox Name="cbxRegion" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" Width="55" Height="23" SelectionChanged="cbxRegion_SelectionChanged" />
+				<Label Name="lblRemember" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Show tracked summoners</Label>
+				<CheckBox Name="cbRemember" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Checked="cbRemember_Checked"/>
+			</Grid>
 			<StackPanel DockPanel.Dock="Bottom">
 				<Button Click="Menu_Click">Summoner</Button>
 				<Button Click="Menu_Click">Matches</Button>
 				<Button Click="Menu_Click">Statistics</Button>
 				<Button Click="Menu_Click">Champions</Button>
 				<Button Click="Menu_Click">Items</Button>
+				<Button Click="Menu_Click">Settings</Button>
 			</StackPanel>
 		</DockPanel>
 		<ContentControl Name="content" DockPanel.Dock="Right" Height="499.2" VerticalAlignment="Top">

@@ -15,13 +15,19 @@ namespace src {
 		Core core;
 
 		public Client() {
-			String key = Properties.Settings.Default.api_key;
-			core = Core.getInstance(Region.euw, Core.getPropertyString("api_key"), false);
+			String key = Settings.getProperty("api_key");
+			core = Core.getInstance(Region.euw, Settings.getProperty("api_key"), false);
             Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
 		}
 
 		public bool isSummonerSet() {
-			return (Core.getPropertyString("summonername") != "" && Core.getPropertyString("region") != "");
+			return (Settings.getProperty("summonername") != "" && Settings.getProperty("region") != "");
+		}
+
+		public void updateSummoner(String summonername, String region) 
+		{
+			Settings.setProperty("summonername", summonername);
+			Settings.setProperty("region", region);
 		}
 	}
 }

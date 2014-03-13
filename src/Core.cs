@@ -112,18 +112,6 @@ namespace src {
             return null;
         }
 
-        public static bool getPropertyBool(String name) {
-            return (bool)Properties.Settings.Default.PropertyValues[name].PropertyValue;
-        }
-
-        public static int getPropertyInt(String name) {
-            return (int)Properties.Settings.Default.PropertyValues[name].PropertyValue;
-        }
-
-        public static String getPropertyString(String name) {
-            return (String)Properties.Settings.Default.PropertyValues[name].PropertyValue;
-        }
-
         public void setSummoner(Summoner summoner) {
 			summonerSet = true;
             this.summoner = summoner;

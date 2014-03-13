@@ -28,7 +28,7 @@ namespace src.patch {
         public List<PatchNode> patchableNodes = new List<PatchNode>();
 
         public PatchClient(Patcher patcher) {
-            String key = Properties.Settings.Default.api_key;
+            String key = Settings.Settings.Default.api_key;
             var riotAPI = RiotApi.GetInstance(key, false);
             this.patcher = patcher;
             homePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
