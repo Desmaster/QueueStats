@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace src.patch {
         public List<PatchNode> patchableNodes = new List<PatchNode>();
 
         public PatchClient(Patcher patcher) {
-            String key = Settings.Settings.Default.api_key;
+            String key = Properties.Settings.Default.api_key;
             var riotAPI = RiotApi.GetInstance(key, false);
             this.patcher = patcher;
             homePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
@@ -42,43 +43,8 @@ namespace src.patch {
                 Directory.CreateDirectory(homePath);
             }
 
-            var staticAPI = StaticRiotApi.GetInstance(key);
-            
-            ChampionListStatic champions;
-            if(File.Exists(currentPath + @"\champions\list.json")) {
-                champions = JsonConvert.DeserializeObject<ChampionListStatic>(File.ReadAllText(currentPath + @"\champions\list.json"));
-            } else {
-                champions = staticAPI.GetChampions(Region.euw, ChampionData.all);
-                var json = JsonConvert.SerializeObject(champions);
-                var champPath = currentPath + @"\champions";
-                if(!Directory.Exists(champPath)) {
-                    Directory.CreateDirectory(champPath);
-                }
-                File.WriteAllText(champPath + @"\list.json", json);
-            }
-            
-            foreach(KeyValuePair<String, ChampionStatic> pair in champions.Champions) {
-                ChampionPatchNode node = new ChampionPatchNode(pair.Value, staticAPI);
-                nodes.Add(node);
-            }
-
-            ItemListStatic items;
-            if(File.Exists(currentPath + @"\items\list.json")) {
-                items = JsonConvert.DeserializeObject<ItemListStatic>(File.ReadAllText(currentPath + @"\items\list.json"));
-            } else {
-                items = staticAPI.GetItems(Region.euw, ItemData.all);
-                var json = JsonConvert.SerializeObject(items);
-                var itemPath = currentPath + @"\items";
-                if(!Directory.Exists(itemPath)) {
-                    Directory.CreateDirectory(itemPath);
-                }
-                File.WriteAllText(itemPath + @"\list.json", json);
-            }
-            foreach(KeyValuePair<int, ItemStatic> pair in items.Items) {
-                ItemPatchNode node = new ItemPatchNode(pair.Value, staticAPI);
-                nodes.Add(node);
-            }
-
+            TGZPatchNode images = new TGZPatchNode(this, "http://tdegroot.nl/api/qstats/", currentPath, "dragontail-" + API.getVersion() + ".zip");
+            nodes.Add(images);
         }
 
         private bool isPatched() {
@@ -147,22 +113,48 @@ namespace src.patch {
             double progress = 0;
             for(int i = 0; i < patchableNodes.Count; i++) {
                 patchableNodes[i].patch(currentPath);
-                patcher.setStatusInvoked("Currently Downloading: " + patchableNodes[i].name + ".json");
-                progress += valuePerElement;
+                //patcher.setStatusInvoked("Currently Downloading: " + patchableNodes[i].name + ".json");
+                //progress += valuePerElement;
 
-                del = new ObjectDelegate(patcher.setProgressInvoked);
-                del.Invoke((int)progress);
+                //del = new ObjectDelegate(patcher.setProgressInvoked);
+               // del.Invoke((int)progress);
 
-                del = new ObjectDelegate(patcher.setFilesRemainingInvoked);
-                del.Invoke(elements - i - 1);
+//                del = new ObjectDelegate(patcher.setFilesRemainingInvoked);
+//                del.Invoke(elements - i - 1);
             }
             if(File.Exists(patchPath)) {
                 File.Delete(patchPath);
             }
+
+            del = new ObjectDelegate(patcher.stopSpinning);
+            del.Invoke(null);
+            patcher.setStatusInvoked("Patching Finished");
+            Console.WriteLine("Patching Finished");
+            Console.WriteLine("Downloaded " + patchableNodes.Count + " files");
+            
             StreamWriter strm = File.CreateText(patchPath);
             strm.WriteLine("version:" + API.getVersion());
             strm.WriteLine("patched:true");
             strm.Close();
+            
+        }
+
+        public void status(String status) {
+            patcher.setStatusInvoked(status);
+        }
+
+        public void progress(int percentage) {
+            var del = new ObjectDelegate(patcher.setProgressInvoked);
+            del.Invoke(percentage);
+        }
+
+        public void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
+            var del = new ObjectDelegate(patcher.setProgressInvoked);
+            del.Invoke(e.ProgressPercentage);
+        }
+
+        public void DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
+            ObjectDelegate del;
             del = new ObjectDelegate(patcher.stopSpinning);
             del.Invoke(null);
             patcher.setStatusInvoked("Patching Finished");

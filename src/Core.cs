@@ -10,14 +10,15 @@ using Newtonsoft.Json;
 
 using RiotSharp;
 using src.api;
+using src.patch;
 using System.Configuration;
 
 namespace src {
 
     class Core {
 
-        private RiotApi riotApi;
-        private StaticRiotApi staticApi;
+        private readonly RiotApi riotApi;
+        private readonly StaticRiotApi staticApi;
         private ChampionListStatic championList;
         private ItemListStatic itemList;
         private Summoner summoner;
@@ -26,7 +27,7 @@ namespace src {
 		public Boolean summonerSet = false;
 		public Boolean regionSet = false;
 
-        private String HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
+        private readonly String HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
         private String CURRENT_PATH;
 
         private static Core instance;
@@ -37,6 +38,7 @@ namespace src {
             updateRegion(region);
             loadLists();
             Log.info("Initialized Core");
+            Patcher patcher = new Patcher();
         }
 
         public static Core getInstance(Region region, String apiKey, bool isProdApi) {
@@ -77,39 +79,19 @@ namespace src {
         }
 
         public ChampionStatic getChampion(String name) {
-            foreach(KeyValuePair<String, ChampionStatic> pair in championList.Champions) {
-                if(pair.Value.Name == name) {
-                    return pair.Value;
-                }
-            }
-            return null;
+            return (from pair in championList.Champions where pair.Value.Name == name select pair.Value).FirstOrDefault();
         }
 
         public ChampionStatic getChampion(int id) {
-            foreach(KeyValuePair<String, ChampionStatic> pair in championList.Champions) {
-                if(pair.Value.Key == id) {
-                    return pair.Value;
-                }
-            }
-            return null;
+            return (from pair in championList.Champions where pair.Value.Key == id select pair.Value).FirstOrDefault();
         }
 
         public ItemStatic getItem(String name) {
-            foreach(KeyValuePair<int, ItemStatic> pair in itemList.Items) {
-                if(pair.Value.Name == name) {
-                    return pair.Value;
-                }
-            }
-            return null;
+            return (from pair in itemList.Items where pair.Value.Name == name select pair.Value).FirstOrDefault();
         }
 
         public ItemStatic getItem(int id) {
-            foreach(KeyValuePair<int, ItemStatic> pair in itemList.Items) {
-                if(pair.Key == id) {
-                    return pair.Value;
-                }
-            }
-            return null;
+            return (from pair in itemList.Items where pair.Key == id select pair.Value).FirstOrDefault();
         }
 
         public void setSummoner(Summoner summoner) {
