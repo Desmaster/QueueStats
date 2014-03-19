@@ -13,16 +13,13 @@ using src.patch;
 namespace src {
     class Client
     {
-	    private DataHandler dataHandler;
 	    private String HOME_PATH;
 		Core core;
 
 
 		public Client() {
 			HOME_PATH = HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
-			dataHandler = new DataHandler(HOME_PATH);
 			
-			String key = Settings.getProperty("api_key");
 			core = Core.getInstance(Region.euw, Settings.getProperty("api_key"), false);
             Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
 		}

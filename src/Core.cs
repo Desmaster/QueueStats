@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
 using RiotSharp;
 using src.api;
 using src.patch;
-using System.Configuration;
 
 namespace src {
 
     class Core {
 
-        private readonly RiotApi riotApi;
+        private readonly RiotApi riotApi ;
         private readonly StaticRiotApi staticApi;
         private ChampionListStatic championList;
         private ItemListStatic itemList;
