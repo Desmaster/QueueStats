@@ -13,6 +13,7 @@ using System.Windows.Data;
 using Newtonsoft.Json;
 using RiotSharp;
 using src.summoner;
+using Summoner = src.summoner.Summoner;
 
 namespace src {
 
@@ -22,7 +23,7 @@ namespace src {
         private static SummonerHandler instance;
 
         private SummonerHandler() {
-            HOME_PATH = Core.getInstance().getHomepath();
+            HOME_PATH = Core.getInstance().getHomePath();
 
             if (!Directory.Exists(HOME_PATH + @"summoners\")) {
                 Directory.CreateDirectory(HOME_PATH + @"summoners\");
@@ -48,10 +49,9 @@ namespace src {
             return instance;
         }
 
-        public object getSummoner() {
-            return new {
-                summonerName = "Krindle", region = Region.euw
-            };
+        public object getSummoner()
+        {
+            return new Summoner("Krindle", Region.euw);
         }
 
         private List<TrackedSummoner> GetTrackedSummoners() {
