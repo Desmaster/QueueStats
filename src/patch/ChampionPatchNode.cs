@@ -31,7 +31,7 @@ namespace src.patch {
         }
 
         override
-        public void patch(String path) {
+        public int patch(String path) {
             String fullPath = path + @"champions\";
             String fileName = name + ".json";
             if(!Directory.Exists(fullPath)) {
@@ -42,6 +42,7 @@ namespace src.patch {
                 String json = JsonConvert.SerializeObject(champion);
                 File.WriteAllText(fullPath + fileName, json);
             }
+            return 1;
         }
 
 

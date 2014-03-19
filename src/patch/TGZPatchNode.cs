@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 using Ionic.Zip;
@@ -47,16 +43,18 @@ namespace src.patch {
             return patched;
         }
 
-        public async override void patch(string path) {
+        public override int patch(string path) {
             if (!File.Exists(path + name)) {
                 using (var client = new WebClient()) {
                     client.DownloadFileCompleted += client_DownloadFileCompleted;
                     client.DownloadProgressChanged += client_DownloadProgressChanged;
-                    await Task.Run(() => client.DownloadFileAsync(new Uri(url + name), path + name));
+                    patchClient.status("Downloading: " + name);
+                    Task.Run(() => client.DownloadFileAsync(new Uri(url + name), path + name));
                 }
-            } else {
-                extract();
+                return 2;
             }
+            extract();
+            return 1;
         }
 
         void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
@@ -83,6 +81,7 @@ namespace src.patch {
                     patchClient.progress((int) progress);
                 }
             }
+            patchClient.status("Finished patching and extracting.");
         }
 
 
