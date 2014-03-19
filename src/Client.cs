@@ -15,23 +15,14 @@ namespace src {
     {
 	    private String HOME_PATH;
 		Core core;
-
+        private SummonerHandler summonerHandler;
 
 		public Client() {
 			HOME_PATH = HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
-			
+
+		    summonerHandler = SummonerHandler.getInstance(HOME_PATH);
 			core = Core.getInstance(Region.euw, Settings.getProperty("api_key"), false);
             Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
-		}
-
-		public bool isSummonerSet() {
-			return (Settings.getProperty("summonername") != "" && Settings.getProperty("region") != "");
-		}
-
-		public void updateSummoner(String summonername, String region) 
-		{
-			Settings.setProperty("summonername", summonername);
-			Settings.setProperty("region", region);
 		}
 	}
 }

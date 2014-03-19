@@ -81,7 +81,7 @@ namespace src {
 
         private void setSummoner() {
             if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "") {
-                client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedValue.ToString());
+                //client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedValue.ToString());
             }
         }
     }

@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Annotations;
+using System.Windows.Controls;
 using System.Windows.Data;
 using Newtonsoft.Json;
 using RiotSharp;
@@ -19,8 +21,8 @@ namespace src {
         private List<TrackedSummoner> trackedSummoners;
         private static SummonerHandler instance;
 
-        private SummonerHandler(String HOME_PATH) {
-            this.HOME_PATH = HOME_PATH;
+        private SummonerHandler() {
+            HOME_PATH = Core.getInstance().getHomepath();
 
             if (!Directory.Exists(HOME_PATH + @"summoners\")) {
                 Directory.CreateDirectory(HOME_PATH + @"summoners\");
@@ -38,34 +40,43 @@ namespace src {
             untrackSummoner("Dyrus", Region.na);
         }
 
-        public static SummonerHandler getInstance(String HOME_PATH) {
+        public static SummonerHandler getInstance() {
             if (instance == null) {
-                instance = new SummonerHandler(HOME_PATH);
+                instance = new SummonerHandler();
             }
 
             return instance;
         }
 
-        public object getSummoner()
-        {
-            return new {summonerName = "Krindle", region = Region.euw};
+        public object getSummoner() {
+            return new {
+                summonerName = "Krindle", region = Region.euw
+            };
         }
 
         private List<TrackedSummoner> GetTrackedSummoners() {
-            return JsonConvert.DeserializeObject<List<TrackedSummoner>>(File.ReadAllText(HOME_PATH + "trackedSummoners.json"));
+            if (File.ReadAllText(HOME_PATH + "trackedSummoners.json") != "") {
+                return JsonConvert.DeserializeObject<List<TrackedSummoner>>(File.ReadAllText(HOME_PATH + "trackedSummoners.json"));
+            }
+
+            return new List<TrackedSummoner>();
         }
 
-        private void SetTrackedSummoners() {
+        private void updateTrackedSummoners() {
+            for (int i = 0; i < trackedSummoners.Count(); i++) {
+                Log.info(trackedSummoners[i].summonerName);
+            }
             File.WriteAllText(HOME_PATH + "trackedSummoners.json", JsonConvert.SerializeObject(trackedSummoners));
         }
 
         private void trackSummoner(String name, Region region) {
             trackedSummoners.Add(new TrackedSummoner(name, region));
-            SetTrackedSummoners();
+            updateTrackedSummoners();
         }
 
         private void untrackSummoner(String name, Region region) {
             trackedSummoners.RemoveAll(x => x.summonerName == name && x.region == region);
+            updateTrackedSummoners();
         }
     }
 }
