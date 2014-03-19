@@ -20,7 +20,7 @@ namespace src {
 		public Client() {
 			HOME_PATH = HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
 			
-			core = Core.getInstance(Region.euw, Settings.getProperty("api_key"), false);
+			core = Core.getInstance();
             Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
 		}
 
