@@ -36,11 +36,15 @@ namespace src {
             Patcher patcher = new Patcher();
         }
 
-        public static Core getInstance(Region region, String apiKey, bool isProdApi) {
+        public static Core getInstance() {
             if (instance == null) {
-                instance = new Core(region, apiKey, isProdApi);
+                instance = new Core(Region.na, Settings.getProperty("api_key"), false);
             }
             return instance;
+        }
+
+        public String getHomePath() {
+            return HOME_PATH;
         }
 
         private void loadLists() {
