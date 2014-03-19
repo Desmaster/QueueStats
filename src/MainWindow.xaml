@@ -7,19 +7,25 @@
     </Window.Background>
     <DockPanel HorizontalAlignment="Left" Height="500" LastChildFill="False" Margin="38,38,0,0" VerticalAlignment="Top" Width="945">
         <DockPanel DockPanel.Dock="Left" Margin="0,0,0,0.2" Width="200">
-            <Grid DockPanel.Dock="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBox Name="tbxSummonername" Grid.Column ="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" Width="145" Height="23" LostFocus="tbxSummonername_LostFocus"/>
-                <ComboBox Name="cbxRegion" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" Width="55" Height="23" SelectionChanged="cbxRegion_SelectionChanged" />
-                <Label Name="lblRemember" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
-                <CheckBox Name="cbTrack" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-            </Grid>
+            <TabControl DockPanel.Dock="Top">
+                <TabItem Header="Search">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBox Name="tbxSummonername" Grid.Column ="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" Width="145" Height="23" LostFocus="tbxSummonername_LostFocus"/>
+                        <ComboBox Name="cbxRegion" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" Width="55" Height="23" SelectionChanged="cbxRegion_SelectionChanged" />
+                        <Label Name="lblRemember" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
+                        <CheckBox Name="cbTrack" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Tracked">
+                </TabItem>
+            </TabControl>
             <StackPanel DockPanel.Dock="Bottom">
                 <Button Click="Menu_Click">Summoner</Button>
                 <Button Click="Menu_Click">Matches</Button>

@@ -12,7 +12,7 @@ namespace src.views {
         public SummonerView() {
             InitializeComponent();
             Console.WriteLine("Pls no Summonerino");
-            Console.WriteLine(SummonerHandler.getInstance(Core.getInstance().getHomePath()).getSummoner());
+            Console.WriteLine(SummonerHandler.getInstance().getSummoner());
          }
     }
 }

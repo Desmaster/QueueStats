@@ -13,7 +13,6 @@ using System.Windows.Data;
 using Newtonsoft.Json;
 using RiotSharp;
 using src.summoner;
-using Summoner = src.summoner.Summoner;
 
 namespace src {
 
@@ -21,6 +20,7 @@ namespace src {
         private String HOME_PATH;
         private List<TrackedSummoner> trackedSummoners;
         private static SummonerHandler instance;
+        private TrackedSummoner selectedSummoner = new TrackedSummoner("Krindle", Region.euw);
 
         private SummonerHandler() {
             HOME_PATH = Core.getInstance().getHomePath();
@@ -49,9 +49,8 @@ namespace src {
             return instance;
         }
 
-        public object getSummoner()
-        {
-            return new Summoner("Krindle", Region.euw);
+        public TrackedSummoner getSummoner() {
+            return selectedSummoner;
         }
 
         private List<TrackedSummoner> GetTrackedSummoners() {
