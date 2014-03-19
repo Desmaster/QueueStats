@@ -24,8 +24,8 @@ namespace src {
         private Summoner summoner;
         private Region region;
 
-		public Boolean summonerSet = false;
-		public Boolean regionSet = false;
+        public Boolean summonerSet = false;
+        public Boolean regionSet = false;
 
         private readonly String HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
         private String CURRENT_PATH;
@@ -42,14 +42,14 @@ namespace src {
         }
 
         public static Core getInstance(Region region, String apiKey, bool isProdApi) {
-            if(instance == null) {
+            if (instance == null) {
                 instance = new Core(region, apiKey, isProdApi);
             }
             return instance;
         }
 
         private void loadLists() {
-            if(File.Exists(CURRENT_PATH + "championList.json")) {
+            if (File.Exists(CURRENT_PATH + "championList.json")) {
                 championList = JsonConvert.DeserializeObject<ChampionListStatic>(File.ReadAllText(CURRENT_PATH + "championList.json"));
             } else {
                 championList = staticApi.GetChampions(region, ChampionData.all);
@@ -57,7 +57,7 @@ namespace src {
                 File.WriteAllText(CURRENT_PATH + "championList.json", json);
             }
 
-            if(File.Exists(CURRENT_PATH + "itemList.json")) {
+            if (File.Exists(CURRENT_PATH + "itemList.json")) {
                 itemList = JsonConvert.DeserializeObject<ItemListStatic>(File.ReadAllText(CURRENT_PATH + "itemList.json"));
             } else {
                 itemList = staticApi.GetItems(region, ItemData.all);
@@ -69,33 +69,41 @@ namespace src {
         private void updateRegion(Region region) {
             API.init(region);
 
-            if(!Directory.Exists(HOME_PATH))
+            if (!Directory.Exists(HOME_PATH))
                 Directory.CreateDirectory(HOME_PATH);
 
             CURRENT_PATH = HOME_PATH + API.getVersion() + @"\";
 
-            if(!Directory.Exists(CURRENT_PATH))
+            if (!Directory.Exists(CURRENT_PATH))
                 Directory.CreateDirectory(CURRENT_PATH);
         }
 
         public ChampionStatic getChampion(String name) {
-            return (from pair in championList.Champions where pair.Value.Name == name select pair.Value).FirstOrDefault();
+            return (from pair in championList.Champions
+                    where pair.Value.Name == name
+                    select pair.Value).FirstOrDefault();
         }
 
         public ChampionStatic getChampion(int id) {
-            return (from pair in championList.Champions where pair.Value.Key == id select pair.Value).FirstOrDefault();
+            return (from pair in championList.Champions
+                    where pair.Value.Key == id
+                    select pair.Value).FirstOrDefault();
         }
 
         public ItemStatic getItem(String name) {
-            return (from pair in itemList.Items where pair.Value.Name == name select pair.Value).FirstOrDefault();
+            return (from pair in itemList.Items
+                    where pair.Value.Name == name
+                    select pair.Value).FirstOrDefault();
         }
 
         public ItemStatic getItem(int id) {
-            return (from pair in itemList.Items where pair.Key == id select pair.Value).FirstOrDefault();
+            return (from pair in itemList.Items
+                    where pair.Key == id
+                    select pair.Value).FirstOrDefault();
         }
 
         public void setSummoner(Summoner summoner) {
-			summonerSet = true;
+            summonerSet = true;
             this.summoner = summoner;
         }
 
@@ -104,8 +112,8 @@ namespace src {
         }
 
         public void setRegion(Region region) {
-			regionSet = true;
-			this.region = region;
+            regionSet = true;
+            this.region = region;
         }
 
         public Region getRegion() {

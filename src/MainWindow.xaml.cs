@@ -26,23 +26,23 @@ namespace src {
 
         public MainWindow() {
             InitializeComponent();
-			
-			//init client code
-			client = new Client();
-		}
 
-		private void InitSummonerPanel()
-		{
-			cbxRegion.ItemsSource = Enum.GetNames(typeof(Region));
-		}
+            //init client code
+            client = new Client();
+            InitSummonerPanel();
+        }
+
+        private void InitSummonerPanel() {
+            cbxRegion.ItemsSource = Enum.GetNames(typeof(Region));
+        }
 
         bool mouseDown = false;
         int lastX, lastY;
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
             mouseDown = true;
-            lastX = (int) e.GetPosition(this).X;
-            lastY = (int) e.GetPosition(this).Y;
+            lastX = (int)e.GetPosition(this).X;
+            lastY = (int)e.GetPosition(this).Y;
         }
 
         private void Window_MouseUp(object sender, MouseButtonEventArgs e) {
@@ -62,40 +62,27 @@ namespace src {
             mouseDown = false;
         }
 
-		private void Menu_Click(object sender, EventArgs args) {
-			if (client.isSummonerSet()){
-				var button = (sender as Button);
-				switch(button.Content.ToString()){
-					case "Summoner":
-						content.Content = new SummonerView().Content;
-						break;
-				}
-			} else {
-				content.Content = "Please insert a summonername and region";
-			}
-		}
+        private void Menu_Click(object sender, EventArgs args) {
+            var button = (sender as Button);
+            switch (button.Content.ToString()) {
+                case "Summoner":
+                content.Content = new SummonerView().Content;
+                break;
+            }
+        }
 
-		private void tbxSummonername_LostFocus(object sender, RoutedEventArgs e)
-		{
-			setSummoner();
-		}
-		
-		private void cbxRegion_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			setSummoner();
-		}
+        private void tbxSummonername_LostFocus(object sender, RoutedEventArgs e) {
+            setSummoner();
+        }
 
-		private void setSummoner()
-		{
-			if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "")
-			{
-				client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedValue.ToString());
-			}
-		}
+        private void cbxRegion_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            setSummoner();
+        }
 
-		private void cbRemember_Checked(object sender, RoutedEventArgs e)
-		{
-			
-		}
+        private void setSummoner() {
+            if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "") {
+                client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedValue.ToString());
+            }
+        }
     }
 }
