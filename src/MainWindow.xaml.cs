@@ -29,11 +29,9 @@ namespace src {
 
             //init client code
             client = new Client();
-            InitSummonerPanel();
-        }
+            cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
+            cbxTrackedSummoners.ItemsSource = client.summonerHandler.trackedSummoners;
 
-        private void InitSummonerPanel() {
-            cbxRegion.ItemsSource = Enum.GetNames(typeof(Region));
         }
 
         bool mouseDown = false;
@@ -80,8 +78,26 @@ namespace src {
         }
 
         private void setSummoner() {
-            if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "") {
-                //client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedValue.ToString());
+            if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "")
+            {
+                cbTrackSearch.IsEnabled = true;
+                client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedItem);
+                cbTrackSearch.IsChecked = client.summonerHandler.isTracked(tbxSummonername.Text, (Region)cbxRegion.SelectedItem);
+            } else
+            {
+                cbTrackSearch.IsEnabled = false;
+                cbTrackSearch.IsChecked = false;
+            }
+        }
+
+        private void cbTrack_Click(object sender, RoutedEventArgs e) {
+            switch (cbTrackSearch.IsChecked) {
+                case true:
+                client.summonerHandler.trackSummoner(client.selectedSummoner.summonerName, client.selectedSummoner.region);
+                break;
+                case false:
+                client.summonerHandler.untrackSummoner(client.selectedSummoner.summonerName, client.selectedSummoner.region);
+                break;
             }
         }
     }
