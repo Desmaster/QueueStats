@@ -19,8 +19,8 @@ namespace src.views {
         public SummonerView() {
             InitializeComponent();
             riotApi = Core.getInstance().getRiotApi();
-            region = SummonerHandler.getInstance().getSummoner().region;
-            summonerName = SummonerHandler.getInstance().getSummoner().summonerName;
+            region = SummonerHandler.getInstance().getSummoner().Region;
+            summonerName = SummonerHandler.getInstance().getSummoner().Name;
             summoner = SummonerHandler.getInstance().getCurrentSummoner();
             loadSummoner().ContinueWith(init, TaskContinuationOptions.ExecuteSynchronously);
         }

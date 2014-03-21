@@ -81,7 +81,7 @@ namespace src {
             if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "")
             {
                 cbTrackSearch.IsEnabled = true;
-                client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedItem);
+                client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedItem.ToString());
                 cbTrackSearch.IsChecked = client.summonerHandler.isTracked(tbxSummonername.Text, (Region)cbxRegion.SelectedItem);
             } else
             {
@@ -89,16 +89,24 @@ namespace src {
                 cbTrackSearch.IsChecked = false;
             }
         }
+        
+        private void cbxTrackedSummoners_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            Log.info(cbxTrackedSummoners.SelectedItem.ToString());
+        }
 
-        private void cbTrack_Click(object sender, RoutedEventArgs e) {
-            switch (cbTrackSearch.IsChecked) {
+        private void cbTrack_Click(object sender, RoutedEventArgs e)
+        {
+            Summoner selectedSummoner = client.summonerHandler.getSummoner();
+            switch ((sender as CheckBox).IsChecked) {
                 case true:
-                client.summonerHandler.trackSummoner(client.selectedSummoner.summonerName, client.selectedSummoner.region);
+                client.summonerHandler.trackSummoner(selectedSummoner.Name, selectedSummoner.Region);
                 break;
                 case false:
-                client.summonerHandler.untrackSummoner(client.selectedSummoner.summonerName, client.selectedSummoner.region);
+                client.summonerHandler.untrackSummoner(selectedSummoner.Name, selectedSummoner.Region);
                 break;
             }
+
+            cbxTrackedSummoners.ItemsSource = client.summonerHandler.trackedSummoners;
         }
     }
 }

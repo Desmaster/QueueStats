@@ -18,12 +18,20 @@ namespace src {
 
     class SummonerHandler {
         private String HOME_PATH;
+        private RiotApi api;
+        private Core core;
+
+
         public List<TrackedSummoner> trackedSummoners;
         private static SummonerHandler instance;
-        private TrackedSummoner selectedSummoner = new TrackedSummoner("Krindle", Region.euw);
+        private Summoner selectedSummoner;
 
         private SummonerHandler() {
-            HOME_PATH = Core.getInstance().getHomePath();
+            core = Core.getInstance();
+            api = core.getRiotApi();
+
+            HOME_PATH = core.getHomePath();
+
 
             if (!Directory.Exists(HOME_PATH + @"summoners\")) {
                 Directory.CreateDirectory(HOME_PATH + @"summoners\");
@@ -44,8 +52,12 @@ namespace src {
             return instance;
         }
 
-        public TrackedSummoner getSummoner() {
+        public Summoner getSummoner() {
             return selectedSummoner;
+        }
+
+        public void setSummoner(String name, String region) {
+            selectedSummoner = api.GetSummoner(Util.resolveRegion(region), name);
         }
 
         private List<TrackedSummoner> getTrackedSummoners() {
