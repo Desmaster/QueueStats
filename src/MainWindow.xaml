@@ -32,7 +32,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ComboBox Name="cbxTrackedSummoners" Grid.Column="0" Grid.Row="0" Height="23">
+                        <ComboBox Name="cbxTrackedSummoners" Grid.Column="0" Grid.Row="0" Height="23" SelectionChanged="cbxTrackedSummoners_SelectionChanged">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock DataContext="{Binding}">
@@ -46,8 +46,8 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Label Name="lblRememberTrack" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
-                        <CheckBox Name="cbTrackTrack" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False"/>
+                        <Label Name="lblRememberTracked" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
+                        <CheckBox Name="cbTrackTracked" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False"/>
                     </Grid>
                 </TabItem>
             </TabControl>

@@ -9,7 +9,7 @@ namespace src {
 
     class Util {
 
-        public static Region? resolveRegion(String name) {
+        public static Region resolveRegion(String name) {
             switch(name) 
             {
                 case "br":
@@ -23,9 +23,8 @@ namespace src {
                 case "tr":
                     return Region.tr;
                 default:
-                    return null;
+                    return Region.na;
             }
         }
-
     }
 }

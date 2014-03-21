@@ -67,6 +67,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="summoner\SummonerHandler.cs" />
     <Compile Include="summoner\TrackedSummoner.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="views\SummonerView.xaml.cs">
       <DependentUpon>SummonerView.xaml</DependentUpon>
     </Compile>
