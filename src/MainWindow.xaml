@@ -17,13 +17,38 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Name="tbxSummonername" Grid.Column ="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" Width="145" Height="23" LostFocus="tbxSummonername_LostFocus"/>
+                        <TextBox Name="tbxSummonername" Grid.Column ="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0.2" Width="139" Height="23" LostFocus="tbxSummonername_LostFocus"/>
                         <ComboBox Name="cbxRegion" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" Width="55" Height="23" SelectionChanged="cbxRegion_SelectionChanged" />
-                        <Label Name="lblRemember" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
-                        <CheckBox Name="cbTrack" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                        <Label Name="lblRememberSearch" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
+                        <CheckBox Name="cbTrackSearch" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Tracked">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <ComboBox Name="cbxTrackedSummoners" Grid.Column="0" Grid.Row="0" Height="23">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock DataContext="{Binding}">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{} {0} - {1}">
+                                                <Binding Path="summonerName" />
+                                                <Binding Path="region" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Label Name="lblRememberTrack" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
+                        <CheckBox Name="cbTrackTrack" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False"/>
+                    </Grid>
                 </TabItem>
             </TabControl>
             <StackPanel DockPanel.Dock="Bottom">

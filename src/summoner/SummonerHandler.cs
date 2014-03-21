@@ -18,7 +18,7 @@ namespace src {
 
     class SummonerHandler {
         private String HOME_PATH;
-        private List<TrackedSummoner> trackedSummoners;
+        public List<TrackedSummoner> trackedSummoners;
         private static SummonerHandler instance;
         private TrackedSummoner selectedSummoner = new TrackedSummoner("Krindle", Region.euw);
 
@@ -33,12 +33,7 @@ namespace src {
                 File.Create(HOME_PATH + "trackedSummoners.json");
             }
 
-            trackedSummoners = GetTrackedSummoners();
-            trackSummoner("Chowtrinity", Region.euw);
-            trackSummoner("DpsKenpachi", Region.euw);
-            trackSummoner("Dyrus", Region.na);
-
-            untrackSummoner("Dyrus", Region.na);
+            trackedSummoners = getTrackedSummoners();
         }
 
         public static SummonerHandler getInstance() {
@@ -53,7 +48,7 @@ namespace src {
             return selectedSummoner;
         }
 
-        private List<TrackedSummoner> GetTrackedSummoners() {
+        private List<TrackedSummoner> getTrackedSummoners() {
             if (File.ReadAllText(HOME_PATH + "trackedSummoners.json") != "") {
                 return JsonConvert.DeserializeObject<List<TrackedSummoner>>(File.ReadAllText(HOME_PATH + "trackedSummoners.json"));
             }
@@ -68,14 +63,21 @@ namespace src {
             File.WriteAllText(HOME_PATH + "trackedSummoners.json", JsonConvert.SerializeObject(trackedSummoners));
         }
 
-        private void trackSummoner(String name, Region region) {
-            trackedSummoners.Add(new TrackedSummoner(name, region));
-            updateTrackedSummoners();
+        public void trackSummoner(String name, Region region) {
+            if (!isTracked(name, region)) {
+                trackedSummoners.Add(new TrackedSummoner(name, region));
+                updateTrackedSummoners();
+            }
         }
 
-        private void untrackSummoner(String name, Region region) {
+        public void untrackSummoner(String name, Region region) {
             trackedSummoners.RemoveAll(x => x.summonerName == name && x.region == region);
             updateTrackedSummoners();
+
+        }
+
+        public bool isTracked(String name, Region region) {
+            return trackedSummoners.Any(x => x.summonerName == name && x.region == region);
         }
     }
 }
