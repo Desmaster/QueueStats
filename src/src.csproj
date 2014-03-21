@@ -65,6 +65,7 @@
     <Compile Include="patch\Tar.cs" />
     <Compile Include="patch\TGZPatchNode.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="SummonerListener.cs" />
     <Compile Include="summoner\SummonerHandler.cs" />
     <Compile Include="summoner\TrackedSummoner.cs" />
     <Compile Include="Util.cs" />

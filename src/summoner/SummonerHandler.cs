@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using Newtonsoft.Json;
 using RiotSharp;
+using src.api;
 using src.summoner;
 
 namespace src {
@@ -25,6 +26,8 @@ namespace src {
         public List<TrackedSummoner> trackedSummoners;
         private static SummonerHandler instance;
         private Summoner selectedSummoner;
+
+        private List<SummonerListener> summonerListeners = new List<SummonerListener>(); 
 
         private SummonerHandler() {
             core = Core.getInstance();
@@ -44,6 +47,10 @@ namespace src {
             trackedSummoners = getTrackedSummoners();
         }
 
+        public void register(SummonerListener listener) {
+            summonerListeners.Add(listener);
+        }
+
         public static SummonerHandler getInstance() {
             if (instance == null) {
                 instance = new SummonerHandler();
@@ -57,7 +64,17 @@ namespace src {
         }
 
         public void setSummoner(String name, String region) {
-            selectedSummoner = api.GetSummoner(Util.resolveRegion(region), name);
+            loadSummoner(name, region).ContinueWith(updateSummoner, TaskContinuationOptions.ExecuteSynchronously);
+        }
+
+        private async Task loadSummoner(String name, String region) {
+            selectedSummoner = await api.GetSummonerAsync(Util.resolveRegion(region), name);
+        }
+
+        private void updateSummoner(Task task) {
+            for (int i = 0; i < summonerListeners.Count; i++) {
+                summonerListeners[i].summonerUpdated(selectedSummoner);
+            }
         }
 
         private List<TrackedSummoner> getTrackedSummoners() {

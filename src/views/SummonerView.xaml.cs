@@ -8,7 +8,7 @@ using RiotSharp;
 using src;
 
 namespace src.views {
-    public partial class SummonerView : Window {
+    public partial class SummonerView : Window, SummonerListener {
 
         private Summoner summoner;
         private List<LeagueItem> leagues; 
@@ -18,23 +18,20 @@ namespace src.views {
 
         public SummonerView() {
             InitializeComponent();
+            SummonerHandler.getInstance().register(this);
             riotApi = Core.getInstance().getRiotApi();
-            region = SummonerHandler.getInstance().getSummoner().Region;
-            summonerName = SummonerHandler.getInstance().getSummoner().Name;
-            summoner = SummonerHandler.getInstance().getCurrentSummoner();
-            loadSummoner().ContinueWith(init, TaskContinuationOptions.ExecuteSynchronously);
         }
 
         private delegate void ObjectDelegate(object obj);
 
         private async Task loadSummoner() {
-//            summoner = await riotApi.GetSummonerAsync(region, summonerName);
             leagues = await summoner.GetLeaguesAsync();
         }
 
-        private void init(Task task) {
+        public void summonerUpdated(Summoner summoner) {
+            this.summoner = summoner;
             lblSummonerName.Content = summoner.Name;
+            Log.info("Summoner Updated");
         }
-        
     }
 }
