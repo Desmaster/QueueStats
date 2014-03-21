@@ -21,13 +21,14 @@ namespace src.views {
             riotApi = Core.getInstance().getRiotApi();
             region = SummonerHandler.getInstance().getSummoner().region;
             summonerName = SummonerHandler.getInstance().getSummoner().summonerName;
+            summoner = SummonerHandler.getInstance().getCurrentSummoner();
             loadSummoner().ContinueWith(init, TaskContinuationOptions.ExecuteSynchronously);
         }
 
         private delegate void ObjectDelegate(object obj);
 
         private async Task loadSummoner() {
-            summoner = await riotApi.GetSummonerAsync(region, summonerName);
+//            summoner = await riotApi.GetSummonerAsync(region, summonerName);
             leagues = await summoner.GetLeaguesAsync();
         }
 
