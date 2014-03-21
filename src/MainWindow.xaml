@@ -35,7 +35,7 @@
                 <Button Click="Menu_Click">Settings</Button>
             </StackPanel>
         </DockPanel>
-        <ContentControl Name="content" DockPanel.Dock="Right" Height="499.2" VerticalAlignment="Top">
+        <ContentControl Name="content" DockPanel.Dock="Right" Height="499" VerticalAlignment="Top" Width="738">
             Content
         </ContentControl>
     </DockPanel>

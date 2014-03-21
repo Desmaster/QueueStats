@@ -22,7 +22,7 @@ namespace src {
 
 		    summonerHandler = SummonerHandler.getInstance();
 			core = Core.getInstance();
-            Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
+            //Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
 		}
 	}
 }

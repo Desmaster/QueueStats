@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 using RiotSharp;
@@ -8,11 +11,29 @@ namespace src.views {
     public partial class SummonerView : Window {
 
         private Summoner summoner;
+        private List<LeagueItem> leagues; 
+        private Region region;
+        private String summonerName;
+        private RiotApi riotApi;
 
         public SummonerView() {
             InitializeComponent();
-            Console.WriteLine("Pls no Summonerino");
-            Console.WriteLine(SummonerHandler.getInstance().getSummoner());
-         }
+            riotApi = Core.getInstance().getRiotApi();
+            region = SummonerHandler.getInstance().getSummoner().region;
+            summonerName = SummonerHandler.getInstance().getSummoner().summonerName;
+            loadSummoner().ContinueWith(init, TaskContinuationOptions.ExecuteSynchronously);
+        }
+
+        private delegate void ObjectDelegate(object obj);
+
+        private async Task loadSummoner() {
+            summoner = await riotApi.GetSummonerAsync(region, summonerName);
+            leagues = await summoner.GetLeaguesAsync();
+        }
+
+        private void init(Task task) {
+            lblSummonerName.Content = summoner.Name;
+        }
+        
     }
 }

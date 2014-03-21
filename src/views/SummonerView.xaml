@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SummonerView" Height="300" Width="300">
     <Grid>
-        
+        <Label x:Name="lblSummonerName" Content="" HorizontalAlignment="Left" Margin="25,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.6,-3.478" Height="35" Width="112" FontSize="24"/>
+
     </Grid>
 </Window>
