@@ -62,13 +62,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="patch\ImagePatchNode.cs" />
     <Compile Include="patch\Tar.cs" />
     <Compile Include="patch\TGZPatchNode.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SummonerListener.cs" />
     <Compile Include="summoner\SummonerHandler.cs" />
     <Compile Include="summoner\TrackedSummoner.cs" />
-    <Compile Include="RiotSharp\util\Util.cs" />
+    <Compile Include="util\Util.cs" />
     <Compile Include="views\SummonerView.xaml.cs">
       <DependentUpon>SummonerView.xaml</DependentUpon>
     </Compile>

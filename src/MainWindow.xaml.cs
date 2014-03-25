@@ -22,6 +22,8 @@ namespace src {
 
             cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
             cbxTrackedSummoners_Update();
+
+            content.Content = new SummonerView().Content;
         }
 
         bool mouseDown = false;
