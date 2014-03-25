@@ -22,12 +22,12 @@ namespace src {
         private RiotApi api;
         private Core core;
 
-
         public List<TrackedSummoner> trackedSummoners;
         private static SummonerHandler instance;
+
         private Summoner selectedSummoner;
 
-        private List<SummonerListener> summonerListeners = new List<SummonerListener>(); 
+        private List<SummonerListener> summonerListeners = new List<SummonerListener>();
 
         private SummonerHandler() {
             core = Core.getInstance();
@@ -63,12 +63,20 @@ namespace src {
             return selectedSummoner;
         }
 
-        public void setSummoner(String name, String region) {
+        public void setSummoner(String name, Region region) {
             loadSummoner(name, region).ContinueWith(updateSummoner, TaskContinuationOptions.ExecuteSynchronously);
         }
 
-        private async Task loadSummoner(String name, String region) {
-            selectedSummoner = await api.GetSummonerAsync(Util.resolveRegion(region), name);
+        public void setSummoner(TrackedSummoner summoner) {
+            loadSummoner(summoner).ContinueWith(updateSummoner, TaskContinuationOptions.ExecuteSynchronously);
+        }
+
+        private async Task loadSummoner(String name, Region region) {
+            selectedSummoner = await api.GetSummonerAsync(region, name);
+        }
+
+        private async Task loadSummoner(TrackedSummoner summoner) {
+            selectedSummoner = await api.GetSummonerAsync(summoner.Region, (int) summoner.Id);
         }
 
         private void updateSummoner(Task task) {
@@ -87,26 +95,26 @@ namespace src {
 
         private void updateTrackedSummoners() {
             for (int i = 0; i < trackedSummoners.Count(); i++) {
-                Log.info(trackedSummoners[i].summonerName);
+                Log.info(trackedSummoners[i].Name);
             }
             File.WriteAllText(HOME_PATH + "trackedSummoners.json", JsonConvert.SerializeObject(trackedSummoners));
         }
 
-        public void trackSummoner(String name, Region region) {
-            if (!isTracked(name, region)) {
-                trackedSummoners.Add(new TrackedSummoner(name, region));
+        public void trackSummoner(Summoner summoner) {
+            if (!isTracked(summoner)) {
+                trackedSummoners.Add(new TrackedSummoner(summoner.Id, summoner.Name, summoner.Region));
                 updateTrackedSummoners();
             }
         }
 
-        public void untrackSummoner(String name, Region region) {
-            trackedSummoners.RemoveAll(x => x.summonerName == name && x.region == region);
+        public void untrackSummoner(Summoner summoner) {
+            trackedSummoners.RemoveAll(x => x.Id == summoner.Id && x.Region == summoner.Region);
             updateTrackedSummoners();
 
         }
 
-        public bool isTracked(String name, Region region) {
-            return trackedSummoners.Any(x => x.summonerName == name && x.region == region);
+        public bool isTracked(Summoner summoner) {
+            return trackedSummoners.Any(x => x.Id == summoner.Id && x.Region == summoner.Region);
         }
     }
 }

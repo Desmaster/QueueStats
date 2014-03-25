@@ -1,26 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+using src.summoner;
 using src.views;
-using src.api;
-using src.patch;
 using RiotSharp;
 
 namespace src {
 
-    public partial class MainWindow : Window {
+    public partial class MainWindow : Window, SummonerListener {
 
         Client client;
 
@@ -29,9 +18,10 @@ namespace src {
 
             //init client code
             client = new Client();
-            cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
-            cbxTrackedSummoners.ItemsSource = client.summonerHandler.trackedSummoners;
+            client.summonerHandler.register(this);
 
+            cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
+            cbxTrackedSummoners_Update();
         }
 
         bool mouseDown = false;
@@ -60,17 +50,25 @@ namespace src {
             mouseDown = false;
         }
 
-        private void Menu_Click(object sender, EventArgs args) {
+        private void Menu_Click(object sender, EventArgs args)
+        {
             var button = (sender as Button);
-            switch (button.Content.ToString()) {
-                case "Summoner":
-                content.Content = new SummonerView().Content;
-                break;
-            }
+            if (button != null)
+                switch (button.Content.ToString()) {
+                    case "Summoner":
+                        content.Content = new SummonerView().Content;
+                        break;
+                }
         }
 
         private void tbxSummonername_LostFocus(object sender, RoutedEventArgs e) {
-            setSummoner();
+            if (client.summonerHandler.getSummoner() != null) {
+                if (tbxSummonername.Text != client.summonerHandler.getSummoner().Name) {
+                    setSummoner();
+                }
+            } else {
+                setSummoner();
+            }
         }
 
         private void cbxRegion_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -78,35 +76,75 @@ namespace src {
         }
 
         private void setSummoner() {
-            if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "")
-            {
-                cbTrackSearch.IsEnabled = true;
-                client.updateSummoner(tbxSummonername.Text, cbxRegion.SelectedItem.ToString());
-                cbTrackSearch.IsChecked = client.summonerHandler.isTracked(tbxSummonername.Text, (Region)cbxRegion.SelectedItem);
-            } else
-            {
-                cbTrackSearch.IsEnabled = false;
-                cbTrackSearch.IsChecked = false;
+            if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "") {
+                String name = tbxSummonername.Text;
+                Region region = Util.resolveRegion(cbxRegion.SelectedItem.ToString());
+
+                client.updateSummoner(name, region);
             }
         }
-        
-        private void cbxTrackedSummoners_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            Log.info(cbxTrackedSummoners.SelectedItem.ToString());
-        }
 
-        private void cbTrack_Click(object sender, RoutedEventArgs e)
-        {
-            Summoner selectedSummoner = client.summonerHandler.getSummoner();
-            switch ((sender as CheckBox).IsChecked) {
-                case true:
-                client.summonerHandler.trackSummoner(selectedSummoner.Name, selectedSummoner.Region);
-                break;
-                case false:
-                client.summonerHandler.untrackSummoner(selectedSummoner.Name, selectedSummoner.Region);
-                break;
-            }
-
+        private void cbxTrackedSummoners_Update() {
             cbxTrackedSummoners.ItemsSource = client.summonerHandler.trackedSummoners;
+            cbxTrackedSummoners.Items.Refresh();
+        }
+
+        private void cbxTrackedSummoners_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (cbxTrackedSummoners.IsDropDownOpen) {
+                TrackedSummoner summoner = cbxTrackedSummoners.SelectedItem as TrackedSummoner;
+                tbxSummonername.Text = summoner.Name;
+                cbxRegion.SelectedItem = summoner.Region;
+                client.updateSummoner(summoner);
+            }
+        }
+
+        private void cbTrack_Click(object sender, RoutedEventArgs e) {
+            Summoner selectedSummoner = client.summonerHandler.getSummoner();
+
+            if (selectedSummoner.Id != 0) {
+                switch ((sender as CheckBox).IsChecked) {
+                    case true:
+                    client.summonerHandler.trackSummoner(selectedSummoner);
+                    cbxTrackedSummoners_SelectionToCurrent(selectedSummoner);
+                    break;
+                    case false:
+                    client.summonerHandler.untrackSummoner(selectedSummoner);
+                    cbxTrackedSummoners.SelectedIndex = -1;
+                    break;
+                }
+
+                cbTrackSearch.IsChecked = (sender as CheckBox).IsChecked;
+                cbTrackTracked.IsChecked = (sender as CheckBox).IsChecked;
+
+                cbxTrackedSummoners_Update();
+            }
+
+        }
+
+        public void summonerUpdated(Summoner summoner) {
+            if (summoner.Id != 0) {
+                Log.info("Summoner loaded: " + summoner.Name);
+                cbTrackSearch.IsEnabled = true;
+                cbTrackTracked.IsEnabled = true;
+
+                if (client.summonerHandler.isTracked(summoner)) {
+                    cbxTrackedSummoners_SelectionToCurrent(summoner);
+
+                    cbTrackSearch.IsChecked = true;
+                    cbTrackTracked.IsChecked = true;
+                } else {
+                    cbTrackSearch.IsChecked = false;
+                    cbTrackTracked.IsChecked = false;
+                }
+            }
+        }
+
+        /// <summary>Sets the selected item of the TrackedSummoners combobox to the current TRACKEDSUMMONER</summary>
+        /// <param name="summoner">The TrackedSummoner which will be set as the selected item</param>
+
+        private void cbxTrackedSummoners_SelectionToCurrent(Summoner summoner) {
+            cbxTrackedSummoners.SelectedIndex =
+                        cbxTrackedSummoners.Items.IndexOf(cbxTrackedSummoners.Items.Cast<TrackedSummoner>().Single(x => x.Id == summoner.Id && x.Region == summoner.Region));
         }
     }
 }
