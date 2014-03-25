@@ -9,21 +9,33 @@ using RiotSharp;
 namespace src.summoner {
     [Serializable]
     class TrackedSummoner {
-        public TrackedSummoner(String summonerName, Region region) {
-            this.summonerName = summonerName;
-            this.region = region;
+        public TrackedSummoner(long id, String summonerName, Region region) {
+            Id = id;
+            Name = summonerName;
+            Region = region;
         }
 
-        [JsonProperty("summonerName")]
-        public String summonerName {
+        [JsonProperty("Id")]
+        public long Id {
+            get;
+            set;
+        }
+
+        [JsonProperty("Name")]
+        public String Name {
             get;
             set;
         }
 
         [JsonProperty("region")]
-        public Region region {
+        public Region Region {
             get;
             set;
+        }
+
+        public override string ToString()
+        {
+            return Name + " - " + Region.ToString();
         }
     }
 }

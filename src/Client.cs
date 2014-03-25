@@ -24,12 +24,15 @@ namespace src {
             summonerHandler = SummonerHandler.getInstance();
             core = Core.getInstance();
             api = core.getRiotApi();
-            //Log.info("Mastery Page: " + core.getRiotApi().GetSummoner(Region.euw, "Krindle").GetMasteryPages()[0].Name);
         }
 
-        public void updateSummoner(string summonerName, string region)
+        public void updateSummoner(string summonerName, Region region)
         {
             summonerHandler.setSummoner(summonerName, region);
+        }
+
+        public void updateSummoner(TrackedSummoner summoner) {
+            summonerHandler.setSummoner(summoner);
         }
     }
 }

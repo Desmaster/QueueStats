@@ -17,6 +17,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
+                        <Label Name="lblStatus"></Label>
                         <TextBox Name="tbxSummonername" Grid.Column ="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0.2" Width="139" Height="23" LostFocus="tbxSummonername_LostFocus"/>
                         <ComboBox Name="cbxRegion" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" Width="55" Height="23" SelectionChanged="cbxRegion_SelectionChanged" />
                         <Label Name="lblRememberSearch" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
@@ -33,18 +34,6 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <ComboBox Name="cbxTrackedSummoners" Grid.Column="0" Grid.Row="0" Height="23" SelectionChanged="cbxTrackedSummoners_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock DataContext="{Binding}">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{} {0} - {1}">
-                                                <Binding Path="summonerName" />
-                                                <Binding Path="region" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Label Name="lblRememberTracked" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Padding="0">Track?</Label>
                         <CheckBox Name="cbTrackTracked" Grid.Column="0" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False"/>
