@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Newtonsoft.Json.Linq;
 using src.summoner;
 using src.views;
 using RiotSharp;
@@ -12,6 +13,7 @@ namespace src {
     public partial class MainWindow : Window, SummonerListener {
 
         Client client;
+        private Window currentWindow;
 
         public MainWindow() {
             InitializeComponent();
@@ -22,8 +24,9 @@ namespace src {
 
             cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
             cbxTrackedSummoners_Update();
-
-            content.Content = new SummonerView().Content;
+            
+            currentWindow = new SummonerView();
+            content.Content = currentWindow.Content;
         }
 
         bool mouseDown = false;
@@ -58,7 +61,9 @@ namespace src {
             if (button != null)
                 switch (button.Content.ToString()) {
                     case "Summoner":
-                        content.Content = new SummonerView().Content;
+                        if (currentWindow.GetType() == typeof(SummonerView)) return;
+                        currentWindow = new SummonerView();
+                        content.Content = currentWindow.Content;
                         break;
                 }
         }
