@@ -22,6 +22,8 @@ namespace src {
 
             cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
             cbxTrackedSummoners_Update();
+
+            //imgProfileIcon.Source = client.core.getHomePath() +
         }
 
         bool mouseDown = false;
