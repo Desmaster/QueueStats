@@ -53,19 +53,22 @@ namespace src.views {
                             Log.info("" + c);
                             switch (c) {
                                 case 'W':
-                                    Image img1 = Util.CreateImage(Core.getInstance().getCurrentPath() + @"\img\profile\series_win.png");
+                                    Image img1 = new Image();
+                                    img1.Source = Util.CreateImage(Core.getInstance().getCurrentPath() + @"\img\profile\series_win.png");
                                     Grid.SetColumn(img1, j);
                                     Grid.SetRow(img1, 0);
                                     grdSeries.Children.Add(img1);
                                     break;
                                 case 'L':
-                                    Image img2 = Util.CreateImage(Core.getInstance().getCurrentPath() + @"\img\profile\series_lose.png");
+                                    Image img2 = new Image(); 
+                                    img2.Source = Util.CreateImage(Core.getInstance().getCurrentPath() + @"\img\profile\series_lose.png");
                                     Grid.SetColumn(img2, j);
                                     Grid.SetRow(img2, 0);
                                     grdSeries.Children.Add(img2);
                                     break;
                                 case 'N':
-                                    Image img3 = Util.CreateImage(Core.getInstance().getCurrentPath() + @"\img\profile\series_none.png");
+                                    Image img3 = new Image();
+                                    img3.Source = Util.CreateImage(Core.getInstance().getCurrentPath() + @"\img\profile\series_none.png");
                                     Grid.SetColumn(img3, j);
                                     Grid.SetRow(img3, 0);
                                     grdSeries.Children.Add(img3);

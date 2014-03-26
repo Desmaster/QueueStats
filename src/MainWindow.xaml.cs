@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using src.summoner;
 using src.views;
 using RiotSharp;
@@ -138,6 +139,10 @@ namespace src {
                     cbTrackSearch.IsChecked = false;
                     cbTrackTracked.IsChecked = false;
                 }
+
+                string imgurl = Core.getInstance().getAssetsPath() + @"profileicon\" + summoner.ProfileIconId + ".png";
+                Log.info(imgurl);
+                imgProfileIcon.Source = Util.CreateImage(imgurl);
             }
         }
 
