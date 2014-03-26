@@ -47,6 +47,14 @@ namespace src {
             return HOME_PATH;
         }
 
+        public String getCurrentPath() {
+            return CURRENT_PATH;
+        }
+
+        public String getAssetsPath() {
+            return CURRENT_PATH + @"img\";
+        }
+
         private void loadLists() {
             if (File.Exists(CURRENT_PATH + "championList.json")) {
                 championList = JsonConvert.DeserializeObject<ChampionListStatic>(File.ReadAllText(CURRENT_PATH + "championList.json"));

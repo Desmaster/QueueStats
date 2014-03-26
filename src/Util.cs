@@ -1,13 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RiotSharp;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Region = RiotSharp.Region;
 
 namespace src {
 
     class Util {
+
+        public static Image CreateImage(String path) {
+            Image Mole = new Image();
+            Mole.Width = 24;
+            Mole.Height = 24;
+            ImageSource MoleImage = new BitmapImage(new Uri(path));
+            Mole.Source = MoleImage;
+            return Mole;
+        }
 
         public static Region resolveRegion(String name) {
             switch(name) 

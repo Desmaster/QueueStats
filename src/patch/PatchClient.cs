@@ -43,6 +43,14 @@ namespace src.patch {
                 Directory.CreateDirectory(homePath);
             }
 
+            ImagePatchNode profileWin = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_win.png");
+            ImagePatchNode profileLose = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_lose.png");
+            ImagePatchNode profileNone = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_none.png");
+
+            nodes.Add(profileWin);
+            nodes.Add(profileLose);
+            nodes.Add(profileNone);
+
             TGZPatchNode images = new TGZPatchNode(this, "http://tdegroot.nl/api/qstats/", currentPath, "dragontail-" + API.getVersion() + ".zip");
             nodes.Add(images);
         }
