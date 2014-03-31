@@ -31,6 +31,7 @@ namespace src.views {
         private void init(Task task) {
             if(summoner == null || summoner.Id == 0) return;
             resetControls();
+            if (leagues == null) return;
             lblSummonerName.Content = summoner.Name;
             lblLevel.Content = "level " + summoner.Level;
             if (leagues == null) return;
@@ -42,6 +43,23 @@ namespace src.views {
                 lblDivision.Content = league.Tier + " " + league.Rank;
                 lblWins.Content = league.Wins;
                 lblLeaguePoints.Content = league.LeaguePoints;
+                int medals = 0;
+                if (league.IsHotStreak) {
+                    Image imgHot = new Image();
+                    imgHot.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"profile\league_hot.png");
+                    Grid.SetColumn(imgHot, medals);
+                    Grid.SetRow(imgHot, 0);
+                    grdMedals.Children.Add(imgHot);
+                    medals++;
+                }
+                if (league.IsFreshBlood) {
+                    Image imgNew = new Image();
+                    imgNew.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"profile\league_new.png");
+                    Grid.SetColumn(imgNew, medals);
+                    Grid.SetRow(imgNew, 0);
+                    grdMedals.Children.Add(imgNew);
+                    medals++;
+                }
                 MiniSeries series = league.MiniSeries;
                 if (series != null) {
                     if (!(series.Losses == 0 && series.Wins == 0)) {
@@ -95,6 +113,7 @@ namespace src.views {
             lblWins.Content = "0";
             lblSeriesTag.Visibility = Visibility.Hidden;
             grdSeries.Children.Clear();
+            grdMedals.Children.Clear();
         }
 
         public void summonerUpdated(Summoner summoner) {

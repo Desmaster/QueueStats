@@ -85,6 +85,14 @@ namespace src {
                 Directory.CreateDirectory(CURRENT_PATH);
         }
 
+        public ChampionListStatic getChampionList() {
+            return championList;
+        }
+
+        public ItemListStatic getItemList() {
+            return itemList;
+        }
+
         public ChampionStatic getChampion(String name) {
             return (from pair in championList.Champions
                     where pair.Value.Name == name

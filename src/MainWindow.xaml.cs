@@ -65,6 +65,11 @@ namespace src {
                         currentWindow = new SummonerView();
                         content.Content = currentWindow.Content;
                         break;
+                    case "Champions":
+                        if (currentWindow.GetType() == typeof(ChampionsView)) return;
+                        currentWindow = new ChampionsView();
+                        content.Content = currentWindow.Content;
+                        break;
                 }
         }
 

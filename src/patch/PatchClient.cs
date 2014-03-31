@@ -46,10 +46,14 @@ namespace src.patch {
             ImagePatchNode profileWin = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_win.png");
             ImagePatchNode profileLose = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_lose.png");
             ImagePatchNode profileNone = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_none.png");
+            ImagePatchNode profileHot = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/league_hot.png");
+            ImagePatchNode profileNew = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/league_new.png");
 
             nodes.Add(profileWin);
             nodes.Add(profileLose);
             nodes.Add(profileNone);
+            nodes.Add(profileHot);
+            nodes.Add(profileNew);
 
             TGZPatchNode images = new TGZPatchNode(this, "http://tdegroot.nl/api/qstats/", currentPath, "dragontail-" + API.getVersion() + ".zip");
             nodes.Add(images);

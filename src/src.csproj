@@ -70,6 +70,10 @@
     <Compile Include="summoner\SummonerHandler.cs" />
     <Compile Include="summoner\TrackedSummoner.cs" />
     <Compile Include="util\Util.cs" />
+    <Compile Include="views\ChampionContainer.cs" />
+    <Compile Include="views\ChampionsView.xaml.cs">
+      <DependentUpon>ChampionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\SummonerView.xaml.cs">
       <DependentUpon>SummonerView.xaml</DependentUpon>
     </Compile>
@@ -203,6 +207,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="views\ChampionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="views\SummonerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
