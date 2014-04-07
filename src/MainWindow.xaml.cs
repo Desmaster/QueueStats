@@ -62,15 +62,18 @@ namespace src {
                 switch (button.Content.ToString()) {
                     case "Summoner":
                         if (currentWindow.GetType() == typeof(SummonerView)) return;
-                        currentWindow = new SummonerView();
-                        content.Content = currentWindow.Content;
+                        setMenu(new SummonerView());
                         break;
                     case "Champions":
                         if (currentWindow.GetType() == typeof(ChampionsView)) return;
-                        currentWindow = new ChampionsView();
-                        content.Content = currentWindow.Content;
+                        setMenu(new ChampionsView(this));
                         break;
                 }
+        }
+
+        public void setMenu(Window window) {
+            currentWindow = window;
+            content.Content = currentWindow.Content;
         }
 
         private void tbxSummonername_LostFocus(object sender, RoutedEventArgs e) {

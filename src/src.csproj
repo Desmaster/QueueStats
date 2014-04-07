@@ -74,6 +74,9 @@
     <Compile Include="views\ChampionsView.xaml.cs">
       <DependentUpon>ChampionsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\ChampionView.xaml.cs">
+      <DependentUpon>ChampionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\SummonerView.xaml.cs">
       <DependentUpon>SummonerView.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="views\ChampionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\ChampionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

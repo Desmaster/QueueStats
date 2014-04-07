@@ -9,11 +9,13 @@ using RiotSharp;
 namespace src.views {
     class ChampionContainer : Image {
 
-        private ChampionStatic champion;
+        public ChampionStatic champion;
 
         public ChampionContainer(ChampionStatic champion) {
             this.champion = champion;
         }
+
+
 
     }
 }

@@ -1,8 +1,12 @@
 ﻿<Window x:Class="src.views.ChampionView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ChampionView" Height="300" Width="300">
+        Title="ChampionView" Height="808" Width="914">
     <Grid>
-        
+        <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Margin="65,35,0,0" VerticalAlignment="Top" FontSize="36"/>
+        <Image x:Name="imgChampion" HorizontalAlignment="Left" Height="100" Margin="65,110,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblTitle" Content="" HorizontalAlignment="Left" Margin="260,49,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Grid x:Name="grdMain" HorizontalAlignment="Left" Margin="65,270,0,26" Width="725"/>
+
     </Grid>
 </Window>

@@ -20,13 +20,15 @@ namespace src.views {
         private int width, height;
         private int imageWidth;
         private ChampionListStatic championList;
+        private MainWindow mainWindow;
 
-        public ChampionsView() {
+        public ChampionsView(MainWindow mainWindow) {
             InitializeComponent();
+            this.mainWindow = mainWindow;
             championList = Core.getInstance().getChampionList();
             width = 10;
             imageWidth = 64;
-            height = championList.Champions.Count/width;
+            height = championList.Champions.Count / width;
             init();
         }
 
@@ -58,7 +60,9 @@ namespace src.views {
 
         void championContainer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             ChampionContainer championContainer = (ChampionContainer) sender;
-            
+            ChampionStatic champion = championContainer.champion;
+            ChampionView championView = new ChampionView(mainWindow, champion);
+            mainWindow.setMenu(championView);       
         }
     }
 }
