@@ -68,4 +68,8 @@
         <ContentControl x:Name="content" DockPanel.Dock="Right" Height="499" VerticalAlignment="Top" Width="738">
         </ContentControl>
     </DockPanel>
+<<<<<<< .mine
 </Window>
+=======
+</Window>
+>>>>>>> .theirs
