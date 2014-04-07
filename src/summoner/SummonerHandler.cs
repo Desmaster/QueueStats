@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using RiotSharp;
 using src.api;
 using src.summoner;
+using src.util;
 
 namespace src {
 
@@ -68,21 +69,27 @@ namespace src {
         }
 
         public void setSummoner(TrackedSummoner summoner) {
-            loadSummoner(summoner).ContinueWith(updateSummoner, TaskContinuationOptions.ExecuteSynchronously);
+            setSummoner(summoner.Name, summoner.Region);
         }
 
         private async Task loadSummoner(String name, Region region) {
+            StatusHandler.info("Loading summoner");
             selectedSummoner = await api.GetSummonerAsync(region, name);
         }
 
         private async Task loadSummoner(TrackedSummoner summoner) {
-            selectedSummoner = await api.GetSummonerAsync(summoner.Region, (int) summoner.Id);
+            loadSummoner(summoner.Name, summoner.Region);
         }
 
         private void updateSummoner(Task task) {
+            StatusHandler.reset();
             for (int i = 0; i < summonerListeners.Count; i++) {
                 summonerListeners[i].summonerUpdated(selectedSummoner);
             }
+        }
+
+        public void resetSummoner() {
+            selectedSummoner = null;
         }
 
         private List<TrackedSummoner> getTrackedSummoners() {

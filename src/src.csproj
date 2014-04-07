@@ -69,6 +69,7 @@
     <Compile Include="SummonerListener.cs" />
     <Compile Include="summoner\SummonerHandler.cs" />
     <Compile Include="summoner\TrackedSummoner.cs" />
+    <Compile Include="util\StatusHandler.cs" />
     <Compile Include="util\Util.cs" />
     <Compile Include="views\ChampionContainer.cs" />
     <Compile Include="views\ChampionsView.xaml.cs">
