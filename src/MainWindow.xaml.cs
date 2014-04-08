@@ -69,6 +69,10 @@ namespace src {
                 if (currentWindow.GetType() == typeof(ChampionsView)) return;
                 setMenu(new ChampionsView(this));
                 break;
+                case "Items":
+                if (currentWindow.GetType() == typeof(ItemListView)) return;
+                setMenu(new ItemListView(this));
+                break;
             }
         }
 

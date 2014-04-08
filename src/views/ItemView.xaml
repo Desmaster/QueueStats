@@ -1,0 +1,10 @@
+﻿<Window x:Class="src.views.ItemView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ItemView" Height="348" Width="664">
+    <Grid>
+        <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Margin="270,45,0,0" VerticalAlignment="Top"/>
+        <Image x:Name="imgItem" HorizontalAlignment="Left" Height="100" Margin="75,85,0,0" VerticalAlignment="Top" Width="100"/>
+
+    </Grid>
+</Window>

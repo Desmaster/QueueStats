@@ -35,7 +35,7 @@ namespace src.views {
         private void init() {
             var champions = from pair in championList.Champions orderby pair.Key ascending select pair;
             int c = 0;
-            foreach (KeyValuePair<String, ChampionStatic> pair in championList.Champions.OrderBy(i => i.Key)) {
+            foreach (KeyValuePair<String, ChampionStatic> pair in championList.Champions.OrderBy(p => p.Key)) {
                 ColumnDefinition columnDefinition = new ColumnDefinition();
                 columnDefinition.Width = new GridLength(imageWidth);
                 grdChampions.ColumnDefinitions.Add(columnDefinition);
@@ -43,7 +43,6 @@ namespace src.views {
                 RowDefinition rowDefinition = new RowDefinition();
                 rowDefinition.Height = new GridLength(imageWidth);
                 grdChampions.RowDefinitions.Add(rowDefinition);
-
 
                 ChampionContainer championContainer = new ChampionContainer(pair.Value);
                 championContainer.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"champion\" + pair.Value.Image.Full);

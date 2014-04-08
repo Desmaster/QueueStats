@@ -20,6 +20,9 @@ namespace src.views {
             InitializeComponent();
             SummonerHandler.getInstance().register(this);
             riotApi = Core.getInstance().getRiotApi();
+            if (SummonerHandler.getInstance().getSummoner() != null) {
+                summonerUpdated(SummonerHandler.getInstance().getSummoner());
+            }
         }
 
         private delegate void ObjectDelegate(object obj);

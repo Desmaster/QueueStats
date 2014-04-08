@@ -78,6 +78,13 @@
     <Compile Include="views\ChampionView.xaml.cs">
       <DependentUpon>ChampionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\ItemContainer.cs" />
+    <Compile Include="views\ItemListView.xaml.cs">
+      <DependentUpon>ItemListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\ItemView.xaml.cs">
+      <DependentUpon>ItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\SummonerView.xaml.cs">
       <DependentUpon>SummonerView.xaml</DependentUpon>
     </Compile>
@@ -216,6 +223,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\ChampionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\ItemListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\ItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

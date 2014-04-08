@@ -26,43 +26,50 @@ namespace src.views {
             this.champion = champion;
             lblName.Content = champion.Name;
             lblTitle.Content = champion.Title;
+            String lore = champion.Lore;
+            lore = lore.Replace("<br>", "\r\n");
+            tbLore.Text = lore;
             int spells = 0;
             foreach (var spell in champion.Spells) {
-                ColumnDefinition columnDefinition = new ColumnDefinition {Width = new GridLength(512)};
+                ColumnDefinition columnDefinition = new ColumnDefinition {Width = new GridLength(750)};
                 grdMain.ColumnDefinitions.Add(columnDefinition);
-                RowDefinition rowDefinition = new RowDefinition {Height = new GridLength(48)};
+                RowDefinition rowDefinition = new RowDefinition {Height = new GridLength(64)};
                 grdMain.RowDefinitions.Add(rowDefinition);
                 Grid tempGrid = new Grid();
-                columnDefinition = new ColumnDefinition {Width = new GridLength(48)};
+                columnDefinition = new ColumnDefinition {Width = new GridLength(64)};
                 tempGrid.ColumnDefinitions.Add(columnDefinition);
-                columnDefinition = new ColumnDefinition {Width = new GridLength(256)};
+                columnDefinition = new ColumnDefinition {Width = new GridLength(425)};
                 tempGrid.ColumnDefinitions.Add(columnDefinition);
 
                 rowDefinition = new RowDefinition();
-                rowDefinition.Height = new GridLength(48);
+                rowDefinition.Height = new GridLength(64);
                 tempGrid.RowDefinitions.Add(rowDefinition);
+
 
                 Image image = new Image();
                 image.Width = 48;
                 image.Height = 48;
                 image.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"spell\" + spell.Image.Full);
-
-                Label label = new Label();
-                label.Content = spell.Description;
+                
+                TextBlock textBlock = new TextBlock();
+                var bold = new Bold(new Run(spell.Name));
+                textBlock.Inlines.Add(bold);
+                textBlock.Inlines.Add(new Run("\r\n" + spell.Description));
+                textBlock.MaxWidth = 400;
+                textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
 
                 Grid.SetColumn(image, 0);
                 Grid.SetRow(image, 0);
-                Grid.SetColumn(label, 1);
-                Grid.SetRow(label, 0);
+                Grid.SetColumn(textBlock, 1);
+                Grid.SetRow(textBlock, 0);
                 tempGrid.Children.Add(image);
-                tempGrid.Children.Add(label);
+                tempGrid.Children.Add(textBlock);
                 Grid.SetColumn(tempGrid, 0);
                 Grid.SetRow(tempGrid, spells);
                 grdMain.Children.Add(tempGrid);
                 spells++;
             }
-            imgChampion.Source =
-                Util.CreateImage(Core.getInstance().getAssetsPath() + @"champion\" + champion.Image.Full);
+            imgChampion.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"champion\" + champion.Image.Full);
         }
 
     }
