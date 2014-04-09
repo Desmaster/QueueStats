@@ -20,7 +20,7 @@ namespace src.views {
             InitializeComponent();
             SummonerHandler.getInstance().register(this);
             riotApi = Core.getInstance().getRiotApi();
-            if (SummonerHandler.getInstance().getSummoner() != null) {
+            if (SummonerHandler.getInstance().getSummoner() != null && summoner == null) {
                 summonerUpdated(SummonerHandler.getInstance().getSummoner());
             }
         }
