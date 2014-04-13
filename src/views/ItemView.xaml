@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ItemView" Height="348" Width="664">
     <Grid>
-        <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Margin="270,45,0,0" VerticalAlignment="Top"/>
-        <Image x:Name="imgItem" HorizontalAlignment="Left" Height="100" Margin="75,85,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="75,47,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Image x:Name="imgItem" HorizontalAlignment="Left" Height="64" Margin="555,47,0,0" VerticalAlignment="Top" Width="64"/>
+        <TextBlock x:Name="tbDescription" HorizontalAlignment="Left" Height="Auto" Margin="75,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="450"/>
 
     </Grid>
 </Window>
