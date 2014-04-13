@@ -55,6 +55,10 @@ namespace RiotSharp
                         return GameSubType.FirstBlood2x2;
                     case "SR_6x6":
                         return GameSubType.Hexakill;
+                    case "URF":
+                        return GameSubType.URF;
+                    case "URF_BOT":
+                        return GameSubType.URF_BOT;
                     default:
                         return null;
                 }
@@ -115,6 +119,12 @@ namespace RiotSharp
                     break;
                 case GameSubType.RankedTeam5x5:
                     result = "RANKED_TEAM_5x5";
+                    break;
+                case GameSubType.URF:
+                    result = "URF";
+                    break;
+                case GameSubType.URF_BOT:
+                    result = "URF_BOT";
                     break;
                 default:
                     result = "";

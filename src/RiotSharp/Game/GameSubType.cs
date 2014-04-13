@@ -89,6 +89,16 @@ namespace RiotSharp
         /// <summary>
         /// Hexakill games
         /// </summary>
-        Hexakill
+        Hexakill,
+
+        /// <summary>
+        /// URF games
+        /// </summary>
+        URF,
+
+        /// <summary>
+        /// URF bot games
+        /// </summary>
+        URF_BOT
     }
 }

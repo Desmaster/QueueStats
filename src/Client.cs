@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 
 using src.api;
 using RiotSharp;
+using src.matches;
 using src.patch;
 using src.summoner;
 
@@ -17,6 +18,7 @@ namespace src {
         public Core core;
         public RiotApi api;
         public SummonerHandler summonerHandler;
+        public MatchHandler matchHandler;
 
         public Client() {
             HOME_PATH = HOME_PATH = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
@@ -24,6 +26,7 @@ namespace src {
             summonerHandler = SummonerHandler.getInstance();
             core = Core.getInstance();
             api = core.getRiotApi();
+            matchHandler = MatchHandler.getInstance();
         }
 
         public void updateSummoner(string summonerName, Region region)
@@ -32,7 +35,7 @@ namespace src {
         }
 
         public void updateSummoner(TrackedSummoner summoner) {
-            summonerHandler.setSummoner(summoner);
+            updateSummoner(summoner.Name, summoner.Region);
         }
     }
 }
