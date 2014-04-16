@@ -38,7 +38,7 @@ namespace src {
 
         public static Core getInstance() {
             if (instance == null) {
-                instance = new Core(Region.na, Settings.getProperty("api_key"), false);
+                instance = new Core(Region.na, Settings.getProperty("api_key"), true);
             }
             return instance;
         }

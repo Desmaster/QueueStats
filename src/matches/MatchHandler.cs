@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 using Newtonsoft.Json;
 using RiotSharp;
 using src.summoner;
@@ -17,6 +21,8 @@ namespace src.matches {
         private SummonerHandler summonerHandler;
 
         private string HOME_PATH;
+
+        private Summoner summoner;
 
         private MatchHandler() {
             core = Core.getInstance();
@@ -46,16 +52,42 @@ namespace src.matches {
             return instance;
         }
 
-        private void updateMatches() {
-            foreach (TrackedSummoner tsummoner in summonerHandler.trackedSummoners) {
-                Summoner summoner = api.GetSummoner(tsummoner.Region, (int)tsummoner.Id);
-                List<Game> games = summoner.GetRecentGames();
+        private async Task<Summoner> processSummoner(Region region, long id) {
+            return await api.GetSummonerAsync(region, (int)id);
+        }
 
-                foreach (Game game in games) {
-                    Console.WriteLine(game.CreateDate);
-                    string json = JsonConvert.SerializeObject(game);
-                    string path = HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json";
-                    File.WriteAllText(path, json);
+        private async Task<List<Game>> processMatch(Task<Summoner> task) {
+            return await task.Result.GetRecentGamesAsync();
+        }
+
+        private async void updateMatches() {
+            foreach (TrackedSummoner tsummoner in summonerHandler.trackedSummoners) {
+                Console.WriteLine(tsummoner.Name);
+            }
+
+            foreach (TrackedSummoner tsummoner in summonerHandler.trackedSummoners) {
+
+                try
+                {
+                    Task<Summoner> summonerTask = api.GetSummonerAsync(tsummoner.Region, (int) tsummoner.Id);
+                    Summoner summoner = await summonerTask;
+                    Task<List<Game>> matchTask = summoner.GetRecentGamesAsync();
+
+                    try
+                    {
+                        List<Game> games = await matchTask;
+                        Console.WriteLine(tsummoner.ToString() + ": " + games.Count);
+                        foreach (Game game in games) {
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.StackTrace);
+                    }
+                }
+                    catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
                 }
             }
         }
