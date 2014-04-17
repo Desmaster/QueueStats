@@ -1,0 +1,11 @@
+﻿<window x:Class="src.views.ChampionsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ChampionsView" Height="433" Width="859">
+    <Grid>
+        <Label Content="Champions" HorizontalAlignment="Left" Margin="347,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.984,0.348"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto" Margin="55,75,26,10">
+            <Grid x:Name="grdChampions" HorizontalAlignment="Left" VerticalAlignment="Top" Width="750"/>
+        </ScrollViewer>
+    </Grid>
+</window>

@@ -1,0 +1,12 @@
+﻿<window x:Class="src.views.ItemListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          Title="ItemListView" Height="408" Width="964">
+    <Grid>
+        <Label Content="Items" HorizontalAlignment="Left" Margin="382,52,0,0" VerticalAlignment="Top"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Margin="55,75,26,10" VerticalAlignment="Top">
+            <Grid x:Name="grdItems" Width="740"/>
+        </ScrollViewer>
+
+    </Grid>
+</window>
