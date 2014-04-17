@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 using Newtonsoft.Json;
 using RiotSharp;
 using src.summoner;
+using src.util;
 
 namespace src.matches {
     class MatchHandler {
@@ -21,8 +18,6 @@ namespace src.matches {
         private SummonerHandler summonerHandler;
 
         private string HOME_PATH;
-
-        private Summoner summoner;
 
         private MatchHandler() {
             core = Core.getInstance();
@@ -40,9 +35,10 @@ namespace src.matches {
                 if (!Directory.Exists(HOME_PATH + summoner.Name + @"\")) {
                     Directory.CreateDirectory(HOME_PATH + summoner.Name + @"\");
                 }
+
+                updateMatches(summoner);
             }
 
-            updateMatches();
         }
 
         public static MatchHandler getInstance() {
@@ -52,6 +48,7 @@ namespace src.matches {
             return instance;
         }
 
+<<<<<<< HEAD
         private async Task<Summoner> processSummoner(Region region, long id) {
             return await api.GetSummonerAsync(region, (int)id);
         }
@@ -60,35 +57,36 @@ namespace src.matches {
             return await task.Result.GetRecentGamesAsync();
         }
 
-        private async void updateMatches() {
-            foreach (TrackedSummoner tsummoner in summonerHandler.trackedSummoners) {
-                Console.WriteLine(tsummoner.Name);
-            }
+        private async void updateMatches(TrackedSummoner tsummoner) {
+            try {
+                Task<Summoner> summonerTask = api.GetSummonerAsync(tsummoner.Region, (int)tsummoner.Id);
+                Summoner summoner = await summonerTask;
+                Task<List<Game>> matchTask = summoner.GetRecentGamesAsync();
 
-            foreach (TrackedSummoner tsummoner in summonerHandler.trackedSummoners) {
-
-                try
-                {
-                    Task<Summoner> summonerTask = api.GetSummonerAsync(tsummoner.Region, (int) tsummoner.Id);
-                    Summoner summoner = await summonerTask;
-                    Task<List<Game>> matchTask = summoner.GetRecentGamesAsync();
-
-                    try
-                    {
-                        List<Game> games = await matchTask;
-                        Console.WriteLine(tsummoner.ToString() + ": " + games.Count);
-                        foreach (Game game in games) {
+                try {
+                    List<Game> games = await matchTask;
+                    foreach (Game game in games) {
+                        if (!Directory.EnumerateFiles(HOME_PATH + tsummoner.Name).Any(x => x == game.GameId.ToString())) {
+                            File.WriteAllText(HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json", JsonConvert.SerializeObject(game));
                         }
                     }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.StackTrace);
-                    }
-                }
-                    catch (Exception e)
-                {
+                } catch (Exception e) {
                     Console.WriteLine(e.StackTrace);
+=======
+        private void updateMatches() {
+            foreach (TrackedSummoner tsummoner in summonerHandler.trackedSummoners) {
+                Summoner summoner = api.GetSummoner(tsummoner.Region, (int)tsummoner.Id);
+                List<Game> games = summoner.GetRecentGames();
+
+                foreach (Game game in games) {
+                    Console.WriteLine(game.CreateDate);
+                    string json = JsonConvert.SerializeObject(game);
+                    string path = HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json";
+                    File.WriteAllText(path, json);
+>>>>>>> parent of 00bc726... MatchHandler works
                 }
+            } catch (Exception e) {
+                Console.WriteLine(e.StackTrace);
             }
         }
     }
