@@ -86,8 +86,8 @@
     <Compile Include="views\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="views\SummonerPlaceholder.xaml.cs">
-      <DependentUpon>SummonerPlaceholder.xaml</DependentUpon>
+    <Compile Include="views\MatchesView.xaml.cs">
+      <DependentUpon>MatchesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="views\SummonerView.xaml.cs">
       <DependentUpon>SummonerView.xaml</DependentUpon>
@@ -238,7 +238,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="views\SummonerPlaceholder.xaml">
+    <Page Include="views\MatchesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

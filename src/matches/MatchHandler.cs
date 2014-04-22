@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using RiotSharp;
 using src.summoner;
@@ -22,8 +19,6 @@ namespace src.matches {
         private SummonerHandler summonerHandler;
 
         private string HOME_PATH;
-
-        private Summoner summoner;
 
         private MatchHandler() {
             core = Core.getInstance();
@@ -72,11 +67,13 @@ namespace src.matches {
                     List<Game> games = await matchTask;
                     foreach (Game game in games) {
                         if (!Directory.EnumerateFiles(HOME_PATH + tsummoner.Name).Any(x => x == game.GameId.ToString())) {
-                            File.WriteAllText(HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json", JsonConvert.SerializeObject(game));
+                            File.WriteAllText(HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json",
+                                JsonConvert.SerializeObject(game));
                         }
                     }
                 } catch (Exception e) {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e.Message);
+
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.StackTrace);

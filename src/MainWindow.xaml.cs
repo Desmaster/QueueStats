@@ -13,8 +13,11 @@ namespace src {
     public partial class MainWindow : Window, SummonerListener {
 
         Client client;
-        private Window currentWindow;
         private Window summonerView;
+        private Window matchesView;
+        private Window itemView;
+        private Window championView;
+        private Window statisticsView;
 
         public MainWindow() {
             InitializeComponent();
@@ -27,11 +30,13 @@ namespace src {
             cbxTrackedSummoners_Update();
 
             StatusHandler.window = this;
-            
+
             summonerView = new SummonerView();
-            currentWindow = summonerView;
-            
-            content.Content = currentWindow.Content;
+            itemView = new ItemListView(this);
+            championView = new ChampionsView(this);
+            matchesView = new MatchesView();
+
+            setMenu(summonerView);
         }
 
         bool mouseDown = false;
@@ -65,26 +70,22 @@ namespace src {
             if (button != null)
                 switch (button.Content.ToString()) {
                     case "Summoner":
-                    if (currentWindow.GetType() == typeof(SummonerView))
-                        return;
                     setMenu(summonerView);
                     break;
+                    case "Matches":
+                    setMenu(matchesView);
+                    break;
                     case "Champions":
-                    if (currentWindow.GetType() == typeof(ChampionsView))
-                        return;
-                    setMenu(new ChampionsView(this));
+                    setMenu(championView);
                     break;
                     case "Items":
-                    if (currentWindow.GetType() == typeof(ItemListView))
-                        return;
-                    setMenu(new ItemListView(this));
+                    setMenu(itemView);
                     break;
                 }
         }
 
         public void setMenu(Window window) {
-            currentWindow = window;
-            content.Content = currentWindow.Content;
+            content.Content = window.Content;
         }
 
         private void tbxSummonername_LostFocus(object sender, RoutedEventArgs e) {
@@ -157,6 +158,10 @@ namespace src {
         }
 
         public void summonerUpdated(Summoner summoner) {
+            if (summoner == null) {
+                StatusHandler.error("Error loading summoner..");
+                return;
+            }
             setSummonerpanel(summoner);
         }
 
