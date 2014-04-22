@@ -25,8 +25,8 @@ namespace src.views {
                 if (summoner == null)
                     summonerUpdated(SummonerHandler.getInstance().getSummoner());
             } else {
-                defaultContent = Content;
-                Content = new SummonerPlaceholder().Content;
+                hideControls();
+                lblPlaceholder.Visibility = Visibility.Visible;
             }
         }
 
@@ -124,9 +124,37 @@ namespace src.views {
             grdMedals.Children.Clear();
         }
 
+        private void hideControls() {
+            resetControls();
+            lblSummonerName.Visibility = Visibility.Hidden;
+            lblLevel.Visibility = Visibility.Hidden;
+            lblTitleRanked.Visibility = Visibility.Hidden;
+            lblTitleLeagueName.Visibility = Visibility.Hidden;
+            lblTitleLeaguePoints.Visibility = Visibility.Hidden;
+            lblTitleWins.Visibility = Visibility.Hidden;
+            lblTitleDivision.Visibility = Visibility.Hidden;
+            lblTitleMedals.Visibility = Visibility.Hidden;
+            lblWins.Visibility = Visibility.Hidden;
+        }
+
+        private void showControls() {
+            lblWins.Visibility = Visibility.Visible;
+            lblSummonerName.Visibility = Visibility.Visible;
+            lblLevel.Visibility = Visibility.Visible;
+            lblTitleRanked.Visibility = Visibility.Visible;
+            lblTitleLeagueName.Visibility = Visibility.Visible;
+            lblTitleLeaguePoints.Visibility = Visibility.Visible;
+            lblTitleWins.Visibility = Visibility.Visible;
+            lblTitleDivision.Visibility = Visibility.Visible;
+            lblTitleMedals.Visibility = Visibility.Visible;
+            lblWins.Visibility = Visibility.Visible;
+        }
+
         public void summonerUpdated(Summoner summoner) {
             previous = this.summoner;
             this.summoner = summoner;
+            showControls();
+            lblPlaceholder.Visibility = Visibility.Hidden;
             loadSummoner().ContinueWith(init, TaskContinuationOptions.ExecuteSynchronously);
             Log.info("Summoner Updated");
         }
