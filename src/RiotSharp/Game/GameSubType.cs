@@ -99,6 +99,11 @@ namespace RiotSharp
         /// <summary>
         /// URF bot games
         /// </summary>
-        URF_BOT
+        URF_BOT,
+
+        /// <summary>
+        /// Teambuilder games
+        /// </summary>
+        CAP_5x5
     }
 }

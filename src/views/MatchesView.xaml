@@ -1,8 +1,12 @@
 ﻿<Window x:Class="src.views.MatchesView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MatchesView" Height="300" Width="300">
+        Title="MatchesView" Height="300" Width="675">
     <Grid>
-        
+        <ScrollViewer HorizontalAlignment="Left" Height="Auto" Width="Auto">
+            <StackPanel Name="matches" Width="651" Height="Auto">
+                
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

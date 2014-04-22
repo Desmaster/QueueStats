@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using RiotSharp;
 using src.summoner;
@@ -71,7 +72,7 @@ namespace src.matches {
                         }
                     }
                 } catch (Exception e) {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e.Message);
 
                 }
             } catch (Exception e) {

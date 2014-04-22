@@ -158,6 +158,10 @@ namespace src {
         }
 
         public void summonerUpdated(Summoner summoner) {
+            if (summoner == null) {
+                StatusHandler.error("Error loading summoner..");
+                return;
+            }
             setSummonerpanel(summoner);
         }
 
