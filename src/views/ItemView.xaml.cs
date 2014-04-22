@@ -32,6 +32,7 @@ namespace src.views {
             lblName.Content = item.Name;
             imgItem.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"item\" + item.Image.Full);
             String description = item.Description;
+            
             description = description.Replace("<br>", "\r\n");
             String[] descriptions = Regex.Split(description, @"<.*?>.*?</.*?>|<.*?/>");    
             Log.info("Stats: " + descriptions[0]);
@@ -53,6 +54,8 @@ namespace src.views {
                     tbDescription.Inlines.Add(new Run(desc));
                 }
             }
+            description = Regex.Replace(description, "<[^>]+>", "");
+            tbDescription.Text = description;
         }
 
     }
