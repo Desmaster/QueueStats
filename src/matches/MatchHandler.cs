@@ -48,7 +48,6 @@ namespace src.matches {
             return instance;
         }
 
-<<<<<<< HEAD
         private async Task<Summoner> processSummoner(Region region, long id) {
             return await api.GetSummonerAsync(region, (int)id);
         }
@@ -67,23 +66,13 @@ namespace src.matches {
                     List<Game> games = await matchTask;
                     foreach (Game game in games) {
                         if (!Directory.EnumerateFiles(HOME_PATH + tsummoner.Name).Any(x => x == game.GameId.ToString())) {
-                            File.WriteAllText(HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json", JsonConvert.SerializeObject(game));
+                            File.WriteAllText(HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json",
+                                JsonConvert.SerializeObject(game));
                         }
                     }
                 } catch (Exception e) {
                     Console.WriteLine(e.StackTrace);
-=======
-        private void updateMatches() {
-            foreach (TrackedSummoner tsummoner in summonerHandler.trackedSummoners) {
-                Summoner summoner = api.GetSummoner(tsummoner.Region, (int)tsummoner.Id);
-                List<Game> games = summoner.GetRecentGames();
 
-                foreach (Game game in games) {
-                    Console.WriteLine(game.CreateDate);
-                    string json = JsonConvert.SerializeObject(game);
-                    string path = HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json";
-                    File.WriteAllText(path, json);
->>>>>>> parent of 00bc726... MatchHandler works
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.StackTrace);
