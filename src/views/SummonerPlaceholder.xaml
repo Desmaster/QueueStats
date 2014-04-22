@@ -1,0 +1,9 @@
+﻿<Window x:Class="src.views.SummonerPlaceholder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SummonerPlaceholder" Height="300" Width="676.5">
+    <Grid>
+        <Label Content="Please enter or select a summoner" HorizontalAlignment="Left" Margin="199,50,0,0" VerticalAlignment="Top" FontSize="20"/>
+
+    </Grid>
+</Window>

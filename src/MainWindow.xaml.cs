@@ -175,6 +175,7 @@ namespace src {
         }
 
         private void setSummonerpanel(Summoner summoner) {
+            if (summoner == null) return;
             if (summoner.Id != 0) {
                 cbTrackSearch.IsEnabled = true;
                 cbTrackTracked.IsEnabled = true;

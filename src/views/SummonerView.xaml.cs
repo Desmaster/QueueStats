@@ -15,13 +15,18 @@ namespace src.views {
         private Region region;
         private String summonerName;
         private RiotApi riotApi;
+        private object defaultContent;
 
         public SummonerView() {
             InitializeComponent();
             SummonerHandler.getInstance().register(this);
             riotApi = Core.getInstance().getRiotApi();
-            if (SummonerHandler.getInstance().getSummoner() != null && summoner == null) {
-                summonerUpdated(SummonerHandler.getInstance().getSummoner());
+            if (SummonerHandler.getInstance().getSummoner() != null) {
+                if (summoner == null)
+                    summonerUpdated(SummonerHandler.getInstance().getSummoner());
+            } else {
+                defaultContent = Content;
+                Content = new SummonerPlaceholder().Content;
             }
         }
 
