@@ -47,10 +47,10 @@ namespace src.views {
                 Image image = new Image();
 
                 var championName = from pair in core.getChampionList().Champions
-                                      where pair.Value.Id.Equals(game.ChampionId.ToString())
-                                      select pair;
+                                      where pair.Value.Id == game.ChampionId.ToString()
+                                      select pair.Value.Name;
 
-                image.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"\champion\" + championName.FirstOrDefault());
+                image.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"\champion\" + championName.First());
                 matches.Children.Add(image);
             }
         }

@@ -27,7 +27,7 @@ namespace RiotSharp {
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-            serializer.Serialize(writer, ((DateTime)value).ToLongDateString());
+            serializer.Serialize(writer, ((DateTime)value).ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
         }
     }
 }
