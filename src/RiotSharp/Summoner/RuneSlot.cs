@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace RiotSharp
 {
@@ -17,10 +16,10 @@ namespace RiotSharp
         internal RuneSlot() { }
 
         /// <summary>
-        /// Rune associated with the rune slot.
+        /// Rune ID associated with the rune slot.
         /// </summary>
-        [JsonProperty("rune")]
-        public Rune Rune { get; set; }
+        [JsonProperty("runeId")]
+        public int RuneId { get; set; }
 
         /// <summary>
         /// Rune slot ID.

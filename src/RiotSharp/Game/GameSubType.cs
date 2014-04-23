@@ -92,18 +92,19 @@ namespace RiotSharp
         Hexakill,
 
         /// <summary>
+        /// Team Builder games
+        /// </summary>
+        TeamBuilder5x5,
+        
+         /// <summary>
         /// URF games
         /// </summary>
         URF,
-
-        /// <summary>
-        /// URF bot games
+        
+         /// <summary>
+        /// URF Bots games
         /// </summary>
         URF_BOT,
-
-        /// <summary>
-        /// Teambuilder games
-        /// </summary>
-        CAP_5x5
+        
     }
 }

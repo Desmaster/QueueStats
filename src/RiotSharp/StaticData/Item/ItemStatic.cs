@@ -70,6 +70,12 @@ namespace RiotSharp
         public bool HideFromAll { get; set; }
 
         /// <summary>
+        /// Item's id.
+        /// </summary>
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        /// <summary>
         /// This object's image.
         /// </summary>
         [JsonProperty("image")]
@@ -115,7 +121,13 @@ namespace RiotSharp
         /// Additional information if the object is a rune.
         /// </summary>
         [JsonProperty("rune")]
-        public RuneTypeStatic RuneType { get; set; }
+        public MetadataStatic Metadata { get; set; }
+
+        /// <summary>
+        /// Sanitized (HTML stripped) description of the item.
+        /// </summary>
+        [JsonProperty("sanitizedDescription")]
+        public string SanitizedDescription { get; set; }
 
         /// <summary>
         /// Id of the special recipe if there is one.

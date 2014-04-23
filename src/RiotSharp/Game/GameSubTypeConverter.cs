@@ -55,12 +55,12 @@ namespace RiotSharp
                         return GameSubType.FirstBlood2x2;
                     case "SR_6x6":
                         return GameSubType.Hexakill;
+                    case "CAP_5x5":
+                        return GameSubType.TeamBuilder5x5;
                     case "URF":
                         return GameSubType.URF;
                     case "URF_BOT":
                         return GameSubType.URF_BOT;
-                    case "CAP_5x5":
-                        return GameSubType.CAP_5x5;
                     default:
                         return null;
                 }
@@ -122,14 +122,14 @@ namespace RiotSharp
                 case GameSubType.RankedTeam5x5:
                     result = "RANKED_TEAM_5x5";
                     break;
+                case GameSubType.TeamBuilder5x5:
+                    result = "CAP_5x5";
+                    break;
                 case GameSubType.URF:
                     result = "URF";
                     break;
                 case GameSubType.URF_BOT:
                     result = "URF_BOT";
-                    break;
-                case GameSubType.CAP_5x5:
-                    result = "CAP_5x5";
                     break;
                 default:
                     result = "";

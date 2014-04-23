@@ -99,12 +99,6 @@ namespace src {
                     select pair.Value).FirstOrDefault();
         }
 
-        public ChampionStatic getChampion(int id) {
-            return (from pair in championList.Champions
-                    where pair.Value.Key == id
-                    select pair.Value).FirstOrDefault();
-        }
-
         public ItemStatic getItem(String name) {
             return (from pair in itemList.Items
                     where pair.Value.Name == name

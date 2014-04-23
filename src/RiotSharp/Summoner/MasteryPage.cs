@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace RiotSharp
 {
     /// <summary>
-    /// Page of masteries (Summoner API).
+    /// Mastery page (Summoner API).
     /// </summary>
     [Serializable]
     public class MasteryPage
@@ -37,7 +36,7 @@ namespace RiotSharp
         /// <summary>
         /// List of mastery page talents associated with the mastery page.
         /// </summary>
-        [JsonProperty("talents")]
-        public List<Talent> Talents { get; set; }
+        [JsonProperty("masteries")]
+        public List<Mastery> Masteries { get; set; }
     }
 }

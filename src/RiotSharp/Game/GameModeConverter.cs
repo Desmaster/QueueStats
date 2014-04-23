@@ -25,8 +25,6 @@ namespace RiotSharp
                 {
                     case "CLASSIC":
                         return GameMode.Classic;
-                    case "any":
-                        return GameMode.Classic;
                     case "ODIN":
                         return GameMode.Dominion;
                     case "ARAM":
@@ -36,7 +34,9 @@ namespace RiotSharp
                     case "ONEFORALL":
                         return GameMode.OneForAll;
                     case "FIRSTBLOOD":
-                        return GameMode.FirstBlood;                    
+                        return GameMode.FirstBlood;
+                    case "any":
+                        return GameMode.Any;
                     default:
                         return null;
                 }
@@ -67,6 +67,9 @@ namespace RiotSharp
                     break;
                 case GameMode.Tutorial:
                     result = "TUTORIAL";
+                    break;
+                case GameMode.Any:
+                    result = "any";
                     break;
                 default:
                     result = string.Empty;

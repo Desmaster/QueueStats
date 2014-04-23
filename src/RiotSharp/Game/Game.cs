@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace RiotSharp
 {
@@ -60,6 +59,12 @@ namespace RiotSharp
         /// </summary>
         [JsonProperty("invalid")]
         public bool Invalid { get; set; }
+
+        /// <summary>
+        /// Ip earned.
+        /// </summary>
+        [JsonProperty("ipEarned")]
+        public int IpEarned { get; set; }
 
         /// <summary>
         /// Level.

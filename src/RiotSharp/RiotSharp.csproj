@@ -44,9 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Champion\Champion.cs" />
     <Compile Include="Champion\ChampionList.cs" />
-    <Compile Include="Game\Deprecated\GameV12.cs" />
-    <Compile Include="Game\Deprecated\RecentGamesV12.cs" />
+    <Compile Include="Champion\Deprecated\ChampionListV11.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameMode.cs" />
     <Compile Include="Game\GameModeConverter.cs" />
@@ -57,7 +57,6 @@
     <Compile Include="Game\GameSubTypeConverter.cs" />
     <Compile Include="Game\RecentGames.cs" />
     <Compile Include="Misc\Language.cs" />
-    <Compile Include="League\Deprecated\LeagueV22.cs" />
     <Compile Include="League\League.cs" />
     <Compile Include="League\LeagueItem.cs" />
     <Compile Include="League\Queue.cs" />
@@ -69,13 +68,17 @@
     <Compile Include="Misc\TimeSpanConverterFromMS.cs" />
     <Compile Include="Misc\TimeSpanConverterFromS.cs" />
     <Compile Include="Cache.cs" />
+    <Compile Include="RiotSharpException.cs" />
     <Compile Include="StaticData\Champion\Cache\ChampionStaticWrapper.cs" />
     <Compile Include="StaticData\Item\Cache\ItemListStaticWrapper.cs" />
     <Compile Include="StaticData\Item\Cache\ItemStaticWrapper.cs" />
     <Compile Include="StaticData\Mastery\Cache\MasteryListStaticWrapper.cs" />
     <Compile Include="StaticData\Mastery\Cache\MasteryStaticWrapper.cs" />
+    <Compile Include="StaticData\Mastery\MasteryTreeItemStatic.cs" />
+    <Compile Include="StaticData\Mastery\MasteryTreeListStatic.cs" />
     <Compile Include="StaticData\Rune\Cache\RuneListStaticWrapper.cs" />
     <Compile Include="StaticData\Rune\Cache\RuneStaticWrapper.cs" />
+    <Compile Include="StaticData\Rune\RuneStatic.cs" />
     <Compile Include="StaticData\SummonerSpell\Cache\SummonerSpellListStaticWrapper.cs" />
     <Compile Include="StaticData\SummonerSpell\Cache\SummonerSpellStaticWrapper.cs" />
     <Compile Include="StaticData\Champion\BlockItemStatic.cs" />
@@ -94,17 +97,16 @@
     <Compile Include="StaticData\Champion\PassiveStatic.cs" />
     <Compile Include="StaticData\Champion\RecommendedStatic.cs" />
     <Compile Include="StaticData\Champion\SkinStatic.cs" />
-    <Compile Include="StaticData\Champion\SpellStatic.cs" />
+    <Compile Include="StaticData\Champion\ChampionSpellStatic.cs" />
     <Compile Include="StaticData\Champion\ChampionStatsStatic.cs" />
     <Compile Include="Requester.cs" />
-    <Compile Include="StaticData\Item\BasicDataStatic.cs" />
+    <Compile Include="StaticData\BasicDataStatic.cs" />
     <Compile Include="StaticData\Item\GoldStatic.cs" />
     <Compile Include="StaticData\Item\GroupStatic.cs" />
     <Compile Include="StaticData\Item\ItemListStatic.cs" />
-    <Compile Include="StaticData\Item\ItemRuneStatic.cs" />
+    <Compile Include="StaticData\MetadataStatic.cs" />
     <Compile Include="StaticData\Item\ItemStatic.cs" />
     <Compile Include="StaticData\Rune\RuneListStatic.cs" />
-    <Compile Include="StaticData\Rune\RuneTypeStatic.cs" />
     <Compile Include="StaticData\StatsStatic.cs" />
     <Compile Include="StaticData\Item\ItemTreeStatic.cs" />
     <Compile Include="StaticData\Mastery\MasteryListStatic.cs" />
@@ -113,30 +115,35 @@
     <Compile Include="StaticData\SummonerSpell\SummonerSpell.cs" />
     <Compile Include="StaticData\SummonerSpell\SummonerSpellListStatic.cs" />
     <Compile Include="StaticData\SummonerSpell\SummonerSpellStatic.cs" />
-    <Compile Include="StaticData\SummonerSpell\SummonerSpellVarStatic.cs" />
+    <Compile Include="StaticData\SpellVarStatic.cs" />
     <Compile Include="StaticRiotApi.cs" />
     <Compile Include="Stats\AggregatedStat.cs" />
     <Compile Include="Stats\ChampionStat.cs" />
     <Compile Include="Stats\ChampionStats.cs" />
-    <Compile Include="Champion\Champion.cs" />
+    <Compile Include="Stats\Deprecated\ChampionStatsV12.cs" />
+    <Compile Include="Champion\Deprecated\ChampionV11.cs" />
     <Compile Include="League\CharArrayConverter.cs" />
-    <Compile Include="League\Deprecated\LeagueV21.cs" />
-    <Compile Include="League\Deprecated\LeagueItemV21.cs" />
     <Compile Include="Stats\PlayerStatsSummary.cs" />
     <Compile Include="Stats\PlayerStatsSummaryList.cs" />
     <Compile Include="Stats\PlayerStatsSummaryType.cs" />
     <Compile Include="Stats\PlayerStatsSummaryTypeConverter.cs" />
-    <Compile Include="Stats\RankedStats.cs" />
+    <Compile Include="Stats\Deprecated\RankedStatsV12.cs" />
     <Compile Include="League\MiniSeries.cs" />
     <Compile Include="Game\Player.cs" />
-    <Compile Include="Game\Deprecated\RawStatV12.cs" />
+    <Compile Include="Stats\RankedStats.cs" />
+    <Compile Include="Summoner\Deprecated\MasteryPageV13.cs" />
+    <Compile Include="Summoner\Deprecated\MasteryPagesV13.cs" />
+    <Compile Include="Summoner\Mastery.cs" />
     <Compile Include="Summoner\MasteryPage.cs" />
     <Compile Include="Summoner\MasteryPages.cs" />
-    <Compile Include="Summoner\Rune.cs" />
+    <Compile Include="Summoner\Deprecated\RuneV13.cs" />
+    <Compile Include="Summoner\Deprecated\RunePageV13.cs" />
+    <Compile Include="Summoner\Deprecated\RunePagesV13.cs" />
+    <Compile Include="Summoner\Deprecated\RuneSlotV13.cs" />
+    <Compile Include="Stats\Season.cs" />
     <Compile Include="Summoner\RunePage.cs" />
     <Compile Include="Summoner\RunePages.cs" />
     <Compile Include="Summoner\RuneSlot.cs" />
-    <Compile Include="Stats\Season.cs" />
     <Compile Include="Summoner\Summoner.cs" />
     <Compile Include="Summoner\SummonerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,12 +151,7 @@
     <Compile Include="RateLimitedRequester.cs" />
     <Compile Include="RiotApi.cs" />
     <Compile Include="Summoner\SummonerBaseList.cs" />
-    <Compile Include="Summoner\Talent.cs" />
-    <Compile Include="Team\Deprecated\MatchHistorySummaryV21.cs" />
-    <Compile Include="Team\Deprecated\TeamIdV21.cs" />
-    <Compile Include="Team\Deprecated\TeamStatDetailV21.cs" />
-    <Compile Include="Team\Deprecated\TeamStatSummaryV21.cs" />
-    <Compile Include="Team\Deprecated\TeamV21.cs" />
+    <Compile Include="Summoner\Deprecated\TalentV13.cs" />
     <Compile Include="Team\MatchHistorySummary.cs" />
     <Compile Include="Team\MessageOfDay.cs" />
     <Compile Include="Team\Roster.cs" />
@@ -159,11 +161,14 @@
     <Compile Include="Team\TeamStatSummary.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Stats\Deprecated\" />
-    <Folder Include="Summoner\Deprecated\" />
+    <Folder Include="Game\Deprecated\" />
+    <Folder Include="League\Deprecated\" />
+    <Folder Include="Team\Deprecated\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
