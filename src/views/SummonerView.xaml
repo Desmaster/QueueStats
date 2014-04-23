@@ -5,30 +5,35 @@
     <Grid>
         <Label x:Name="lblSummonerName" Content="SummonerName" HorizontalAlignment="Left" Margin="28,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.6,-3.478" Height="Auto" Width="Auto" FontSize="24"/>
         <Label x:Name="lblLevel" Content="SummonerLevel" HorizontalAlignment="Left" Margin="503,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.065,-3.24" Width="Auto" Height="Auto" FontSize="20"/>
-        <Label x:Name="lblTitleRanked" Content="Ranked Solo/Duo Queue" HorizontalAlignment="Left" Margin="28,88,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblTitleDivision" Content="Division:" HorizontalAlignment="Left" Margin="28,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.095,0.821"/>
-        <Label x:Name="lblDivision" Content="" HorizontalAlignment="Left" Margin="124,151,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblTitleWins" Content="Wins:" HorizontalAlignment="Left" Margin="28,181,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblWins" Content="" HorizontalAlignment="Left" Margin="124,181,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblTitleLeaguePoints" Content="League Points:" HorizontalAlignment="Left" Margin="28,209,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblLeaguePoints" Content="" HorizontalAlignment="Left" Margin="124,209,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblTitleLeagueName" Content="League Name:" HorizontalAlignment="Left" Margin="28,123,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblLeagueName" Content="" HorizontalAlignment="Left" Margin="124,123,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblSeriesTag" Content="Series:" HorizontalAlignment="Left" Margin="221,209,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
-        <Grid x:Name="grdSeries" HorizontalAlignment="Left" Height="23" Margin="269,209,0,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <Grid x:Name="grdNormal">
+
         </Grid>
-        <DataGrid HorizontalAlignment="Left" Height="7" Margin="772,139,-107,0" VerticalAlignment="Top" Width="3"/>
-        <Label x:Name="lblTitleMedals" Content="Medals:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28,237,0,0"/>
-        <Grid x:Name="grdMedals" HorizontalAlignment="Left" Height="24" Margin="124,237,0,0" VerticalAlignment="Top" Width="48">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <Grid x:Name="grdRanked" Margin="0,92,333,0">
+            <Label x:Name="lblTitleRanked" Content="Ranked Solo/Duo Queue" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblTitleDivision" Content="Division:" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.095,0.821"/>
+            <Label x:Name="lblDivision" Content="" HorizontalAlignment="Left" Margin="124,151,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblTitleWins" Content="Wins:" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblWins" Content="" HorizontalAlignment="Left" Margin="124,181,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblTitleLeaguePoints" Content="League Points:" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblLeaguePoints" Content="" HorizontalAlignment="Left" Margin="124,209,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblTitleLeagueName" Content="League Name:" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblLeagueName" Content="" HorizontalAlignment="Left" Margin="124,123,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblSeriesTag" Content="Series:" HorizontalAlignment="Left" Margin="221,209,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Grid x:Name="grdSeries" HorizontalAlignment="Left" Height="23" Margin="221,139,0,0" VerticalAlignment="Top" Width="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <DataGrid HorizontalAlignment="Left" Height="7" Margin="772,139,-107,0" VerticalAlignment="Top" Width="3"/>
+            <Label x:Name="lblTitleMedals" Content="Medals:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,159,0,0"/>
+            <Grid x:Name="grdMedals" HorizontalAlignment="Left" Height="24" Margin="124,159,0,0" VerticalAlignment="Top" Width="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            </Grid>
         </Grid>
         <Label x:Name="lblPlaceholder" Content="Please enter or select a summoner" HorizontalAlignment="Left" Margin="187,58,0,0" VerticalAlignment="Top" FontSize="20"/>
     </Grid>
