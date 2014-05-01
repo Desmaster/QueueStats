@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Windows.Controls;
+using System.Drawing;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Image = System.Windows.Controls.Image;
 using Region = RiotSharp.Region;
 
 namespace src {
@@ -17,21 +19,34 @@ namespace src {
         }
 
         public static Region resolveRegion(String name) {
-            switch(name) 
-            {
+            switch (name) {
                 case "br":
-                    return Region.br;
+                return Region.br;
                 case "eune":
-                    return Region.eune;
+                return Region.eune;
                 case "euw":
-                    return Region.euw;
+                return Region.euw;
                 case "na":
-                    return Region.na;
+                return Region.na;
                 case "tr":
-                    return Region.tr;
+                return Region.tr;
                 default:
-                    return Region.na;
+                return Region.na;
             }
+        }
+
+        public static String resolveChampionId(int id) {
+            return Core.getInstance().getChampion(id).Name;
+        }
+
+        public static String resolveItemId(int id) {
+            return Core.getInstance().getItem(id).Name;
+        }
+
+        public static Image cropImage(Image image, Rect rect) {
+            
+            return image;
+
         }
     }
 }
