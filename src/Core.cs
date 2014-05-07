@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-
+using System.Windows.Forms;
 using Newtonsoft.Json;
 
 using RiotSharp;
@@ -12,10 +12,11 @@ namespace src {
 
     class Core {
 
-        private readonly RiotApi riotApi ;
+        private readonly RiotApi riotApi;
         private readonly StaticRiotApi staticApi;
         private ChampionListStatic championList;
         private ItemListStatic itemList;
+        private SummonerSpellListStatic spellList;
         private Summoner summoner;
         private Region region;
 
@@ -38,7 +39,7 @@ namespace src {
 
         public static Core getInstance() {
             if (instance == null) {
-                instance = new Core(Region.na, Settings.getProperty("api_key"), false);
+                instance = new Core(Region.na, Settings.getProperty("api_key"), true);
             }
             return instance;
         }
@@ -71,6 +72,14 @@ namespace src {
                 var json = JsonConvert.SerializeObject(itemList);
                 File.WriteAllText(CURRENT_PATH + "itemList.json", json);
             }
+
+            if (File.Exists(CURRENT_PATH + "spellList.json")) {
+                spellList = JsonConvert.DeserializeObject<SummonerSpellListStatic>(File.ReadAllText(CURRENT_PATH + "spellList.json"));
+            } else {
+                spellList = staticApi.GetSummonerSpells(region, SummonerSpellData.all);
+                var json = JsonConvert.SerializeObject(spellList);
+                File.WriteAllText(CURRENT_PATH + "spellList.json", json);
+            }
         }
 
         private void updateRegion(Region region) {
@@ -93,9 +102,19 @@ namespace src {
             return itemList;
         }
 
+        public SummonerSpellListStatic getSpellList() {
+            return spellList;
+        }
+
         public ChampionStatic getChampion(String name) {
             return (from pair in championList.Champions
                     where pair.Value.Name == name
+                    select pair.Value).FirstOrDefault();
+        }
+
+        public ChampionStatic getChampion(int id) {
+            return (from pair in championList.Champions
+                    where pair.Value.Id == id
                     select pair.Value).FirstOrDefault();
         }
 
@@ -108,6 +127,18 @@ namespace src {
         public ItemStatic getItem(int id) {
             return (from pair in itemList.Items
                     where pair.Key == id
+                    select pair.Value).FirstOrDefault();
+        }
+
+        public SummonerSpellStatic getSpell(String name) {
+            return (from pair in spellList.SummonerSpells
+                    where pair.Value.Name == name
+                    select pair.Value).FirstOrDefault();
+        }
+
+        public SummonerSpellStatic getSpell(int id) {
+            return (from pair in spellList.SummonerSpells
+                    where pair.Value.Id == id
                     select pair.Value).FirstOrDefault();
         }
 

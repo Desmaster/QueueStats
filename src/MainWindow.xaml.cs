@@ -35,6 +35,7 @@ namespace src {
             itemView = new ItemListView(this);
             championView = new ChampionsView(this);
             matchesView = new MatchesView();
+            statisticsView = new StatisticsView();
 
             setMenu(summonerView);
         }
