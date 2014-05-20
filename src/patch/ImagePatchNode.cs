@@ -28,18 +28,17 @@ namespace src.patch {
             return false;
         }
 
-        public override int patch(string path) {
+        public override async Task patch(string path) {
             if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
             using (var client = new WebClient()) {
                 client.DownloadProgressChanged += client_DownloadProgressChanged;
                 client.DownloadFileCompleted += client_DownloadFileCompleted;
-                Task.Run(() => client.DownloadFileAsync(new Uri("http://tdegroot.nl/api/qstats/img" + webName), path + @"\img" + webName.Replace("/", @"\")));
+                await Task.Run(() => client.DownloadFileAsync(new Uri("http://tdegroot.nl/api/qstats/img" + webName), path + @"\img" + webName.Replace("/", @"\")));
             }
-            return 2;
         }
 
         void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-            patchClient.DownloadFileCompleted(sender, e);
+            patchClient.DownloadFileCompleted(sender, e, "Downloaded " + webName);
         }
 
         void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {

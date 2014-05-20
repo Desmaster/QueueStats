@@ -19,7 +19,7 @@ namespace src.patch {
 
         public abstract bool patched(String path); 
 
-        public abstract int patch(String path);
+        public abstract Task patch(String path);
 
     }
 

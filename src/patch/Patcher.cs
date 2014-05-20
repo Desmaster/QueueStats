@@ -23,14 +23,14 @@ namespace src.patch {
 
         public Patcher() {
             InitializeComponent();
-            client = new PatchClient(this);
+//            client = new PatchClient(this);
             if(client.shouldPatch()) {
                 btnPatch.Enabled = true;
                 Visible = true;
                 Activate();
                 Focus();
                 lblFilesRemaining.Text = ("" + client.patchableNodes.Count);
-                patchThread = new Thread(new ThreadStart(client.patch));
+//                patchThread = new Thread(new ThreadStart(client.patch));
             }
         }
 

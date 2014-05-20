@@ -43,18 +43,21 @@ namespace src.patch {
             return patched;
         }
 
-        public override int patch(string path) {
+        public override async Task patch(string path) {
             if (!File.Exists(path + name)) {
                 using (var client = new WebClient()) {
                     client.DownloadFileCompleted += client_DownloadFileCompleted;
                     client.DownloadProgressChanged += client_DownloadProgressChanged;
                     patchClient.status("Downloading: " + name);
-                    Task.Run(() => client.DownloadFileAsync(new Uri(url + name), path + name));
+                    await Task.Run(() => {
+                        patchClient.status("Downloading: " + name);
+                        client.DownloadFileAsync(new Uri(url + name), path + name);
+                    });
+                    patchClient.status("Downloading: " + name);
                 }
-                return 2;
+            } else {
+                extract();
             }
-            extract();
-            return 1;
         }
 
         void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
@@ -62,7 +65,7 @@ namespace src.patch {
         }
 
         void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-            patchClient.DownloadFileCompleted(sender, e);
+            patchClient.DownloadFileCompleted(sender, e, "Downloaded " + name);
             extract();
         }
 

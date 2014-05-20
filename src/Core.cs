@@ -34,7 +34,6 @@ namespace src {
             updateRegion(region);
             loadLists();
             Log.info("Initialized Core");
-            Patcher patcher = new Patcher();
         }
 
         public static Core getInstance() {

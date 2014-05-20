@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,7 +55,11 @@ namespace src.views {
                 TextBlock textBlock = new TextBlock();
                 var bold = new Bold(new Run(spell.Name));
                 textBlock.Inlines.Add(bold);
-                textBlock.Inlines.Add(new Run("\r\n" + spell.Description));
+                String description = spell.Description.Replace("<br>", "\r\n");
+                description = Regex.Replace(description, @"<\s*\w.*?>", "");
+                description = description.Replace("</span>", "");
+
+                textBlock.Inlines.Add(new Run("\r\n" + description));
                 textBlock.MaxWidth = 400;
                 textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
 

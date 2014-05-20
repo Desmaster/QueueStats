@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 
 using RiotSharp;
 using src.api;
+using src.views;
 
 namespace src.patch {
 
@@ -23,15 +24,15 @@ namespace src.patch {
         private String currentPath;
         private String patchPath;
 
-        private Patcher patcher;
+        private SettingsView settingsView;
 
         private List<PatchNode> nodes = new List<PatchNode>();
         public List<PatchNode> patchableNodes = new List<PatchNode>();
 
-        public PatchClient(Patcher patcher) {
+        public PatchClient(SettingsView settingsView) {
             String key = Properties.Settings.Default.api_key;
             var riotAPI = RiotApi.GetInstance(key, false);
-            this.patcher = patcher;
+            this.settingsView = settingsView;
             homePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
             currentPath = homePath + API.getVersion() + @"\";
             patchPath = homePath + "patch.config";
@@ -113,28 +114,28 @@ namespace src.patch {
 
         private delegate void ObjectDelegate(object obj);
 
-        public void patch() {
+        public async Task patch() {
             if(!Directory.Exists(currentPath)) {
                 Directory.CreateDirectory(currentPath);
             }
             ObjectDelegate del;
             int elements = patchableNodes.Count;
-            del = new ObjectDelegate(patcher.setFilesRemainingInvoked);
-            del.Invoke(elements);
+//            del = new ObjectDelegate(settingsView.setFilesRemainingInvoked);
+//            del.Invoke(elements);
             double valuePerElement = 1.0 / elements * 100;
             double progress = 0;
             int patchCode = 0;
             for(int i = 0; i < patchableNodes.Count; i++) {
-                patchCode = patchableNodes[i].patch(currentPath);
+               await patchableNodes[i].patch(currentPath);
             }
             if(File.Exists(patchPath)) {
                 File.Delete(patchPath);
             }
 
             if (patchCode == 1) {
-                del = new ObjectDelegate(patcher.stopSpinning);
-                del.Invoke(null);
-                patcher.setStatusInvoked("Patching Finished");
+//                del = new ObjectDelegate(settingsView.stopSpinning);
+//                del.Invoke(null);
+//                settingsView.setStatusInvoked("Patching Finished");
                 Console.WriteLine("Patching Finished");
                 Console.WriteLine("Downloaded " + patchableNodes.Count + " files");
             }
@@ -147,26 +148,19 @@ namespace src.patch {
         }
 
         public void status(String status) {
-            patcher.setStatusInvoked(status);
+            settingsView.setStatus(status);
         }
 
         public void progress(int percentage) {
-            var del = new ObjectDelegate(patcher.setProgressInvoked);
-            del.Invoke(percentage);
+            settingsView.setProgress(percentage);
         }
 
         public void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {
-            var del = new ObjectDelegate(patcher.setProgressInvoked);
-            del.Invoke(e.ProgressPercentage);
+            progress(e.ProgressPercentage);
         }
 
-        public void DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e) {
-            ObjectDelegate del;
-            del = new ObjectDelegate(patcher.stopSpinning);
-            del.Invoke(null);
-            patcher.setStatusInvoked("Patching Finished");
-            Console.WriteLine("Patching Finished");
-            Console.WriteLine("Downloaded " + patchableNodes.Count + " files");
+        public void DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e, String message) {
+            status(message);
         }
 
     }

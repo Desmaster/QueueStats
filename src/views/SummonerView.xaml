@@ -5,7 +5,7 @@
     <Grid Margin="0,0,0,-347">
         <Label x:Name="lblSummonerName" Content="SummonerName" HorizontalAlignment="Left" Margin="28,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.6,-3.478" Height="Auto" Width="Auto" FontSize="24"/>
         <Label x:Name="lblLevel" Content="SummonerLevel" HorizontalAlignment="Left" Margin="503,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.065,-3.24" Width="Auto" Height="Auto" FontSize="20"/>
-        <Grid x:Name="grdNormal" Margin="340,92,0,-268">
+        <Grid x:Name="grdNormal" Margin="340,92,0,348">
             <Label Content="ARAM&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="50"/>
             <Label Content="Wins:&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="23" Width="40"/>
             <Label Content="Takedowns:&#xA;" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Height="25" Width="72"/>
@@ -25,11 +25,11 @@
             <Label x:Name="lbl3v3Wins" Content="" HorizontalAlignment="Left" Margin="117,273,0,0" VerticalAlignment="Top"/>
             <Label Content="Takedowns:" HorizontalAlignment="Left" Margin="10,301,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lbl3v3Kills" Content="" HorizontalAlignment="Left" Margin="117,301,0,0" VerticalAlignment="Top"/>
-            <Label Content="Towers Destroyed:" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top"/>
+            <Label Content="Towers destroyed:" HorizontalAlignment="Left" Margin="10,329,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lbl3v3Turrets" Content="" HorizontalAlignment="Left" Margin="117,329,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Grid x:Name="grdRanked" Margin="0,92,333,0">
-            <Label x:Name="lblTitleRanked" Content="Ranked Solo/Duo Queue" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblTitleRanked" Content="Ranked Solo 5v5" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblTitleDivision" Content="Division:" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.095,0.821"/>
             <Label x:Name="lblDivision" Content="" HorizontalAlignment="Left" Margin="124,73,0,0" VerticalAlignment="Top" RenderTransformOrigin="11.6,2.304"/>
             <Label x:Name="lblTitleWins" Content="Wins:" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
@@ -54,6 +54,18 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
             </Grid>
+            <Grid x:Name="grdNormalStats" HorizontalAlignment="Left" Height="699" Margin="0,187,0,0" VerticalAlignment="Top" Width="325">
+                <Label Content="Normal 5v5" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="Wins:" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="lblNormalWins" Content="" HorizontalAlignment="Left" Margin="112,48,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.9,-0.739"/>
+                <Label Content="Takedowns:" HorizontalAlignment="Left" Margin="7,76,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="lblNormalKills" Content="" HorizontalAlignment="Left" Margin="112,76,0,0" VerticalAlignment="Top"/>
+                <Label Content="Towers destroyed:" HorizontalAlignment="Left" Margin="7,104,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="lblNormalTurrets" Content="" HorizontalAlignment="Left" Margin="112,104,0,0" VerticalAlignment="Top"/>
+                <Label Content="Creeps slain:" HorizontalAlignment="Left" Margin="7,132,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="lblNormalCreeps" Content="" HorizontalAlignment="Left" Margin="112,132,0,0" VerticalAlignment="Top"/>
+            </Grid>
+            <Label x:Name="lblWins_Copy" Content="" HorizontalAlignment="Left" Margin="124,103,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Label x:Name="lblPlaceholder" Content="Please enter or select a summoner" HorizontalAlignment="Left" Margin="187,58,0,0" VerticalAlignment="Top" FontSize="20"/>
     </Grid>

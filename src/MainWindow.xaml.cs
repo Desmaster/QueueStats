@@ -18,6 +18,7 @@ namespace src {
         private Window itemView;
         private Window championView;
         private Window statisticsView;
+        private Window settingsView;
 
         public MainWindow() {
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace src {
             championView = new ChampionsView(this);
             matchesView = new MatchesView();
             statisticsView = new StatisticsView();
+            settingsView = new SettingsView();
 
             setMenu(summonerView);
         }
@@ -81,6 +83,9 @@ namespace src {
                     break;
                     case "Items":
                     setMenu(itemView);
+                    break;
+                    case "Settings":
+                    setMenu(settingsView);
                     break;
                 }
         }

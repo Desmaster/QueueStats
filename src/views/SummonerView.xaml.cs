@@ -78,7 +78,6 @@ namespace src.views {
                 }
                 MiniSeries series = league.MiniSeries;
                 if (series != null) {
-                if (!(series.Losses == 0 && series.Wins == 0)) {
                     lblSeriesTag.Visibility = Visibility.Visible;
                     grdSeries.Visibility = Visibility.Visible;
                     grdSeries.Children.Clear();
@@ -113,10 +112,6 @@ namespace src.views {
                     lblSeriesTag.Visibility = Visibility.Hidden;
                     grdSeries.Visibility = Visibility.Hidden;
                 }
-                } else {
-                    lblSeriesTag.Visibility = Visibility.Hidden;
-                    grdSeries.Visibility = Visibility.Hidden;
-                }
             }
         }
 
@@ -125,12 +120,21 @@ namespace src.views {
             lblAramWins.Content = summaries[0].Wins;
             lblAramTakedowns.Content = summaries[0].AggregatedStats.TotalChampionKills;
             lblAramTurrets.Content = summaries[0].AggregatedStats.TotalTurretsKilled;
+
             lblDominionWins.Content = summaries[3].Wins;
             lblDominionNodes.Content = summaries[3].AggregatedStats.TotalNodeCapture;
             lblDominionKills.Content = summaries[3].AggregatedStats.TotalChampionKills;
+
             lbl3v3Wins.Content = summaries[9].Wins;
             lbl3v3Kills.Content = summaries[9].AggregatedStats.TotalChampionKills;
             lbl3v3Turrets.Content = summaries[9].AggregatedStats.TotalTurretsKilled;
+
+            lblNormalWins.Content = summaries[8].Wins;
+            lblNormalKills.Content = summaries[8].AggregatedStats.TotalChampionKills;
+            lblNormalTurrets.Content = summaries[8].AggregatedStats.TotalTurretsKilled;
+            int creeps = summaries[8].AggregatedStats.TotalMinionKills + summaries[8].AggregatedStats.TotalNeutralMinionsKilled;
+            lblNormalCreeps.Content = creeps;
+
         }
 
         private void resetControls() {
@@ -147,30 +151,15 @@ namespace src.views {
 
         private void hideControls() {
             resetControls();
-//            lblSummonerName.Visibility = Visibility.Hidden;
-//            lblLevel.Visibility = Visibility.Hidden;
-//            lblTitleRanked.Visibility = Visibility.Hidden;
-//            lblTitleLeagueName.Visibility = Visibility.Hidden;
-//            lblTitleLeaguePoints.Visibility = Visibility.Hidden;
-//            lblTitleWins.Visibility = Visibility.Hidden;
-//            lblTitleDivision.Visibility = Visibility.Hidden;
-//            lblTitleMedals.Visibility = Visibility.Hidden;
-//            lblWins.Visibility = Visibility.Hidden;
             grdRanked.Visibility = Visibility.Hidden;
+            grdNormal.Visibility = Visibility.Hidden;
+            grdNormalStats.Visibility = Visibility.Hidden;
         }
 
         private void showControls() {
-//            lblWins.Visibility = Visibility.Visible;
-//            lblSummonerName.Visibility = Visibility.Visible;
-//            lblLevel.Visibility = Visibility.Visible;
-//            lblTitleRanked.Visibility = Visibility.Visible;
-//            lblTitleLeagueName.Visibility = Visibility.Visible;
-//            lblTitleLeaguePoints.Visibility = Visibility.Visible;
-//            lblTitleWins.Visibility = Visibility.Visible;
-//            lblTitleDivision.Visibility = Visibility.Visible;
-//            lblTitleMedals.Visibility = Visibility.Visible;
-//            lblWins.Visibility = Visibility.Visible;
             grdRanked.Visibility = Visibility.Visible;
+            grdNormal.Visibility = Visibility.Visible;
+            grdNormalStats.Visibility = Visibility.Visible;
         }
 
         public void summonerUpdated(Summoner summoner) {

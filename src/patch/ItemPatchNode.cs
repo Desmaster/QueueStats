@@ -29,7 +29,7 @@ namespace src.patch {
         }
 
         override
-        public int patch(String path) {
+        public async Task patch(String path) {
             String fullPath = path + @"items\";
             String fileName = name + ".json";
             if(!Directory.Exists(fullPath)) {
@@ -40,7 +40,6 @@ namespace src.patch {
                 String json = JsonConvert.SerializeObject(item);
                 File.WriteAllText(fullPath + fileName, json);
             }
-            return 1;
         }
 
     }
