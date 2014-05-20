@@ -1,0 +1,10 @@
+﻿<Window x:Class="src.views.SettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SettingsView" Height="453" Width="779">
+    <Grid>
+        <ProgressBar x:Name="pbProgress" HorizontalAlignment="Left" Height="40" Margin="185,150,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label x:Name="lblStatus" Content="Status" HorizontalAlignment="Left" Margin="185,195,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
