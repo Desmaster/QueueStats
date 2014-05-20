@@ -14,5 +14,6 @@ namespace src.stats {
     
         [JsonProperty("timesPlayed")]
         public int timesPlayed { get; set; }
+
     }
 }

@@ -35,8 +35,15 @@ namespace src {
             }
         }
 
-        public static String resolveChampionId(int id) {
-            return Core.getInstance().getChampion(id).Name;
+        public static String resolveChampionId(int id)
+        {
+            String name = Core.getInstance().getChampion(id).Name;
+            switch (name) {
+                case "Master Yi":
+                    return "MasterYi";
+                default:
+                    return name;
+            }
         }
 
         public static String resolveItemId(int id) {

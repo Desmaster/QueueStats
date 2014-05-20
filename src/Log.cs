@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 namespace src {
 
     class Log {
+        private static void log(String message) {
+            Console.WriteLine(DateTime.Now + " " + message);
+        }
 
         public static void info(String message) {
-            Console.WriteLine("INFO: " + message);
+            log("[INFO]: " + message);
         }
 
     }

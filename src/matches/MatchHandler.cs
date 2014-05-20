@@ -39,7 +39,6 @@ namespace src.matches {
                 }
 
                 updateMatches(summoner);
-                updateAverageStats(summoner);
             }
         }
 
@@ -50,28 +49,20 @@ namespace src.matches {
             return instance;
         }
 
-        private async Task<Summoner> processSummoner(Region region, long id) {
-            return await api.GetSummonerAsync(region, (int)id);
-        }
-
-        private async Task<List<Game>> processMatch(Task<Summoner> task) {
-            return await task.Result.GetRecentGamesAsync();
-        }
-
         private async void updateMatches(TrackedSummoner tsummoner) {
             try {
-                Task<Summoner> summonerTask = api.GetSummonerAsync(tsummoner.Region, (int)tsummoner.Id);
-                Summoner summoner = await summonerTask;
-                Task<List<Game>> matchTask = summoner.GetRecentGamesAsync();
+                Summoner summoner = await api.GetSummonerAsync(tsummoner.Region, (int)tsummoner.Id);
 
                 try {
-                    List<Game> games = await matchTask;
+                    List<Game> games = await summoner.GetRecentGamesAsync();
                     foreach (Game game in games) {
                         if (!Directory.EnumerateFiles(HOME_PATH + tsummoner.Name).Any(x => x == game.GameId.ToString())) {
                             File.WriteAllText(HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json",
-                                JsonConvert.SerializeObject(game));
+                            await Task.Factory.StartNew(() => JsonConvert.SerializeObject(game)));
                         }
                     }
+
+                    updateAverageStats(tsummoner);
                 } catch (Exception e) {
                     Console.WriteLine(e.Message);
 
@@ -81,15 +72,14 @@ namespace src.matches {
             }
         }
 
-        public void updateAverageStats(TrackedSummoner tsummoner) {
-            List<Game> games = loadTrackedMatches(tsummoner.Name);
+        public async void updateAverageStats(TrackedSummoner tsummoner) {
+            List<Game> games = await loadTrackedMatches(tsummoner.Name);
             AverageStats stats = new AverageStats();
 
             //list of champions played
             //first array element contains the champion id, second the times champion was played
             List<ChampionPlayed> championsPlayed = new List<ChampionPlayed>();
 
-            Console.WriteLine(tsummoner.Name);
             foreach (Game game in games) {
                 //champions stats
                 if (championsPlayed.Exists(x => x.championId == game.ChampionId)) {
@@ -125,16 +115,31 @@ namespace src.matches {
             stats.totalPhysicalDamageTaken = games.Sum(x => x.Statistics.PhysicalDamageTaken);
             stats.totalTrueDamageTaken = games.Sum(x => x.Statistics.TrueDamageTaken);
             stats.totalDamageTaken = games.Sum(x => x.Statistics.TotalDamageTaken);
+
+            stats.averageGoldEarned = games.Average(x => x.Statistics.GoldEarned);
+            stats.goldEarned = games.Sum(x => x.Statistics.GoldEarned);
+            stats.goldSpent = games.Sum(x => x.Statistics.GoldSpent);
+
+            File.WriteAllText(HOME_PATH + tsummoner.Name + @"\averageStats.json", await Task.Factory.StartNew(() => JsonConvert.SerializeObject(stats)));
         }
 
-        public List<Game> loadTrackedMatches(String summonerName) {
+        public async Task<List<Game>> loadTrackedMatches(String summonerName) {
             List<Game> games = new List<Game>();
-            String path = core.getHomePath() + @"matches\" + summonerName + @"\";
+            String path = HOME_PATH + summonerName + @"\";
             foreach (String filePath in Directory.EnumerateFiles(path)) {
-                games.Add(JsonConvert.DeserializeObject<Game>(File.ReadAllText(filePath)));
+                if (filePath.Contains("averageStats"))
+                    continue;
+                String fileContent = File.ReadAllText(filePath);
+                Game game = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<Game>(fileContent));
+
+                games.Add(game);
             }
 
             return games;
+        }
+
+        public async Task<AverageStats> getAverageStats(String summonerName) {
+            return await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<AverageStats>(File.ReadAllText(HOME_PATH + summonerName + @"\averageStats.json")));
         }
     }
 }

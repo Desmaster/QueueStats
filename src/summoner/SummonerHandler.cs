@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,27 +65,28 @@ namespace src {
             return selectedSummoner;
         }
 
-        public void setSummoner(String name, Region region) {
-            loadSummoner(name, region).ContinueWith(updateSummoner, TaskContinuationOptions.ExecuteSynchronously);
+        public async void setSummoner(String name, Region region)
+        {
+            try
+            {
+                Log.info("getting summoner..");
+                Summoner summoner = await api.GetSummonerAsync(region, name);
+                updateSummoner(summoner);
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public void setSummoner(TrackedSummoner summoner) {
             setSummoner(summoner.Name, summoner.Region);
         }
 
-        private async Task loadSummoner(String name, Region region) {
-            StatusHandler.info("Loading summoner");
-            selectedSummoner = await api.GetSummonerAsync(region, name);
-        }
-
-        private async Task loadSummoner(TrackedSummoner summoner) {
-            loadSummoner(summoner.Name, summoner.Region);
-        }
-
-        private void updateSummoner(Task task) {
-            StatusHandler.reset();
+        private void updateSummoner(Summoner summoner)
+        {
+            selectedSummoner = summoner;
             for (int i = 0; i < summonerListeners.Count; i++) {
-                summonerListeners[i].summonerUpdated(selectedSummoner);
+                summonerListeners[i].summonerUpdated(summoner);
             }
         }
 
