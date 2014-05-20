@@ -42,8 +42,7 @@ namespace src.views {
             if (summonerHandler.isTracked(summoner)) {
                 games = await MatchHandler.getInstance().loadTrackedMatches(summoner.Name);
             } else {
-                games = new List<Game>();
-                loadMatches(summoner);
+                games = await summoner.GetRecentGamesAsync();
             }
 
             updateMatchesList(summoner);
@@ -57,10 +56,6 @@ namespace src.views {
             foreach (Game game in games.OrderBy(x => x.CreateDate).Reverse()) {
                 addMatchControl(game);
             }
-        }
-
-        private async void loadMatches(Summoner summoner) {
-            games = await summoner.GetRecentGamesAsync();
         }
 
         private void addMatchControl(Game game) {

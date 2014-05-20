@@ -39,7 +39,7 @@ namespace src.views {
         }
 
         public async void summonerUpdated(Summoner summoner) {
-            stats = await MatchHandler.getInstance().getAverageStats(summoner.Name);
+            stats = await MatchHandler.getInstance().getAverageStats(summoner);
 
             ImageBrush splashImage = new ImageBrush();
             splashImage.Opacity = 0.5;
