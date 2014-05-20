@@ -21,6 +21,9 @@ namespace src.matches {
 
         private string HOME_PATH;
 
+        private List<Game> games;
+        private AverageStats stats;
+
         private MatchHandler() {
             core = Core.getInstance();
             api = core.getRiotApi();
@@ -33,13 +36,7 @@ namespace src.matches {
                 Directory.CreateDirectory(HOME_PATH);
             }
 
-            foreach (TrackedSummoner summoner in summonerHandler.trackedSummoners) {
-                if (!Directory.Exists(HOME_PATH + summoner.Name + @"\")) {
-                    Directory.CreateDirectory(HOME_PATH + summoner.Name + @"\");
-                }
-
-                updateMatches(summoner);
-            }
+            updateTrackedInfo();
         }
 
         public static MatchHandler getInstance() {
@@ -49,38 +46,35 @@ namespace src.matches {
             return instance;
         }
 
-        private async void updateMatches(TrackedSummoner tsummoner) {
-            try {
-                Summoner summoner = await api.GetSummonerAsync(tsummoner.Region, (int)tsummoner.Id);
-
-                try {
-                    List<Game> games = await summoner.GetRecentGamesAsync();
-                    foreach (Game game in games) {
-                        if (!Directory.EnumerateFiles(HOME_PATH + tsummoner.Name).Any(x => x == game.GameId.ToString())) {
-                            File.WriteAllText(HOME_PATH + tsummoner.Name + @"\" + game.GameId + ".json",
-                            await Task.Factory.StartNew(() => JsonConvert.SerializeObject(game)));
-                        }
-                    }
-
-                    updateAverageStats(tsummoner);
-                } catch (Exception e) {
-                    Console.WriteLine(e.Message);
-
+        private async void updateTrackedInfo() {
+            foreach (TrackedSummoner summoner in summonerHandler.trackedSummoners) {
+                if (!Directory.Exists(HOME_PATH + summoner.Name + @"\")) {
+                    Directory.CreateDirectory(HOME_PATH + summoner.Name + @"\");
                 }
-            } catch (Exception e) {
-                Console.WriteLine(e.StackTrace);
+
+                updateMatches(await api.GetSummonerAsync(summoner.Region, summoner.Name));
             }
         }
 
-        public async void updateAverageStats(TrackedSummoner tsummoner) {
-            List<Game> games = await loadTrackedMatches(tsummoner.Name);
-            AverageStats stats = new AverageStats();
+        private async void updateMatches(Summoner summoner)
+        {
+            games = await summoner.GetRecentGamesAsync();
+            foreach (Game game in games) {
+                if (!Directory.EnumerateFiles(HOME_PATH + summoner.Name).Any(x => x == game.GameId.ToString())) {
+                    File.WriteAllText(HOME_PATH + summoner.Name + @"\" + game.GameId + ".json",
+                        await Task.Factory.StartNew(() => JsonConvert.SerializeObject(game)));
+                }
+            }
 
-            //list of champions played
-            //first array element contains the champion id, second the times champion was played
+            updateAverageStats(summoner);
+        }
+
+        public async void updateAverageStats(Summoner summoner) {
+            stats = new AverageStats();
+
             List<ChampionPlayed> championsPlayed = new List<ChampionPlayed>();
 
-            foreach (Game game in games) {
+            foreach (Game game in summonerHandler.isTracked(summoner) ? await loadTrackedMatches(summoner.Name) : games) {
                 //champions stats
                 if (championsPlayed.Exists(x => x.championId == game.ChampionId)) {
                     championsPlayed.Find(x => x.championId == game.ChampionId).timesPlayed++;
@@ -88,6 +82,7 @@ namespace src.matches {
                     championsPlayed.Add(new ChampionPlayed() {
                         championId = game.ChampionId, timesPlayed = 1
                     });
+                    Console.WriteLine(Util.resolveChampionId(game.ChampionId));
                 }
             }
 
@@ -120,7 +115,8 @@ namespace src.matches {
             stats.goldEarned = games.Sum(x => x.Statistics.GoldEarned);
             stats.goldSpent = games.Sum(x => x.Statistics.GoldSpent);
 
-            File.WriteAllText(HOME_PATH + tsummoner.Name + @"\averageStats.json", await Task.Factory.StartNew(() => JsonConvert.SerializeObject(stats)));
+            if (summonerHandler.isTracked(summoner))
+                File.WriteAllText(HOME_PATH + summoner.Name + @"\averageStats.json", await Task.Factory.StartNew(() => JsonConvert.SerializeObject(stats)));
         }
 
         public async Task<List<Game>> loadTrackedMatches(String summonerName) {
@@ -138,8 +134,20 @@ namespace src.matches {
             return games;
         }
 
-        public async Task<AverageStats> getAverageStats(String summonerName) {
-            return await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<AverageStats>(File.ReadAllText(HOME_PATH + summonerName + @"\averageStats.json")));
+        public async Task<AverageStats> getAverageStats(Summoner summoner) {
+            if (summonerHandler.isTracked(summoner)) {
+                return
+                    await
+                        Task.Factory.StartNew(
+                            () =>
+                                JsonConvert.DeserializeObject<AverageStats>(
+                                    File.ReadAllText(HOME_PATH + summoner.Name + @"\averageStats.json")));
+            } else
+            {
+                games = await summoner.GetRecentGamesAsync();
+                updateAverageStats(summoner);
+                return stats;
+            }
         }
     }
 }
