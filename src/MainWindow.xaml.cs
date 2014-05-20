@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using src.summoner;
 using src.util;
 using src.views;
@@ -26,16 +27,17 @@ namespace src {
             client = new Client();
             client.summonerHandler.register(this);
 
-            cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
-            cbxTrackedSummoners_Update();
-
             StatusHandler.window = this;
 
             summonerView = new SummonerView();
             itemView = new ItemListView(this);
             championView = new ChampionsView(this);
             matchesView = new MatchesView();
-            statisticsView = new StatisticsView();
+            statisticsView = new StatisticsView(this);
+
+            
+            cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
+            cbxTrackedSummoners_Update();
 
             setMenu(summonerView);
         }
@@ -75,6 +77,9 @@ namespace src {
                     break;
                     case "Matches":
                     setMenu(matchesView);
+                    break;
+                    case "Statistics":
+                    setMenu(statisticsView);
                     break;
                     case "Champions":
                     setMenu(championView);
@@ -166,9 +171,6 @@ namespace src {
             setSummonerpanel(summoner);
         }
 
-        /// <summary>Sets the selected item of the TrackedSummoners combobox to the current TRACKEDSUMMONER</summary>
-        /// <param name="summoner">The TrackedSummoner which will be set as the selected item</param>
-
         private void cbxTrackedSummoners_SelectionToCurrent(Summoner summoner) {
             cbxTrackedSummoners.SelectedIndex =
                         cbxTrackedSummoners.Items.IndexOf(cbxTrackedSummoners.Items.Cast<TrackedSummoner>().Single(x => x.Id == summoner.Id && x.Region == summoner.Region));
@@ -181,7 +183,8 @@ namespace src {
         }
 
         private void setSummonerpanel(Summoner summoner) {
-            if (summoner == null) return;
+            if (summoner == null)
+                return;
             if (summoner.Id != 0) {
                 cbTrackSearch.IsEnabled = true;
                 cbTrackTracked.IsEnabled = true;
@@ -216,6 +219,11 @@ namespace src {
             cbTrackTracked.IsEnabled = false;
 
             cbxTrackedSummoners.SelectedIndex = -1;
+        }
+
+        public void setBackground(ImageBrush brush)
+        {
+            gridBackground.Background = brush;
         }
 
     }

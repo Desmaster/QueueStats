@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using RiotSharp;
 
 namespace src.stats {
@@ -66,5 +67,14 @@ namespace src.stats {
 
         [JsonProperty("totalDamageTaken")]
         public long totalDamageTaken { get; set; }
+
+        [JsonProperty("averageGoldEarned")]
+        public double averageGoldEarned { get; set; }
+
+        [JsonProperty("goldEarned")]
+        public int goldEarned { get; set; }
+
+        [JsonProperty("goldSpent")]
+        public int goldSpent { get; set; }
     }
 }

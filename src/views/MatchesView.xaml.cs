@@ -38,9 +38,9 @@ namespace src.views {
             core = Core.getInstance();
         }
 
-        public void summonerUpdated(Summoner summoner) {
+        public async void summonerUpdated(Summoner summoner) {
             if (summonerHandler.isTracked(summoner)) {
-                games = MatchHandler.getInstance().loadTrackedMatches(summoner.Name);
+                games = await MatchHandler.getInstance().loadTrackedMatches(summoner.Name);
             } else {
                 games = new List<Game>();
                 loadMatches(summoner);
@@ -50,7 +50,6 @@ namespace src.views {
         }
 
         private void updateMatchesList(Summoner summoner) {
-            //matchesGrid.ColumnDefinitions.Clear();
             matchesGrid.RowDefinitions.Clear();
             matchesGrid.Children.Clear();
             rowNumber = 0;
@@ -61,7 +60,7 @@ namespace src.views {
         }
 
         private async void loadMatches(Summoner summoner) {
-            games = summoner.GetRecentGames();
+            games = await summoner.GetRecentGamesAsync();
         }
 
         private void addMatchControl(Game game) {
