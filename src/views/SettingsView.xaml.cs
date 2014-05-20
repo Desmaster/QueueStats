@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +27,8 @@ namespace src.views {
             if (patchClient.shouldPatch()) {
                 patch();
             } else {
-                
+                lblStatus.Content = "Nothing to download right now!";
             }
-            
         }
 
         private async void patch() {
@@ -36,7 +36,7 @@ namespace src.views {
         }
 
         public void setProgress(double progress) {
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
+            Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
                 delegate() {
                     pbProgress.Value= progress;
                 }
@@ -51,6 +51,11 @@ namespace src.views {
                    lblStatus.Content = status;
                }
             );
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            Directory.Delete(Core.getInstance().getHomePath(), true);
+            patch();
         }
 
 

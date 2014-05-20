@@ -66,8 +66,7 @@
                     <Button Click="Menu_Click">Settings</Button>
                 </StackPanel>
             </StackPanel>
-            <ContentControl x:Name="content" DockPanel.Dock="Right" Height="530" VerticalAlignment="Top" Width="755" Margin="0,0,0,-19">
-            </ContentControl>
+            <ContentControl x:Name="content" Width="666" Margin="0,29"/>
         </DockPanel>
     </Grid>
 </Window>

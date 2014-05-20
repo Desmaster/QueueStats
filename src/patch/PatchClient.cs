@@ -124,20 +124,11 @@ namespace src.patch {
 //            del.Invoke(elements);
             double valuePerElement = 1.0 / elements * 100;
             double progress = 0;
-            int patchCode = 0;
             for(int i = 0; i < patchableNodes.Count; i++) {
                await patchableNodes[i].patch(currentPath);
             }
             if(File.Exists(patchPath)) {
                 File.Delete(patchPath);
-            }
-
-            if (patchCode == 1) {
-//                del = new ObjectDelegate(settingsView.stopSpinning);
-//                del.Invoke(null);
-//                settingsView.setStatusInvoked("Patching Finished");
-                Console.WriteLine("Patching Finished");
-                Console.WriteLine("Downloaded " + patchableNodes.Count + " files");
             }
             
             StreamWriter strm = File.CreateText(patchPath);

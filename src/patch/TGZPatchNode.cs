@@ -79,12 +79,14 @@ namespace src.patch {
                     patchClient.status("Currently extracting: " + loc);
                     if (loc == "")
                         continue;
+                    if (File.Exists(imgPath + entry.FileName)) continue;
                     entry.Extract(imgPath);
                     progress += pointPerFile;
                     patchClient.progress((int) progress);
                 }
             }
             patchClient.status("Finished patching and extracting.");
+            patchClient.progress(100);
         }
 
 

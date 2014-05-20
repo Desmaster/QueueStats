@@ -5,6 +5,7 @@
     <Grid>
         <ProgressBar x:Name="pbProgress" HorizontalAlignment="Left" Height="40" Margin="185,150,0,0" VerticalAlignment="Top" Width="200"/>
         <Label x:Name="lblStatus" Content="Status" HorizontalAlignment="Left" Margin="185,195,0,0" VerticalAlignment="Top"/>
+        <Button Content="Clear all downloaded data" HorizontalAlignment="Left" Margin="175,310,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
 
     </Grid>
 </Window>
