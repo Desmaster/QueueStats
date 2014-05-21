@@ -83,6 +83,7 @@ namespace src.views {
                     grdSeries.Children.Clear();
                         for (int j = 0; j < series.Progress.Length; j++) {
                         char c = series.Progress[j];
+                        grdSeries.ColumnDefinitions.Add(new ColumnDefinition());
                         Log.info("" + c);
                         switch (c) {
                             case 'W':
@@ -117,23 +118,29 @@ namespace src.views {
 
         private void initNormal() {
             if (summaries == null) return;
-            lblAramWins.Content = summaries[0].Wins;
-            lblAramTakedowns.Content = summaries[0].AggregatedStats.TotalChampionKills;
-            lblAramTurrets.Content = summaries[0].AggregatedStats.TotalTurretsKilled;
-
-            lblDominionWins.Content = summaries[3].Wins;
-            lblDominionNodes.Content = summaries[3].AggregatedStats.TotalNodeCapture;
-            lblDominionKills.Content = summaries[3].AggregatedStats.TotalChampionKills;
-
-            lbl3v3Wins.Content = summaries[9].Wins;
-            lbl3v3Kills.Content = summaries[9].AggregatedStats.TotalChampionKills;
-            lbl3v3Turrets.Content = summaries[9].AggregatedStats.TotalTurretsKilled;
-
-            lblNormalWins.Content = summaries[8].Wins;
-            lblNormalKills.Content = summaries[8].AggregatedStats.TotalChampionKills;
-            lblNormalTurrets.Content = summaries[8].AggregatedStats.TotalTurretsKilled;
-            int creeps = summaries[8].AggregatedStats.TotalMinionKills + summaries[8].AggregatedStats.TotalNeutralMinionsKilled;
-            lblNormalCreeps.Content = creeps;
+            for (int i = 0; i < summaries.Count; i++) {
+                PlayerStatsSummary summary = summaries[i];
+                if (summary.PlayerStatSummaryType == PlayerStatsSummaryType.AramUnranked5x5) {
+                    lblAramWins.Content = summary.Wins;
+                    lblAramTakedowns.Content = summary.AggregatedStats.TotalChampionKills;
+                    lblAramTurrets.Content = summary.AggregatedStats.TotalTurretsKilled;
+                } else if (summary.PlayerStatSummaryType == PlayerStatsSummaryType.OdinUnranked) {
+                    lblDominionWins.Content = summary.Wins;
+                    lblDominionNodes.Content = summary.AggregatedStats.TotalNodeCapture;
+                    lblDominionKills.Content = summary.AggregatedStats.TotalChampionKills;
+                } else if (summary.PlayerStatSummaryType == PlayerStatsSummaryType.Unranked3x3) {
+                    lbl3v3Wins.Content = summary.Wins;
+                    lbl3v3Kills.Content = summary.AggregatedStats.TotalChampionKills;
+                    lbl3v3Turrets.Content = summary.AggregatedStats.TotalTurretsKilled;
+                } else if (summary.PlayerStatSummaryType == PlayerStatsSummaryType.Unranked) {
+                    lblNormalWins.Content = summary.Wins;
+                    lblNormalKills.Content = summary.AggregatedStats.TotalChampionKills;
+                    lblNormalTurrets.Content = summary.AggregatedStats.TotalTurretsKilled;
+                    int creeps = summary.AggregatedStats.TotalMinionKills + summary.AggregatedStats.TotalNeutralMinionsKilled;
+                    lblNormalCreeps.Content = creeps;
+                }
+            }
+            
 
         }
 
@@ -145,6 +152,7 @@ namespace src.views {
             lblLeaguePoints.Content = "";
             lblWins.Content = "0";
             lblSeriesTag.Visibility = Visibility.Hidden;
+            grdSeries.ColumnDefinitions.Clear();
             grdSeries.Children.Clear();
             grdMedals.Children.Clear();
         }

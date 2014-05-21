@@ -85,8 +85,7 @@ namespace src.patch {
                     patchClient.progress((int) progress);
                 }
             }
-            patchClient.status("Finished patching and extracting.");
-            patchClient.progress(100);
+            patchClient.completion();
         }
 
 

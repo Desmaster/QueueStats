@@ -30,7 +30,7 @@ namespace src.patch {
         public List<PatchNode> patchableNodes = new List<PatchNode>();
 
         public PatchClient(SettingsView settingsView) {
-            String key = Properties.Settings.Default.api_key;
+            String key = Properties.Settings.Default.api_key_1;
             var riotAPI = RiotApi.GetInstance(key, false);
             this.settingsView = settingsView;
             homePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
@@ -144,6 +144,12 @@ namespace src.patch {
 
         public void progress(int percentage) {
             settingsView.setProgress(percentage);
+        }
+
+        public void completion() {
+            status("Finished patching and extracting.");
+            progress(100);
+            settingsView.completion();
         }
 
         public void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e) {

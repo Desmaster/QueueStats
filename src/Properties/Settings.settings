@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="src.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="api_key" Type="System.String" Scope="User">
+    <Setting Name="api_key_1" Type="System.String" Scope="User">
       <Value Profile="(Default)">af7503f7-147c-4342-b331-fcd32b479c0c</Value>
     </Setting>
     <Setting Name="summonername" Type="System.String" Scope="User">
@@ -10,6 +10,9 @@
     </Setting>
     <Setting Name="region" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="api_key_2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">cf2ad251-64ab-4a6a-a5bf-7350de8b6d2a</Value>
     </Setting>
   </Settings>
 </SettingsFile>

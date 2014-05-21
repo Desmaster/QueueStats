@@ -38,11 +38,12 @@ namespace src {
         public static String resolveChampionId(int id)
         {
             String name = Core.getInstance().getChampion(id).Name;
+            Log.info(name);
             switch (name) {
-                case "Master Yi":
-                    return "MasterYi";
+                case "Fiddlesticks":
+                    return "FiddleSticks";
                 default:
-                    return name;
+                    return name.Replace(" ", "");
             }
         }
 

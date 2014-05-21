@@ -12,7 +12,7 @@ namespace src {
 
     class Core {
 
-        private readonly RiotApi riotApi;
+        private readonly RiotApi[] riotApis;
         private readonly StaticRiotApi staticApi;
         private ChampionListStatic championList;
         private ItemListStatic itemList;
@@ -28,9 +28,11 @@ namespace src {
 
         private static Core instance;
 
-        private Core(Region region, String apiKey, bool isProdApi) {
-            riotApi = RiotApi.GetInstance(apiKey, isProdApi);
-            staticApi = StaticRiotApi.GetInstance(apiKey);
+        private Core(Region region, bool isProdApi) {
+            String apiKey_1 = Settings.getProperty("api_key_1");
+            String apiKey_2 = Settings.getProperty("api_key_2");
+            riotApis = new RiotApi[] { RiotApi.GetInstance(apiKey_1, isProdApi), RiotApi.GetInstance(apiKey_2, isProdApi) };
+            staticApi = StaticRiotApi.GetInstance(apiKey_1);
             updateRegion(region);
             loadLists();
             Log.info("Initialized Core");
@@ -38,7 +40,7 @@ namespace src {
 
         public static Core getInstance() {
             if (instance == null) {
-                instance = new Core(Region.na, Settings.getProperty("api_key"), true);
+                instance = new Core(Region.na, true);
             }
             return instance;
         }
@@ -160,7 +162,8 @@ namespace src {
         }
 
         public RiotApi getRiotApi() {
-            return riotApi;
+            int i = new Random().Next(riotApis.Length);
+            return riotApis[i];
         }
 
         public StaticRiotApi getStaticRiotApi() {

@@ -30,18 +30,21 @@ namespace src {
 
             StatusHandler.window = this;
 
+            initViews();
+    
+            cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
+            cbxTrackedSummoners_Update();
+
+            setMenu(summonerView);
+        }
+
+        public void initViews() {
             summonerView = new SummonerView();
             itemView = new ItemListView(this);
             championView = new ChampionsView(this);
             matchesView = new MatchesView();
             statisticsView = new StatisticsView(this);
-            settingsView = new SettingsView();
-
-            
-            cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
-            cbxTrackedSummoners_Update();
-
-            setMenu(summonerView);
+            settingsView = new SettingsView(this);
         }
 
         bool mouseDown = false;

@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using src.patch;
 
@@ -20,8 +9,10 @@ namespace src.views {
     public partial class SettingsView : Window {
 
         private PatchClient patchClient;
+        private MainWindow mainWindow;
 
-        public SettingsView() {
+        public SettingsView(MainWindow mainWindow) {
+            this.mainWindow = mainWindow;
             InitializeComponent();
             patchClient = new PatchClient(this);
             if (patchClient.shouldPatch()) {
@@ -38,7 +29,7 @@ namespace src.views {
         public void setProgress(double progress) {
             Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
                 delegate() {
-                    pbProgress.Value= progress;
+                    pbProgress.Value = progress;
                 }
            );
         }
@@ -53,12 +44,26 @@ namespace src.views {
             );
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            Directory.Delete(Core.getInstance().getHomePath(), true);
-            patch();
+        public void completion() {
+            mainWindow.initViews();
         }
 
+        private void btnClearDownloadedData_Click(object sender, RoutedEventArgs e) {
+            foreach (var directory in Directory.EnumerateDirectories(Core.getInstance().getHomePath())) {
+                if (directory.EndsWith("matches") || directory.EndsWith("summoners")) continue;
+                Directory.Delete(directory);
+            }
+        }
 
+        private void btnClearSummonerData_Click(object sender, RoutedEventArgs e) {
+            try {
+                Directory.Delete(Core.getInstance().getHomePath() + "matches", true);
+                Directory.Delete(Core.getInstance().getHomePath() + "summoners", true);
+                File.Delete(Core.getInstance().getHomePath() + "trackedSummoners.json");
+            } catch {
+                
+            }
+        }
 
     }
 }
