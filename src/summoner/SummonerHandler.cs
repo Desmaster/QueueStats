@@ -65,16 +65,17 @@ namespace src {
             return selectedSummoner;
         }
 
-        public async void setSummoner(String name, Region region)
+        public async Task<Boolean> setSummoner(String name, Region region)
         {
             try
             {
-                Log.info("getting summoner..");
                 Summoner summoner = await api.GetSummonerAsync(region, name);
                 updateSummoner(summoner);
-            } catch (Exception e)
+
+                return true;
+            } catch (RiotSharpException e)
             {
-                Console.WriteLine(e.Message);
+                return false;
             }
         }
 

@@ -1,0 +1,8 @@
+﻿<Window x:Class="src.views.NotfoundView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NotfoundView" Height="499" Width="738">
+    <Grid>
+        <Label FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White">Summoner not found!</Label>
+    </Grid>
+</Window>

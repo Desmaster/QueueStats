@@ -1,7 +1,7 @@
 ﻿<Window x:Class="src.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="576" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanMinimize" AllowsTransparency="True" MouseDown="Window_MouseDown" MouseMove="Window_MouseMove" MouseUp="Window_MouseUp" MouseLeave="Window_MouseLeave">
+        Title="MainWindow" Height="576" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanMinimize" AllowsTransparency="True" MouseDown="Window_MouseDown" MouseMove="Window_MouseMove" MouseUp="Window_MouseUp" MouseLeave="Window_MouseLeave" FontFamily="Fritz">
     <Window.Background>
         <ImageBrush ImageSource="assets\filledframeborder.png"/>
     </Window.Background>
@@ -20,10 +20,23 @@
                                 <RowDefinition />
                                 <RowDefinition Height="0*" />
                             </Grid.RowDefinitions>
-                            <TextBox Name="tbxSummonername" Grid.Column ="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,15.2" Width="138" Height="23" LostFocus="tbxSummonername_LostFocus" Grid.ColumnSpan="2" Grid.RowSpan="2" TextChanged="tbxSummonername_TextChanged"/>
-                            <ComboBox Name="cbxRegion" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0" Width="55" Height="23" SelectionChanged="cbxRegion_SelectionChanged" />
-                            <Label Name="lblRememberSearch" Grid.Column="1" Margin="20,23,78.8,0.2" VerticalAlignment="Center" Padding="0" Grid.RowSpan="2" Height="16">Track?</Label>
-                            <CheckBox Name="cbTrackSearch" Grid.Column="1" Grid.Row="1" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False" Height="15" Width="16"/>
+                            <TextBox Name="tbxSummonername" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="138" Height="23" Grid.ColumnSpan="2" Grid.RowSpan="2" TextChanged="tbxSummonername_TextChanged"/>
+                            <ComboBox Name="cbxRegion" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="55" Height="23" SelectionChanged="cbxRegion_SelectionChanged" />
+                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Name="gridOptionsSearch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Button Name="btnResetSearch" Grid.Column="0" Grid.Row="0" Click="Reset_Click">Reset</Button>
+                                <Button Name="btnReloadSearch" Grid.Column="1" Grid.Row="0" Click="Reload_Click">Reload</Button>
+                                <Label Name="lblRememberSearch" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Padding="0" Height="16" HorizontalAlignment="Center">Track?</Label>
+                                <CheckBox Name="cbTrackSearch" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False" Height="15" Width="16"/>
+                            </Grid>
                         </Grid>
                     </TabItem>
                     <TabItem Header="Tracked" Margin="0">
@@ -37,8 +50,21 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <ComboBox Name="cbxTrackedSummoners" Grid.Column="0" Grid.Row="0" SelectionChanged="cbxTrackedSummoners_SelectionChanged" Grid.ColumnSpan="2" Margin="0" Height="23" MouseWheel="cbxTrackedSummoners_MouseWheel"/>
-                            <Label Name="lblRememberTracked" Grid.Column="1" Margin="20,23,78.8,0.2" VerticalAlignment="Center" Padding="0" Grid.RowSpan="2" Height="16" HorizontalAlignment="Right">Track?</Label>
-                            <CheckBox Name="cbTrackTracked" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False"/>
+                            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Name="gridOptionsTracked">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Button Name="btnResetTracked" Grid.Column="0" Grid.Row="0" Click="Reset_Click">Reset</Button>
+                                <Button Name="btnReloadTracked" Grid.Column="1" Grid.Row="0" Click="Reload_Click">Reload</Button>
+                                <Label Name="lblRememberTracked" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Padding="0" Height="16" HorizontalAlignment="Center">Track?</Label>
+                                <CheckBox Name="cbTrackTracked" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Right" Click="cbTrack_Click" IsEnabled="False" Height="15" Width="16"/>
+                            </Grid>
                         </Grid>
                     </TabItem>
                 </TabControl>
@@ -66,7 +92,7 @@
                     <Button Click="Menu_Click">Settings</Button>
                 </StackPanel>
             </StackPanel>
-            <ContentControl x:Name="content" Width="666" Margin="0,29"/>
+            <ContentControl x:Name="content" Width="726" Margin="15, 30"/>
         </DockPanel>
     </Grid>
 </Window>

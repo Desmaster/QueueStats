@@ -21,6 +21,8 @@ namespace src {
         private Window statisticsView;
         private Window settingsView;
 
+        private Window notfoundView;
+
         public MainWindow() {
             InitializeComponent();
 
@@ -37,7 +39,9 @@ namespace src {
             statisticsView = new StatisticsView(this);
             settingsView = new SettingsView();
 
-            
+            notfoundView = new NotfoundView(this);
+
+
             cbxRegion.ItemsSource = Enum.GetValues(typeof(Region));
             cbxTrackedSummoners_Update();
 
@@ -99,28 +103,28 @@ namespace src {
             content.Content = window.Content;
         }
 
-        private void tbxSummonername_LostFocus(object sender, RoutedEventArgs e) {
-            if (client.summonerHandler.getSummoner() != null) {
-                if (tbxSummonername.Text != client.summonerHandler.getSummoner().Name) {
-                    setSummoner();
-                }
-            } else {
-                setSummoner();
-            }
-        }
-
         private void cbxRegion_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (cbxRegion.IsDropDownOpen) {
                 setSummoner();
             }
         }
 
-        private void setSummoner() {
+        private async void setSummoner() {
             if (cbxRegion.SelectedIndex != -1 && tbxSummonername.Text != "") {
                 String name = tbxSummonername.Text;
                 Region region = Util.resolveRegion(cbxRegion.SelectedItem.ToString());
 
-                client.updateSummoner(name, region);
+                if (await client.updateSummoner(name, region)) {
+                    setMenu(summonerView);
+                } else {
+                    ImageBrush image = new ImageBrush();
+                    image.ImageSource = Util.CreateImage("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Heimerdinger_2.jpg");
+                    image.Opacity = 0.5;
+                    
+                    setBackground(image);
+
+                    setMenu(notfoundView);
+                }
             }
         }
 
@@ -224,12 +228,21 @@ namespace src {
             cbTrackTracked.IsEnabled = false;
 
             cbxTrackedSummoners.SelectedIndex = -1;
+            cbxRegion.SelectedIndex = -1;
         }
 
-        public void setBackground(ImageBrush brush)
-        {
+        public void setBackground(ImageBrush brush) {
             gridBackground.Background = brush;
         }
 
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            tbxSummonername.Text = "";
+            resetSummonerpanel();
+        }
+
+        private void Reload_Click(object sender, RoutedEventArgs e) {
+            setSummoner();
+        }
     }
 }
