@@ -97,6 +97,9 @@
     <Compile Include="views\MatchesView.xaml.cs">
       <DependentUpon>MatchesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\NotfoundView.xaml.cs">
+      <DependentUpon>NotfoundView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\MatchesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\NotfoundView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

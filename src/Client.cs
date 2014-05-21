@@ -29,13 +29,13 @@ namespace src {
             matchHandler = MatchHandler.getInstance();
         }
 
-        public void updateSummoner(string summonerName, Region region)
+        public async Task<Boolean> updateSummoner(string summonerName, Region region)
         {
-            summonerHandler.setSummoner(summonerName, region);
+            return await summonerHandler.setSummoner(summonerName, region);
         }
 
-        public void updateSummoner(TrackedSummoner summoner) {
-            updateSummoner(summoner.Name, summoner.Region);
+        public async Task<Boolean> updateSummoner(TrackedSummoner summoner) {
+            return await updateSummoner(summoner.Name, summoner.Region);
         }
     }
 }

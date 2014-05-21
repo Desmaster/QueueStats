@@ -47,15 +47,13 @@ namespace src.views {
             ImageSource imageSource = Util.CreateImage("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" +
                                  Util.resolveChampionId(stats.champions.First().championId) + "_" + random.Next(0, core.getChampion(stats.champions.First().championId).Skins.Count) + ".jpg");
 
-            imageSource.Changed += (sender, args) =>
+            splashImage.ImageSource = imageSource;
+
+            splashImage.Changed += (sender, args) =>
             {
-                splashImage.ImageSource = imageSource;
+                mainWindow.setBackground(splashImage);
             };
 
-            splashImage.ImageSource = imageSource;
-            
-
-            mainWindow.setBackground(splashImage);
 
 
             lblAvgKills.Content = Math.Round(stats.averageKills, 2);
