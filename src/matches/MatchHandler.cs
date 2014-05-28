@@ -81,7 +81,6 @@ namespace src.matches {
                     championsPlayed.Add(new ChampionPlayed() {
                         championId = game.ChampionId, timesPlayed = 1
                     });
-                    Console.WriteLine(Util.resolveChampionId(game.ChampionId));
                 }
             }
 
@@ -100,10 +99,10 @@ namespace src.matches {
             stats.totalQuadraKills = games.Sum(x => x.Statistics.QuadraKills);
             stats.totalPentaKills = games.Sum(x => x.Statistics.PentaKills);
 
-            stats.totalMagicDamageDealt = games.Sum(x => x.Statistics.MagicDamageDealtToChampions);
-            stats.totalPhysicalDamageDealt = games.Sum(x => x.Statistics.PhysicalDamageDealtToChampions);
-            stats.totalTrueDamageDealt = games.Sum(x => x.Statistics.TrueDamageDealtToChampions);
-            stats.totalDamageDealt = games.Sum(x => x.Statistics.TotalDamageDealtToChampions);
+            stats.totalMagicDamageDealt = games.Sum(x => x.Statistics.MagicDamageDealtPlayer);
+            stats.totalPhysicalDamageDealt = games.Sum(x => x.Statistics.PhysicalDamageDealtPlayer);
+            stats.totalTrueDamageDealt = games.Sum(x => x.Statistics.TrueDamageDealtPlayer);
+            stats.totalDamageDealt = games.Sum(x => x.Statistics.TotalDamageDealt);
 
             stats.totalMagicDamageTaken = games.Sum(x => x.Statistics.MagicDamageTaken);
             stats.totalPhysicalDamageTaken = games.Sum(x => x.Statistics.PhysicalDamageTaken);

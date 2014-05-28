@@ -55,7 +55,6 @@ namespace src.views {
             for (int i = 0; i < leagues.Count; i++) {
                 LeagueItem league = leagues[i];
                 if (league.PlayerOrTeamName != summoner.Name) return;
-                Log.info("League Type: " + league.QueueType);
                 lblLeagueName.Content = league.LeagueName;
                 lblDivision.Content = league.Tier + " " + league.Rank;
                 lblWins.Content = league.Wins;
@@ -85,7 +84,6 @@ namespace src.views {
                         for (int j = 0; j < series.Progress.Length; j++) {
                         char c = series.Progress[j];
                         grdSeries.ColumnDefinitions.Add(new ColumnDefinition());
-                        Log.info("" + c);
                         switch (c) {
                             case 'W':
                             Image img1 = new Image();
@@ -177,7 +175,6 @@ namespace src.views {
             showControls();
             lblPlaceholder.Visibility = Visibility.Hidden;
             loadSummoner().ContinueWith(init, TaskContinuationOptions.ExecuteSynchronously);
-            Log.info("Summoner Updated");
         }
 
     }

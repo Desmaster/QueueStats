@@ -19,8 +19,7 @@ namespace src.views {
     /// <summary>
     /// Interaction logic for StatisticsView.xaml
     /// </summary>
-    public partial class StatisticsView : Window, SummonerListener
-    {
+    public partial class StatisticsView : Window, SummonerListener {
 
         private Core core;
         private AverageStats stats;
@@ -45,12 +44,14 @@ namespace src.views {
             splashImage.Opacity = 0.5;
 
             ImageSource imageSource = Util.CreateImage("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" +
-                                 Util.resolveChampionId(stats.champions.First().championId) + "_" + random.Next(0, core.getChampion(stats.champions.First().championId).Skins.Count) + ".jpg");
+                                                       Util.resolveChampionId(stats.champions.First().championId) + "_" +
+                                                       random.Next(0,
+                                                           core.getChampion(stats.champions.First().championId)
+                                                               .Skins.Count) + ".jpg");
 
-            splashImage.ImageSource = imageSource;
 
-            splashImage.Changed += (sender, args) =>
-            {
+            imageSource.Changed += (sender, args) => {
+                splashImage.ImageSource = imageSource;
                 mainWindow.setBackground(splashImage);
             };
 
@@ -65,13 +66,55 @@ namespace src.views {
             lblTotalAssists.Content = stats.totalAssists;
 
             spPlayedChamps.Children.Clear();
-            foreach (ChampionPlayed champion in stats.champions)
-            {
+            foreach (ChampionPlayed champion in stats.champions) {
                 Image image = new Image();
-                image.Source = Util.CreateImage(core.getAssetsPath() + @"champion\" + core.getChampion(champion.championId).Image.Full);
+                image.Source =
+                    Util.CreateImage(core.getAssetsPath() + @"champion\" +
+                                     core.getChampion(champion.championId).Image.Full);
 
                 spPlayedChamps.Children.Add(image);
             }
+
+            lblMagicDealt.Content = stats.totalMagicDamageDealt;
+            lblPhysicalDealt.Content = stats.totalPhysicalDamageDealt;
+            lblTrueDealt.Content = stats.totalTrueDamageDealt;
+            lblTotalDealt.Content = stats.totalDamageDealt;
+
+            lblMagicTaken.Content = stats.totalMagicDamageTaken;
+            lblPhysicalTaken.Content = stats.totalPhysicalDamageTaken;
+            lblTrueTaken.Content = stats.totalTrueDamageTaken;
+            lblTotalTaken.Content = stats.totalDamageTaken;
+
+            lblMagicDifference.Content = stats.totalMagicDamageDealt - stats.totalMagicDamageTaken;
+            lblPhysicalDifference.Content = stats.totalPhysicalDamageDealt - stats.totalPhysicalDamageTaken;
+            lblTrueDifference.Content = stats.totalTrueDamageDealt - stats.totalTrueDamageTaken;
+            lblTotalDifference.Content = stats.totalDamageDealt - stats.totalDamageTaken;
+
+            lblMagicDifference.Foreground =
+                new SolidColorBrush((Convert.ToInt32(lblMagicDifference.Content.ToString())) > 0
+                    ? Color.FromRgb(40, 200, 10)
+                    : Color.FromRgb(200, 40, 10));
+            lblPhysicalDifference.Foreground =
+                new SolidColorBrush((Convert.ToInt32(lblPhysicalDifference.Content.ToString())) > 0
+                    ? Color.FromRgb(40, 200, 10)
+                    : Color.FromRgb(200, 40, 10));
+            lblTrueDifference.Foreground =
+                new SolidColorBrush((Convert.ToInt32(lblTrueDifference.Content.ToString())) > 0
+                    ? Color.FromRgb(40, 200, 10)
+                    : Color.FromRgb(200, 40, 10));
+            lblTotalDifference.Foreground =
+                new SolidColorBrush((Convert.ToInt32(lblTotalDifference.Content.ToString())) > 0
+                    ? Color.FromRgb(40, 200, 10)
+                    : Color.FromRgb(200, 40, 10));
+
+            lblGoldEarned.Content = stats.goldEarned;
+            lblGoldSpent.Content = stats.goldSpent;
+            lblGoldSpare.Content = stats.goldEarned - stats.goldSpent;
+
+            lblDouble.Content = stats.totalDoubleKills;
+            lblTriple.Content = stats.totalTripleKills;
+            lblQuadra.Content = stats.totalQuadraKills;
+            lblPenta.Content = stats.totalPentaKills;
         }
     }
 }
