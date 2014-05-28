@@ -14,6 +14,7 @@ namespace src {
             try {
                 return new BitmapImage(new Uri(path));
             } catch (Exception e) {
+                Log.info("Failed to load image: " + path);
                 return null;
             }
         }
@@ -38,7 +39,6 @@ namespace src {
         public static String resolveChampionId(int id)
         {
             String name = Core.getInstance().getChampion(id).Name;
-            Log.info(name);
             switch (name) {
                 case "Fiddlesticks":
                     return "FiddleSticks";

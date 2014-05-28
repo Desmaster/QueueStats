@@ -13,7 +13,7 @@ namespace src {
 
     public partial class MainWindow : Window, SummonerListener {
 
-        Client client;
+        private Client client;
         private Window summonerView;
         private Window matchesView;
         private Window itemView;
@@ -25,6 +25,7 @@ namespace src {
 
         public MainWindow() {
             InitializeComponent();
+            Hide();
 
             //init client code
             client = new Client();
@@ -38,6 +39,9 @@ namespace src {
             cbxTrackedSummoners_Update();
 
             setMenu(summonerView);
+            btnClose.Click += btnClose_Click;
+            btnHide.Click += btnHide_Click;
+            Show();
         }
 
         public void initViews() {
@@ -254,6 +258,15 @@ namespace src {
 
         private void Reload_Click(object sender, RoutedEventArgs e) {
             setSummoner();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e) {
+            Close();
+            Application.Current.Shutdown(0);
+        }
+
+        private void btnHide_Click(object sender, RoutedEventArgs e) {
+            WindowState = System.Windows.WindowState.Minimized;
         }
     }
 }

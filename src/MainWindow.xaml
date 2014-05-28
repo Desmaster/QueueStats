@@ -92,7 +92,49 @@
                     <Button Click="Menu_Click">Settings</Button>
                 </StackPanel>
             </StackPanel>
-            <ContentControl x:Name="content" Width="726" Margin="15, 30"/>
+            <ContentControl x:Name="content" Width="726" Margin="15,39,15,30"/>
         </DockPanel>
+        <Button x:Name="btnHide" Content="Button" HorizontalAlignment="Left" Margin="455,-41,0,0" VerticalAlignment="Top" Width="16" Height="16" RenderTransformOrigin="6.25,-0.062">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Normal" Source="assets\hide_default.png"/>
+                        <Image Name="Pressed" Source="assets\hide_hover.png" Visibility="Hidden"/>
+                        <Image Name="Disabled" Source="assets\hide_default.png" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Normal" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="Pressed" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Normal" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="Disabled" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="btnClose" Content="Button" HorizontalAlignment="Left" Margin="529,-41,0,0" VerticalAlignment="Top" Width="16" Height="16" RenderTransformOrigin="6.25,-0.062">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Normal" Source="assets\close_default.png"/>
+                        <Image Name="Pressed" Source="assets\close_hover.png" Visibility="Hidden"/>
+                        <Image Name="Disabled" Source="assets\close_default.png" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Normal" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="Pressed" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Normal" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="Disabled" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Window>

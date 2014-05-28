@@ -31,7 +31,6 @@ namespace src.matches {
 
             HOME_PATH = core.getHomePath() + @"matches\";
 
-            //Check for folders
             if (!Directory.Exists(HOME_PATH)) {
                 Directory.CreateDirectory(HOME_PATH);
             }

@@ -38,14 +38,14 @@ namespace src.views {
 
         public void setStatus(String status) {
             this.Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
-               delegate() {
-                   lblStatus.Content = status;
-               }
+               (() => lblStatus.Content = status)
             );
         }
 
         public void completion() {
-            mainWindow.initViews();
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
+               (() => mainWindow.initViews())
+            );
         }
 
         private void btnClearDownloadedData_Click(object sender, RoutedEventArgs e) {

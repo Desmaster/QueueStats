@@ -35,7 +35,8 @@ namespace src.views {
         private delegate void ObjectDelegate(object obj);
 
         private async Task loadSummoner() {
-            leagues = await summoner.GetLeaguesAsync();
+            if (summoner.Level == 30)
+                leagues = await summoner.GetLeaguesAsync();
             summaries = await summoner.GetStatsSummariesAsync();
         }
 

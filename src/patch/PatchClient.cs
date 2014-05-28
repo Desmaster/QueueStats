@@ -118,10 +118,7 @@ namespace src.patch {
             if(!Directory.Exists(currentPath)) {
                 Directory.CreateDirectory(currentPath);
             }
-            ObjectDelegate del;
             int elements = patchableNodes.Count;
-//            del = new ObjectDelegate(settingsView.setFilesRemainingInvoked);
-//            del.Invoke(elements);
             double valuePerElement = 1.0 / elements * 100;
             double progress = 0;
             for(int i = 0; i < patchableNodes.Count; i++) {
