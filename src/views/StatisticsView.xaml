@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="StatisticsView" Height="499" Width="738">
     <Grid x:Name="gridBackground">
-        <StackPanel x:Name="spPlayedChamps" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Orientation="Vertical" Margin="0,26,26,0"/>
+        <Grid.Resources>
+            <Style TargetType="Grid">
+                <Setter Property="Background" Value="#88FFFFFF"></Setter>
+            </Style>
+        </Grid.Resources>
+        <StackPanel x:Name="spPlayedChamps" HorizontalAlignment="Right" Width="80" Orientation="Vertical" Margin="0,26,26,0" VerticalAlignment="Top"/>
         <Label Content="Most played champions" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Grid Name="gridStatistics" HorizontalAlignment="Left" Height="256" Margin="10,10,0,0" VerticalAlignment="Top" Width="248">
+        <Grid Name="gridStatistics" HorizontalAlignment="Left" Height="83" Margin="0" VerticalAlignment="Top" Width="213">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -16,19 +21,14 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="1">Average</Label>
             <Label Grid.Column="0" Grid.Row="2">Total</Label>
-            
+
             <Label Grid.Column="1" Grid.Row="0">Kills</Label>
             <Label Grid.Column="2" Grid.Row="0">Deaths</Label>
             <Label Grid.Column="3" Grid.Row="0">Assists</Label>
-            
+
             <Label Name="lblAvgKills" Grid.Column="1" Grid.Row="1" />
             <Label Name="lblAvgDeaths" Grid.Column="2" Grid.Row="1" />
             <Label Name="lblAvgAssists" Grid.Column="3" Grid.Row="1" />
@@ -36,6 +36,86 @@
             <Label Name="lblTotalKills" Grid.Column="1" Grid.Row="2" />
             <Label Name="lblTotalDeaths" Grid.Column="2" Grid.Row="2" />
             <Label Name="lblTotalAssists" Grid.Column="3" Grid.Row="2" />
+        </Grid>
+        <Grid Name="gridDamageDealt" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"></ColumnDefinition>
+                <ColumnDefinition Width="89*"/>
+                <ColumnDefinition Width="89*"></ColumnDefinition>
+                <ColumnDefinition Width="88*"></ColumnDefinition>
+                <ColumnDefinition Width="89*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">Magic damage</Label>
+            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">Physical damage</Label>
+            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">True damage</Label>
+            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2">Total damage</Label>
+
+            <Label Grid.Column="2" Grid.Row="0">Dealt</Label>
+            <Label Grid.Column="3" Grid.Row="0">Taken</Label>
+            <Label Grid.Column="4" Grid.Row="0">Difference</Label>
+
+            <Label Name="lblMagicDealt" Grid.Column="2" Grid.Row="1"></Label>
+            <Label Name="lblPhysicalDealt" Grid.Column="2" Grid.Row="2"></Label>
+            <Label Name="lblTrueDealt" Grid.Column="2" Grid.Row="3"></Label>
+            <Label Name="lblTotalDealt" Grid.Column="2" Grid.Row="4"></Label>
+
+            <Label Name="lblMagicTaken" Grid.Column="3" Grid.Row="1"></Label>
+            <Label Name="lblPhysicalTaken" Grid.Column="3" Grid.Row="2"></Label>
+            <Label Name="lblTrueTaken" Grid.Column="3" Grid.Row="3"></Label>
+            <Label Name="lblTotalTaken" Grid.Column="3" Grid.Row="4"></Label>
+
+            <Label Name="lblMagicDifference" Grid.Column="4" Grid.Row="1"></Label>
+            <Label Name="lblPhysicalDifference" Grid.Column="4" Grid.Row="2"></Label>
+            <Label Name="lblTrueDifference" Grid.Column="4" Grid.Row="3"></Label>
+            <Label Name="lblTotalDifference" Grid.Column="4" Grid.Row="4"></Label>
+        </Grid>
+        <Grid Name="gridGold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0">Gold earned</Label>
+            <Label Grid.Column="1" Grid.Row="0">Gold spend</Label>
+            <Label Grid.Column="2" Grid.Row="0">Spare gold</Label>
+            
+            <Label Name="lblGoldEarned" Grid.Row="1" Grid.Column="0"></Label>
+            <Label Name="lblGoldSpent" Grid.Row="1" Grid.Column="1"></Label>
+            <Label Name="lblGoldSpare" Grid.Row="1" Grid.Column="2"></Label>
+        </Grid>
+        <Grid Name="gridKillingsprees" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Column="0" Grid.Row="0">Double kills</Label>
+            <Label Grid.Column="0" Grid.Row="1">Triple kills</Label>
+            <Label Grid.Column="0" Grid.Row="2">Quadra kills</Label>
+            <Label Grid.Column="0" Grid.Row="3">Penta kills</Label>
+        
+            <Label Name="lblDouble" Grid.Column="1" Grid.Row="0"></Label>
+            <Label Name="lblTriple" Grid.Column="1" Grid.Row="1"></Label>
+            <Label Name="lblQuadra" Grid.Column="1" Grid.Row="2"></Label>
+            <Label Name="lblPenta" Grid.Column="1" Grid.Row="3"></Label>
         </Grid>
     </Grid>
 </Window>

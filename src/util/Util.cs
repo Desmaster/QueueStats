@@ -38,7 +38,6 @@ namespace src {
         public static String resolveChampionId(int id)
         {
             String name = Core.getInstance().getChampion(id).Name;
-            Log.info(name);
             switch (name) {
                 case "Fiddlesticks":
                     return "FiddleSticks";
