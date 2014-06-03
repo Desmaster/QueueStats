@@ -16,7 +16,6 @@ namespace src.matches {
         private static MatchHandler instance;
 
         private Core core;
-        private RiotApi api;
         private SummonerHandler summonerHandler;
 
         private string HOME_PATH;
@@ -26,7 +25,6 @@ namespace src.matches {
 
         private MatchHandler() {
             core = Core.getInstance();
-            api = core.getRiotApi();
             summonerHandler = SummonerHandler.getInstance();
 
             HOME_PATH = core.getHomePath() + @"matches\";
@@ -51,7 +49,7 @@ namespace src.matches {
                     Directory.CreateDirectory(HOME_PATH + summoner.Name + @"\");
                 }
 
-                updateMatches(await api.GetSummonerAsync(summoner.Region, summoner.Name));
+                updateMatches(await Core.getInstance().getRiotApi().GetSummonerAsync(summoner.Region, summoner.Name));
             }
         }
 

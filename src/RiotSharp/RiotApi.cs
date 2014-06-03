@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using Newtonsoft.Json;
+using src.api;
 
 namespace RiotSharp
 {
@@ -34,7 +35,7 @@ namespace RiotSharp
 
         private RateLimitedRequester requester;
 
-        private static RiotApi instance;
+        private static Dictionary<String, RiotApi> apis = new Dictionary<string, RiotApi>(); 
         /// <summary>
         /// Get the instance of RiotApi.
         /// </summary>
@@ -43,11 +44,9 @@ namespace RiotSharp
         /// <returns>The instance of RiotApi.</returns>
         public static RiotApi GetInstance(string apiKey, bool isProdApi)
         {
-            if (instance == null || apiKey != RateLimitedRequester.ApiKey || isProdApi != RateLimitedRequester.IsProdApi)
-            {
-                instance = new RiotApi(apiKey, isProdApi);
-            }
-            return instance;
+                if (!apis.ContainsKey(apiKey)) 
+                    apis.Add(apiKey, new RiotApi(apiKey, isProdApi));
+            return apis[apiKey];
         }
         
         private RiotApi(string apiKey, bool isProdApi)

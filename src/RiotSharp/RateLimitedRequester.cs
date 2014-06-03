@@ -36,7 +36,7 @@ namespace RiotSharp
 
         private SemaphoreSlim semaphore = new SemaphoreSlim(1);
 
-        private const int MAX_REQUEST_PER_10S = 10;
+        private const int MAX_REQUEST_PER_10S = 5;
         private const int MAX_REQUEST_PER_10M = 500;
 
         public override string CreateRequest(string relativeUrl, List<string> addedArguments = null)

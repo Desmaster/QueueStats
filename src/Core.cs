@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Input;
 using Newtonsoft.Json;
 
 using RiotSharp;
@@ -12,13 +13,14 @@ namespace src {
 
     class Core {
 
-        private readonly RiotApi riotApi;
-        private readonly StaticRiotApi staticApi;
+        private RiotApi riotApi;
+        private StaticRiotApi staticApi;
         private ChampionListStatic championList;
         private ItemListStatic itemList;
         private SummonerSpellListStatic spellList;
         private Summoner summoner;
         private Region region;
+        private String[] keys;
 
         public Boolean summonerSet = false;
         public Boolean regionSet = false;
@@ -30,7 +32,10 @@ namespace src {
 
         private Core(Region region, bool isProdApi) {
             String apiKey_1 = Settings.getProperty("api_key_1");
-            riotApi = RiotApi.GetInstance(apiKey_1, true);
+            String apiKey_2 = Settings.getProperty("api_key_2");
+            keys = new[] {apiKey_1, apiKey_2};
+            RiotApi.GetInstance(apiKey_1, false);
+            RiotApi.GetInstance(apiKey_2, false);
             staticApi = StaticRiotApi.GetInstance(apiKey_1);
             updateRegion(region);
             loadLists();
@@ -161,7 +166,9 @@ namespace src {
         }
 
         public RiotApi getRiotApi() {
-            return riotApi;
+            int i = new Random().Next(keys.Length);
+            Log.info("Key: " + i);
+            return RiotApi.GetInstance(keys[i], false);
         }
 
         public StaticRiotApi getStaticRiotApi() {

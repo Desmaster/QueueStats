@@ -21,7 +21,6 @@ namespace src {
 
     class SummonerHandler {
         private String HOME_PATH;
-        private RiotApi api;
         private Core core;
 
         public List<TrackedSummoner> trackedSummoners;
@@ -33,7 +32,6 @@ namespace src {
 
         private SummonerHandler() {
             core = Core.getInstance();
-            api = core.getRiotApi();
 
             HOME_PATH = core.getHomePath();
 
@@ -69,7 +67,7 @@ namespace src {
         {
             try
             {
-                Summoner summoner = await api.GetSummonerAsync(region, name);
+                Summoner summoner = await Core.getInstance().getRiotApi().GetSummonerAsync(region, name);
                 updateSummoner(summoner);
 
                 return true;

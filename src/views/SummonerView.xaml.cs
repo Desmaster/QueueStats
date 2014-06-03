@@ -61,7 +61,8 @@ namespace src.views {
                         break;
                     }
                 }
-                if (entry != null && entry.PlayerOrTeamName != summoner.Name) return;
+                if (entry == null) return;
+                if (entry.PlayerOrTeamName != summoner.Name) return;
                 lblLeagueName.Content = league.Name;
                 lblDivision.Content = league.Tier + " " + league.Queue;
                 lblWins.Content = entry.Wins;
