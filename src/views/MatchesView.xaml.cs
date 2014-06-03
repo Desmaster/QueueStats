@@ -90,14 +90,14 @@ namespace src.views {
             //Summonerspells
             Image imgSummonerSpell1 = new Image();
             imgSummonerSpell1.Source =
-                Util.CreateImage(core.getAssetsPath() + @"spell\" + core.getSpell(game.Spell1).Image.Full);
+                Util.CreateImage(core.getAssetsPath() + @"spell\" + core.getSpell(game.SummonerSpell1).Image.Full);
             imgSummonerSpell1.Width = 32;
             imgSummonerSpell1.Height = 32;
             imgSummonerSpell1.Margin = new Thickness(2);
 
             Image imgSummonerSpell2 = new Image();
             imgSummonerSpell2.Source =
-                Util.CreateImage(core.getAssetsPath() + @"spell\" + core.getSpell(game.Spell2).Image.Full);
+                Util.CreateImage(core.getAssetsPath() + @"spell\" + core.getSpell(game.SummonerSpell2).Image.Full);
             imgSummonerSpell2.Width = 32;
             imgSummonerSpell2.Height = 32;
             imgSummonerSpell2.Margin = new Thickness(2);

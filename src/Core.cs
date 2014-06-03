@@ -12,7 +12,7 @@ namespace src {
 
     class Core {
 
-        private readonly RiotApi[] riotApis;
+        private readonly RiotApi riotApi;
         private readonly StaticRiotApi staticApi;
         private ChampionListStatic championList;
         private ItemListStatic itemList;
@@ -30,8 +30,7 @@ namespace src {
 
         private Core(Region region, bool isProdApi) {
             String apiKey_1 = Settings.getProperty("api_key_1");
-            String apiKey_2 = Settings.getProperty("api_key_2");
-            riotApis = new RiotApi[] { RiotApi.GetInstance(apiKey_1, isProdApi), RiotApi.GetInstance(apiKey_2, isProdApi) };
+            riotApi = RiotApi.GetInstance(apiKey_1, true);
             staticApi = StaticRiotApi.GetInstance(apiKey_1);
             updateRegion(region);
             loadLists();
@@ -162,8 +161,7 @@ namespace src {
         }
 
         public RiotApi getRiotApi() {
-            int i = new Random().Next(riotApis.Length);
-            return riotApis[i];
+            return riotApi;
         }
 
         public StaticRiotApi getStaticRiotApi() {

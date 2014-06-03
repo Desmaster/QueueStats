@@ -12,7 +12,7 @@ namespace src.views {
     public partial class SummonerView : Window, SummonerListener {
 
         private Summoner summoner, previous;
-        private List<LeagueItem> leagues;
+        private List<League> leagues;
         private List<PlayerStatsSummary> summaries; 
         private Region region;
         private String summonerName;
@@ -53,14 +53,21 @@ namespace src.views {
             lblLevel.Content = "level " + summoner.Level;
             if (leagues == null) return;
             for (int i = 0; i < leagues.Count; i++) {
-                LeagueItem league = leagues[i];
-                if (league.PlayerOrTeamName != summoner.Name) return;
-                lblLeagueName.Content = league.LeagueName;
-                lblDivision.Content = league.Tier + " " + league.Rank;
-                lblWins.Content = league.Wins;
-                lblLeaguePoints.Content = league.LeaguePoints;
+                League league = leagues[i];
+                LeagueEntry entry = null;
+                for (int j = 0; j < league.Entries.Count; j++) {
+                    if (league.Entries[j].PlayerOrTeamName.Equals(summoner.Name)) {
+                        entry = league.Entries[j];
+                        break;
+                    }
+                }
+                if (entry != null && entry.PlayerOrTeamName != summoner.Name) return;
+                lblLeagueName.Content = league.Name;
+                lblDivision.Content = league.Tier + " " + league.Queue;
+                lblWins.Content = entry.Wins;
+                lblLeaguePoints.Content = entry.LeaguePoints;
                 int medals = 0;
-                if (league.IsHotStreak) {
+                if (entry.IsHotStreak) {
                     Image imgHot = new Image();
                     imgHot.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"profile\league_hot.png");
                     Grid.SetColumn(imgHot, medals);
@@ -68,7 +75,7 @@ namespace src.views {
                     grdMedals.Children.Add(imgHot);
                     medals++;
                 }
-                if (league.IsFreshBlood) {
+                if (entry.IsFreshBlood) {
                     Image imgNew = new Image();
                     imgNew.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"profile\league_new.png");
                     Grid.SetColumn(imgNew, medals);
@@ -76,7 +83,7 @@ namespace src.views {
                     grdMedals.Children.Add(imgNew);
                     medals++;
                 }
-                MiniSeries series = league.MiniSeries;
+                var series = entry.MiniSeries;
                 if (series != null) {
                     lblSeriesTag.Visibility = Visibility.Visible;
                     grdSeries.Visibility = Visibility.Visible;

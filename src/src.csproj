@@ -39,10 +39,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RiotSharp">
-      <HintPath>packages\RiotSharp.1.6.0\lib\net45\RiotSharp.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -72,6 +69,115 @@
     <Compile Include="patch\ImagePatchNode.cs" />
     <Compile Include="patch\Tar.cs" />
     <Compile Include="patch\TGZPatchNode.cs" />
+    <Compile Include="RiotSharp\Cache.cs" />
+    <Compile Include="RiotSharp\Champion\Champion.cs" />
+    <Compile Include="RiotSharp\Champion\ChampionList.cs" />
+    <Compile Include="RiotSharp\Game\Game.cs" />
+    <Compile Include="RiotSharp\Game\GameMode.cs" />
+    <Compile Include="RiotSharp\Game\GameModeConverter.cs" />
+    <Compile Include="RiotSharp\Game\GameSubType.cs" />
+    <Compile Include="RiotSharp\Game\GameSubTypeConverter.cs" />
+    <Compile Include="RiotSharp\Game\GameType.cs" />
+    <Compile Include="RiotSharp\Game\GameTypeConverter.cs" />
+    <Compile Include="RiotSharp\Game\Player.cs" />
+    <Compile Include="RiotSharp\Game\RawStat.cs" />
+    <Compile Include="RiotSharp\Game\RecentGames.cs" />
+    <Compile Include="RiotSharp\League\CharArrayConverter.cs" />
+    <Compile Include="RiotSharp\League\Deprecated\LeagueItemV23.cs" />
+    <Compile Include="RiotSharp\League\Deprecated\LeagueV23.cs" />
+    <Compile Include="RiotSharp\League\Deprecated\MiniSeriesV23.cs" />
+    <Compile Include="RiotSharp\League\League.cs" />
+    <Compile Include="RiotSharp\League\LeagueEntry.cs" />
+    <Compile Include="RiotSharp\League\MiniSeries.cs" />
+    <Compile Include="RiotSharp\League\Queue.cs" />
+    <Compile Include="RiotSharp\League\QueueConverter.cs" />
+    <Compile Include="RiotSharp\League\Tier.cs" />
+    <Compile Include="RiotSharp\League\TierConverter.cs" />
+    <Compile Include="RiotSharp\Misc\DateTimeConverter.cs" />
+    <Compile Include="RiotSharp\Misc\DateTimeUtil.cs" />
+    <Compile Include="RiotSharp\Misc\Language.cs" />
+    <Compile Include="RiotSharp\Misc\Region.cs" />
+    <Compile Include="RiotSharp\Misc\TimeSpanConverterFromMS.cs" />
+    <Compile Include="RiotSharp\Misc\TimeSpanConverterFromS.cs" />
+    <Compile Include="RiotSharp\RateLimitedRequester.cs" />
+    <Compile Include="RiotSharp\Requester.cs" />
+    <Compile Include="RiotSharp\RiotApi.cs" />
+    <Compile Include="RiotSharp\RiotSharpException.cs" />
+    <Compile Include="RiotSharp\StaticData\BasicDataStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\BlockItemStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\BlockStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\Cache\ChampionListStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\Cache\ChampionStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\ChampionListStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\ChampionSpellStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\ChampionStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\ChampionStatsStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\InfoStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\LevelTipStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\ParTypeStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\ParTypeStaticConverter.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\PassiveStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\RecommendedStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\SkinStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\TagStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Champion\TagStaticConverter.cs" />
+    <Compile Include="RiotSharp\StaticData\DataRequested.cs" />
+    <Compile Include="RiotSharp\StaticData\ImageStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Item\Cache\ItemListStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\Item\Cache\ItemStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\Item\GoldStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Item\GroupStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Item\ItemListStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Item\ItemStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Item\ItemTreeStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Mastery\Cache\MasteryListStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\Mastery\Cache\MasteryStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\Mastery\MasteryListStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Mastery\MasteryStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Mastery\MasteryTreeItemStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Mastery\MasteryTreeListStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Mastery\MasteryTreeStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\MetadataStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Rune\Cache\RuneListStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\Rune\Cache\RuneStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\Rune\RuneListStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\Rune\RuneStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\SpellVarStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\StatsStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\SummonerSpell\Cache\SummonerSpellListStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\SummonerSpell\Cache\SummonerSpellStaticWrapper.cs" />
+    <Compile Include="RiotSharp\StaticData\SummonerSpell\SummonerSpell.cs" />
+    <Compile Include="RiotSharp\StaticData\SummonerSpell\SummonerSpellListStatic.cs" />
+    <Compile Include="RiotSharp\StaticData\SummonerSpell\SummonerSpellStatic.cs" />
+    <Compile Include="RiotSharp\StaticRiotApi.cs" />
+    <Compile Include="RiotSharp\Stats\AggregatedStat.cs" />
+    <Compile Include="RiotSharp\Stats\ChampionStat.cs" />
+    <Compile Include="RiotSharp\Stats\ChampionStats.cs" />
+    <Compile Include="RiotSharp\Stats\PlayerStatsSummary.cs" />
+    <Compile Include="RiotSharp\Stats\PlayerStatsSummaryList.cs" />
+    <Compile Include="RiotSharp\Stats\PlayerStatsSummaryType.cs" />
+    <Compile Include="RiotSharp\Stats\PlayerStatsSummaryTypeConverter.cs" />
+    <Compile Include="RiotSharp\Stats\RankedStats.cs" />
+    <Compile Include="RiotSharp\Stats\Season.cs" />
+    <Compile Include="RiotSharp\Summoner\Mastery.cs" />
+    <Compile Include="RiotSharp\Summoner\MasteryPage.cs" />
+    <Compile Include="RiotSharp\Summoner\MasteryPages.cs" />
+    <Compile Include="RiotSharp\Summoner\RunePage.cs" />
+    <Compile Include="RiotSharp\Summoner\RunePages.cs" />
+    <Compile Include="RiotSharp\Summoner\RuneSlot.cs" />
+    <Compile Include="RiotSharp\Summoner\Summoner.cs" />
+    <Compile Include="RiotSharp\Summoner\SummonerBase.cs" />
+    <Compile Include="RiotSharp\Summoner\SummonerBaseList.cs" />
+    <Compile Include="RiotSharp\Team\Deprecated\MatchHistorySummaryV22.cs" />
+    <Compile Include="RiotSharp\Team\Deprecated\TeamStatDetailV22.cs" />
+    <Compile Include="RiotSharp\Team\Deprecated\TeamStatSummaryV22.cs" />
+    <Compile Include="RiotSharp\Team\Deprecated\TeamV22.cs" />
+    <Compile Include="RiotSharp\Team\MatchHistorySummary.cs" />
+    <Compile Include="RiotSharp\Team\MessageOfDay.cs" />
+    <Compile Include="RiotSharp\Team\Roster.cs" />
+    <Compile Include="RiotSharp\Team\Team.cs" />
+    <Compile Include="RiotSharp\Team\TeamMemberInfo.cs" />
+    <Compile Include="RiotSharp\Team\TeamStatDetail.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="stats\AverageStats.cs" />
     <Compile Include="stats\ChampionPlayed.cs" />
@@ -199,6 +305,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="RiotSharp\packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -219,6 +326,9 @@
   <ItemGroup>
     <Resource Include="assets\hide_default.png" />
     <Resource Include="assets\hide_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RiotSharp\RiotSharp.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

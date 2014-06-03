@@ -17,7 +17,7 @@ namespace src.views {
 
     public partial class ChampionsView : Window {
 
-        private int width, height;
+        private int championsHorizontal;
         private int imageWidth;
         private ChampionListStatic championList;
         private MainWindow mainWindow;
@@ -25,15 +25,12 @@ namespace src.views {
         public ChampionsView(MainWindow mainWindow) {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            championList = Core.getInstance().getChampionList();
-            width = 10;
-            imageWidth = 64;
-            height = championList.Champions.Count / width;
-            init();
         }
 
         private void init() {
-            var champions = from pair in championList.Champions orderby pair.Key ascending select pair;
+            championList = Core.getInstance().getChampionList();
+            championsHorizontal = 10;
+            imageWidth = 64;
             int c = 0;
             foreach (KeyValuePair<String, ChampionStatic> pair in championList.Champions.OrderBy(p => p.Key)) {
                 ColumnDefinition columnDefinition = new ColumnDefinition();
@@ -48,13 +45,13 @@ namespace src.views {
                 championContainer.Source = Util.CreateImage(Core.getInstance().getAssetsPath() + @"champion\" + pair.Value.Image.Full);
                 championContainer.MouseLeftButtonDown += championContainer_MouseLeftButtonDown;
                 grdChampions.Children.Add(championContainer);    
-                Grid.SetColumn(championContainer, (int) c % width);
-                Grid.SetRow(championContainer, (int) c / width);
+                Grid.SetColumn(championContainer, (int) c % championsHorizontal);
+                Grid.SetRow(championContainer, (int) c / championsHorizontal);
                 
                 c++;
             }
-            c += width;
-            grdChampions.Height = imageWidth*(c/width);
+            c += championsHorizontal;
+            grdChampions.Height = imageWidth*(c/championsHorizontal);
         }
 
         void championContainer_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
