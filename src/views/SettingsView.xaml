@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SettingsView" Height="453" Width="779">
     <Grid>
-        <ProgressBar x:Name="pbProgress" HorizontalAlignment="Left" Height="40" Margin="185,150,0,0" VerticalAlignment="Top" Width="200"/>
-        <Label x:Name="lblStatus" Content="Status" HorizontalAlignment="Left" Margin="185,195,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnClearDownloadedData" Content="Clear all downloaded data" HorizontalAlignment="Left" Margin="185,275,0,0" VerticalAlignment="Top" Width="150" Click="btnClearDownloadedData_Click"/>
-        <Button x:Name="btnClearSummonerData" Content="Clear summoner data" HorizontalAlignment="Left" Margin="185,300,0,0" VerticalAlignment="Top" Width="150" Click="btnClearSummonerData_Click"/>
+        <ProgressBar x:Name="pbProgress" HorizontalAlignment="Left" Height="40" Margin="25,30,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label x:Name="lblStatus" Content="Status" HorizontalAlignment="Left" Margin="25,75,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnClearDownloadedData" Content="Clear all downloaded data" HorizontalAlignment="Left" Margin="25,365,0,0" VerticalAlignment="Top" Width="150" Click="btnClearDownloadedData_Click"/>
+        <Button x:Name="btnClearSummonerData" Content="Clear summoner data" HorizontalAlignment="Left" Margin="25,390,0,0" VerticalAlignment="Top" Width="150" Click="btnClearSummonerData_Click"/>
 
     </Grid>
 </Window>

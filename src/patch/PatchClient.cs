@@ -27,11 +27,9 @@ namespace src.patch {
         private SettingsView settingsView;
 
         private List<PatchNode> nodes = new List<PatchNode>();
-        public List<PatchNode> patchableNodes = new List<PatchNode>();
+        private List<PatchNode> patchableNodes = new List<PatchNode>();
 
         public PatchClient(SettingsView settingsView) {
-            String key = Properties.Settings.Default.api_key_1;
-            var riotAPI = RiotApi.GetInstance(key, false);
             this.settingsView = settingsView;
             homePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\QueueStats\";
             currentPath = homePath + API.getVersion() + @"\";
@@ -44,20 +42,14 @@ namespace src.patch {
                 Directory.CreateDirectory(homePath);
             }
 
-            ImagePatchNode profileWin = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_win.png");
-            ImagePatchNode profileLose = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_lose.png");
-            ImagePatchNode profileNone = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_none.png");
-            ImagePatchNode profileHot = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/league_hot.png");
-            ImagePatchNode profileNew = new ImagePatchNode(this, currentPath + @"img\profile", "/profile/league_new.png");
+            nodes.Add(new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_win.png"));
+            nodes.Add(new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_lose.png"));
+            nodes.Add(new ImagePatchNode(this, currentPath + @"img\profile", "/profile/series_none.png"));
+            nodes.Add(new ImagePatchNode(this, currentPath + @"img\profile", "/profile/league_hot.png"));
+            nodes.Add(new ImagePatchNode(this, currentPath + @"img\profile", "/profile/league_new.png"));
+            nodes.Add(new TGZPatchNode(this, "http://tdegroot.nl/api/qstats/", Core.getInstance().getCurrentPath(),
+                                        "dragontail-" + API.getVersion() + ".zip"));
 
-            nodes.Add(profileWin);
-            nodes.Add(profileLose);
-            nodes.Add(profileNone);
-            nodes.Add(profileHot);
-            nodes.Add(profileNew);
-
-            TGZPatchNode images = new TGZPatchNode(this, "http://tdegroot.nl/api/qstats/", currentPath, "dragontail-" + API.getVersion() + ".zip");
-            nodes.Add(images);
         }
 
         private bool isPatched() {
@@ -78,23 +70,17 @@ namespace src.patch {
                     reader.Close();
                     if(lastPatchVersion == API.getVersion()) {
                         patched = patchedLastTime;
-                    } else {
-                        patched = false;
                     }
                 } catch(Exception e) {
                     Console.WriteLine("The file could not be read:");
                     Console.WriteLine(e.Message);
                 }
-            } else {
-                patched = false;
             }
             return patched;
         }
 
         public bool shouldPatch() {
-            bool patched = false;
-
-            patched = isPatched();
+            bool patched = isPatched();
 
             for(int i = 0; i < nodes.Count; i++) {
                 if(!nodes[i].patched(currentPath))
@@ -109,6 +95,7 @@ namespace src.patch {
                     }
                 }
             }
+
             return !patched;
         }
 
@@ -118,21 +105,19 @@ namespace src.patch {
             if(!Directory.Exists(currentPath)) {
                 Directory.CreateDirectory(currentPath);
             }
-            int elements = patchableNodes.Count;
-            double valuePerElement = 1.0 / elements * 100;
-            double progress = 0;
+
             for(int i = 0; i < patchableNodes.Count; i++) {
                await patchableNodes[i].patch(currentPath);
             }
+
             if(File.Exists(patchPath)) {
                 File.Delete(patchPath);
             }
             
-            StreamWriter strm = File.CreateText(patchPath);
-            strm.WriteLine("version:" + API.getVersion());
-            strm.WriteLine("patched:true");
-            strm.Close();
-            
+            StreamWriter sw = File.CreateText(patchPath);
+            sw.WriteLine("version:" + API.getVersion());
+            sw.WriteLine("patched:true");
+            sw.Close();
         }
 
         public void status(String status) {

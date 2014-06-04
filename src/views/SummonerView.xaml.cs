@@ -64,7 +64,7 @@ namespace src.views {
                 if (entry == null) return;
                 if (entry.PlayerOrTeamName != summoner.Name) return;
                 lblLeagueName.Content = league.Name;
-                lblDivision.Content = league.Tier + " " + league.Queue;
+                lblDivision.Content = league.Tier + " " + entry.Division;
                 lblWins.Content = entry.Wins;
                 lblLeaguePoints.Content = entry.LeaguePoints;
                 int medals = 0;

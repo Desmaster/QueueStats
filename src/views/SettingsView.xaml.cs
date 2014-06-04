@@ -28,22 +28,20 @@ namespace src.views {
 
         public void setProgress(double progress) {
             Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
-                delegate() {
-                    pbProgress.Value = progress;
-                }
+                (() => pbProgress.Value = progress)
            );
         }
 
         private delegate void MyDelegate();
 
         public void setStatus(String status) {
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
+            Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
                (() => lblStatus.Content = status)
             );
         }
 
         public void completion() {
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
+            Dispatcher.Invoke(DispatcherPriority.Normal, (MyDelegate)
                (() => mainWindow.initViews())
             );
         }
@@ -60,8 +58,7 @@ namespace src.views {
                 Directory.Delete(Core.getInstance().getHomePath() + "matches", true);
                 Directory.Delete(Core.getInstance().getHomePath() + "summoners", true);
                 File.Delete(Core.getInstance().getHomePath() + "trackedSummoners.json");
-            } catch {
-                
+            } catch (IOException exc) {
             }
         }
 
